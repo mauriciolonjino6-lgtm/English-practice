@@ -87150,3 +87150,4 @@ inflection/lib/inflection.js:
    * limitations under the License.
    *)
 */
+module.exports = app; module.exports.default = app; module.exports.app = app;
