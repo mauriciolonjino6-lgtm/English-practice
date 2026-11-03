@@ -1,3 +1,14 @@
+// ─── User Profile ────────────────────────────────────────────────────────────
+export interface UserProfile {
+  id:     string
+  name:   string
+  email?: string
+  level:  string
+  goal?:  string
+  xp:     number
+  streak: number
+}
+
 // ─── Message ──────────────────────────────────────────────────────────────────
 export type MessageRole = 'user' | 'assistant'
 
@@ -9,14 +20,21 @@ export interface Correction {
   rule:        string
 }
 
+export interface SuggestedReply {
+  text: string
+  hint: string
+}
+
 export interface Message {
-  id:         string
-  role:       MessageRole
-  content:    string
-  timestamp:  string
-  correction?: Correction
-  audioUrl?:  string
-  isLoading?: boolean
+  id:                string
+  role:              MessageRole
+  content:           string
+  translation?:      string
+  suggestedReplies?: SuggestedReply[]
+  timestamp:         string
+  correction?:       Correction
+  audioUrl?:         string
+  isLoading?:        boolean
 }
 
 // ─── SRS / Flashcard ──────────────────────────────────────────────────────────
@@ -49,23 +67,25 @@ export interface ShadowingExercise {
 
 // ─── Dashboard / Progress ─────────────────────────────────────────────────────
 export interface UserProgress {
-  userId:           string
-  streak:           number
-  totalMessages:    number
-  totalWords:       number
+  userId:             string
+  streak:             number
+  totalMessages:      number
+  totalWords:         number
   cardsReviewedToday: number
-  cardsDueToday:    number
-  level:            string
-  xp:               number
+  cardsDueToday:      number
+  level:              string
+  xp:                 number
 }
 
 // ─── API Responses ────────────────────────────────────────────────────────────
 export interface ChatResponse {
-  sessionId?:  string
-  message:     string
-  correction?: Correction
-  vocabulary?: { word: string; meaning: string; example: string }[]
-  taskStatus?: 'ongoing' | 'completed'
+  sessionId?:        string
+  message:           string
+  translation?:      string
+  suggestedReplies?: SuggestedReply[]
+  correction?:       Correction
+  vocabulary?:       { word: string; meaning: string; example: string }[]
+  taskStatus?:       'ongoing' | 'completed'
 }
 
 export interface ApiError {

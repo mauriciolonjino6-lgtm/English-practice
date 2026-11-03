@@ -1,9 +1,10 @@
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { MessageCircle, Mic2, BookOpen, ChevronRight, Zap, Lightbulb } from 'lucide-react'
-import { useAppStore } from '@/store/useAppStore'
+import { MessageCircle, Mic2, BookOpen, ChevronRight, Zap, Lightbulb, Coffee, Plane, Briefcase, Volume2, Sparkles } from 'lucide-react'
+import { useAppStore, ScenarioType } from '@/store/useAppStore'
 import { getUserProgress, getDueCards } from '@/services/api'
+import { useSpeechSynthesis } from '@/hooks/useSpeechSynthesis'
 import StreakCard  from './StreakCard'
 import ProgressCard from './ProgressCard'
 import VocabCard   from './VocabCard'
@@ -18,18 +19,31 @@ const item = {
 }
 
 export default function Dashboard() {
-  const navigate    = useNavigate()
-  const { userId, progress, dueCards, setProgress, setDueCards } = useAppStore()
+  const navigate = useNavigate()
+  const { user, userId, progress, dueCards, setProgress, setDueCards, setActiveScenario, setAuthModalOpen } = useAppStore()
+  const { speak } = useSpeechSynthesis()
 
   useEffect(() => {
-    getUserProgress(userId).then(setProgress).catch(console.error)
-    getDueCards(userId).then(setDueCards).catch(console.error)
-  }, [userId])
+    const activeId = user?.id || userId
+    getUserProgress(activeId).then(setProgress).catch(console.error)
+    getDueCards(activeId).then(setDueCards).catch(console.error)
+  }, [user?.id, userId, setProgress, setDueCards])
+
+  const startScenario = (scenario: ScenarioType) => {
+    setActiveScenario(scenario)
+    navigate('/chat')
+  }
 
   const actions = [
-    { label: 'Continue Chat',  sub: 'Practice with Mr. Davies', icon: MessageCircle, path: '/chat',       color: 'from-brand-600 to-indigo-600' },
-    { label: 'Shadowing',      sub: 'British accent training',  icon: Mic2,          path: '/shadowing',  color: 'from-emerald-600 to-teal-600'  },
-    { label: 'Flashcards',     sub: `${dueCards.length} cards due`, icon: BookOpen, path: '/flashcards', color: 'from-amber-600 to-orange-600'   },
+    { label: 'Conversación Libre', sub: 'Habla con Mr. Davies', icon: MessageCircle, path: '/chat', scenario: 'free-talk' as const, color: 'from-brand-600 to-indigo-600' },
+    { label: 'Entrenamiento de Acento', sub: 'Shadowing con audio británico', icon: Mic2, path: '/shadowing', color: 'from-emerald-600 to-teal-600' },
+    { label: 'Tarjetas de Memoria', sub: `${dueCards.length} palabras por repasar`, icon: BookOpen, path: '/flashcards', color: 'from-amber-600 to-orange-600' },
+  ]
+
+  const scenarios = [
+    { id: 'cafe' as const, label: 'En la Cafetería', icon: Coffee, desc: 'Pedir café y comida en Londres' },
+    { id: 'airport' as const, label: 'En el Aeropuerto', icon: Plane, desc: 'Aduana, maletas y preguntas clave' },
+    { id: 'interview' as const, label: 'Entrevista Laboral', icon: Briefcase, desc: 'Presentar tu experiencia en inglés' },
   ]
 
   return (
@@ -38,21 +52,61 @@ export default function Dashboard() {
         variants={container}
         initial="hidden"
         animate="show"
-        className="p-4 pb-6 space-y-4 max-w-lg mx-auto"
+        className="p-4 pb-8 space-y-4 max-w-xl mx-auto"
       >
-        {/* Header */}
-        <motion.div variants={item} className="pt-2">
-          <p className="text-white/50 text-sm">Good day</p>
-          <h1 className="text-2xl font-bold mt-0.5">
-            <span className="text-gradient">FluentAI</span>
-          </h1>
+        {/* Welcome Banner */}
+        <motion.div variants={item} className="pt-2 flex items-center justify-between">
+          <div>
+            <p className="opacity-60 text-xs font-semibold uppercase tracking-wider">
+              {user ? `¡Hola de nuevo, ${user.name}!` : 'Bienvenido a tu clase'}
+            </p>
+            <h1 className="text-2xl font-black mt-0.5">
+              Aprende <span className="text-gradient">Inglés Real</span>
+            </h1>
+          </div>
+
+          {!user && (
+            <button
+              onClick={() => setAuthModalOpen(true)}
+              className="px-3 py-1.5 rounded-xl bg-brand-500/20 text-brand-400 border border-brand-400/30 text-xs font-bold hover:bg-brand-500/30 transition-all"
+            >
+              Crear Perfil
+            </button>
+          )}
         </motion.div>
 
         {/* Stats row */}
         <motion.div variants={item} className="grid grid-cols-3 gap-3">
-          <StreakCard  streak={progress?.streak ?? 0} />
-          <ProgressCard level={progress?.level ?? 'A1'} xp={progress?.xp ?? 0} />
+          <StreakCard  streak={progress?.streak ?? 1} />
+          <ProgressCard level={user?.level ?? progress?.level ?? 'A1'} xp={user?.xp ?? progress?.xp ?? 20} />
           <VocabCard   count={progress?.totalWords ?? 0} />
+        </motion.div>
+
+        {/* Real-Life Scenarios Section */}
+        <motion.div variants={item}>
+          <div className="flex items-center justify-between mb-2">
+            <p className="text-xs font-bold uppercase tracking-wider opacity-60 flex items-center gap-1.5">
+              <Sparkles size={13} className="text-brand-400" />
+              Misiones Prácticas de Hoy
+            </p>
+            <span className="text-[10px] opacity-40">Toca para interactuar</span>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+            {scenarios.map(({ id, label, icon: Icon, desc }) => (
+              <button
+                key={id}
+                onClick={() => startScenario(id)}
+                className="p-3.5 glass rounded-2xl text-left hover:border-brand-400/50 hover:bg-brand-500/10 active:scale-98 transition-all group"
+              >
+                <div className="w-8 h-8 rounded-xl bg-brand-500/20 text-brand-400 flex items-center justify-center mb-2 group-hover:scale-110 transition-transform">
+                  <Icon size={16} />
+                </div>
+                <h3 className="font-bold text-xs">{label}</h3>
+                <p className="text-[10px] opacity-60 mt-0.5 line-clamp-1">{desc}</p>
+              </button>
+            ))}
+          </div>
         </motion.div>
 
         {/* Due cards alert */}
@@ -60,51 +114,69 @@ export default function Dashboard() {
           <motion.div variants={item}>
             <button
               onClick={() => navigate('/flashcards')}
-              className="w-full glass flex items-center gap-3 p-4 active:scale-[0.98] transition-transform"
+              className="w-full glass flex items-center gap-3 p-4 active:scale-[0.98] transition-transform border-amber-500/30 bg-amber-500/10"
             >
-              <div className="p-2 rounded-xl bg-amber-500/20">
+              <div className="p-2.5 rounded-xl bg-amber-500/20">
                 <Zap size={18} className="text-amber-400" />
               </div>
               <div className="flex-1 text-left">
-                <p className="text-sm font-semibold text-amber-300">Review due!</p>
-                <p className="text-xs text-white/50">{dueCards.length} cards waiting for review</p>
+                <p className="text-sm font-bold text-amber-300">¡Tienes tarjetas por repasar!</p>
+                <p className="text-xs opacity-70">{dueCards.length} palabras esperando en tu sistema SM-2</p>
               </div>
-              <ChevronRight size={16} className="text-white/30" />
+              <ChevronRight size={16} className="opacity-40" />
             </button>
           </motion.div>
         )}
 
-        {/* Quick actions */}
+        {/* Quick Start Actions */}
         <motion.div variants={item}>
-          <p className="text-xs font-semibold text-white/40 uppercase tracking-wider mb-3">Quick Start</p>
-          <div className="space-y-3">
-            {actions.map(({ label, sub, icon: Icon, path, color }) => (
+          <p className="text-xs font-bold opacity-60 uppercase tracking-wider mb-2.5">
+            Módulos de Aprendizaje
+          </p>
+          <div className="space-y-2.5">
+            {actions.map(({ label, sub, icon: Icon, path, color, scenario }) => (
               <button
                 key={path}
-                onClick={() => navigate(path)}
-                className="w-full glass flex items-center gap-4 p-4 active:scale-[0.98] transition-transform group"
+                onClick={() => {
+                  if (scenario) setActiveScenario(scenario)
+                  navigate(path)
+                }}
+                className="w-full glass flex items-center gap-4 p-3.5 active:scale-[0.98] transition-transform group hover:border-white/20"
               >
-                <div className={`p-3 rounded-xl bg-gradient-to-br ${color} shrink-0`}>
-                  <Icon size={20} className="text-white" />
+                <div className={`p-3 rounded-xl bg-gradient-to-br ${color} shrink-0 text-white shadow-md`}>
+                  <Icon size={18} />
                 </div>
                 <div className="flex-1 text-left">
-                  <p className="font-semibold text-sm">{label}</p>
-                  <p className="text-xs text-white/50 mt-0.5">{sub}</p>
+                  <p className="font-bold text-sm">{label}</p>
+                  <p className="text-xs opacity-60 mt-0.5">{sub}</p>
                 </div>
-                <ChevronRight size={16} className="text-white/30 group-hover:translate-x-0.5 transition-transform" />
+                <ChevronRight size={16} className="opacity-30 group-hover:translate-x-0.5 transition-transform" />
               </button>
             ))}
           </div>
         </motion.div>
 
-        {/* Today's tip */}
-        <motion.div variants={item} className="glass p-4">
-          <div className="flex items-center gap-1.5 mb-2">
-            <Lightbulb size={14} className="text-brand-400" />
-            <p className="text-xs font-semibold text-brand-400 uppercase tracking-wider">Today's Tip</p>
+        {/* Phrase of the day with audio */}
+        <motion.div variants={item} className="glass p-4 border-brand-500/30">
+          <div className="flex items-center justify-between mb-2">
+            <div className="flex items-center gap-1.5">
+              <Lightbulb size={15} className="text-brand-400" />
+              <p className="text-xs font-bold text-brand-400 uppercase tracking-wider">Frase Británica del Día</p>
+            </div>
+            <button
+              onClick={() => speak("Could I have a flat white and a bacon bap, please?")}
+              className="flex items-center gap-1 text-[11px] font-bold text-brand-400 hover:text-brand-300"
+              title="Escuchar audio"
+            >
+              <Volume2 size={13} />
+              <span>Escuchar</span>
+            </button>
           </div>
-          <p className="text-sm text-white/80 leading-relaxed">
-            When riding the Tube, practice saying <span className="text-brand-300 font-medium">"Excuse me, could I get past, please?"</span> — very British and polite.
+          <p className="text-sm font-semibold leading-relaxed">
+            "Could I have a flat white and a bacon bap, please?"
+          </p>
+          <p className="text-xs opacity-60 mt-1">
+            En Reino Unido, <em>"Could I have..."</em> suena mucho más educado y natural que <em>"I want..."</em>.
           </p>
         </motion.div>
       </motion.div>

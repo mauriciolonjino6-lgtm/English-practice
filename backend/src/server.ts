@@ -18,7 +18,7 @@ app.use(helmet({
   contentSecurityPolicy: false,
 }))
 
-const allowedOrigins = ENV.FRONTEND_URL ? ENV.FRONTEND_URL.split(',').map((u) => u.trim()) : ['http://localhost:5173']
+const allowedOrigins = ENV.FRONTEND_URL ? ENV.FRONTEND_URL.split(',').map((u) => u.trim()) : ['*']
 app.use(cors({
   origin: (origin, callback) => {
     if (!origin || allowedOrigins.includes('*') || allowedOrigins.includes(origin)) {
@@ -33,41 +33,30 @@ app.use(morgan(ENV.NODE_ENV === 'development' ? 'dev' : 'combined'))
 app.use(express.json({ limit: '10mb' }))
 app.use(express.urlencoded({ extended: true }))
 
-// Rate limiting
+// ── Instant Health Check ──────────────────────────────────────────────────────
+app.get(['/health', '/api/health'], (_req, res) => {
+  res.json({
+    ok:           true,
+    env:          ENV.NODE_ENV,
+    hasDbUrl:     Boolean(ENV.DATABASE_URL),
+    hasGeminiKey: Boolean(ENV.GEMINI_API_KEY && ENV.GEMINI_API_KEY !== 'AI...'),
+    status:       'healthy',
+  })
+})
+
+// ── Rate Limiting ─────────────────────────────────────────────────────────────
 app.use('/api', rateLimit({
   windowMs: 60 * 1000,
-  max:      100,
+  max:      120,
   message:  { error: 'Too many requests, slow down.' },
 }))
 
-// ── Database Connection Middleware for Serverless (Vercel) ────────────────────
-let dbConnected = false
-let dbPromise: Promise<void> | null = null
+// ── Ensure DB Connection in background ────────────────────────────────────────
+connectDB().catch((err) => console.warn('[DB Background Warning]:', err))
 
-const ensureDB = async (_req: express.Request, _res: express.Response, next: express.NextFunction) => {
-  if (dbConnected) return next()
-  if (!dbPromise) {
-    dbPromise = connectDB()
-      .then(() => { dbConnected = true })
-      .catch((err) => {
-        dbPromise = null
-        throw err
-      })
-  }
-  try {
-    await dbPromise
-    next()
-  } catch (err) {
-    next(err)
-  }
-}
-
-app.use('/api', ensureDB)
-
-// ── API Routes ─────────────────────────────────────────────────────────────────
+// ── API Routes (Mounted on both /api and / to support all rewrite scenarios) ──
 app.use('/api', routes)
-
-app.get('/health', (_req, res) => res.json({ ok: true, env: ENV.NODE_ENV, status: 'healthy' }))
+app.use('/', routes)
 
 // ── Static Frontend Serving (if running standalone server outside Vercel) ─────
 if (!process.env.VERCEL) {
@@ -83,14 +72,11 @@ if (!process.env.VERCEL) {
 // ── Error Handler ─────────────────────────────────────────────────────────────
 app.use(errorHandler)
 
-// ── Start Server (Local / Render / Railway) ───────────────────────────────────
+// ── Start Server ──────────────────────────────────────────────────────────────
 if (!process.env.VERCEL) {
-  ;(async () => {
-    await connectDB()
-    app.listen(ENV.PORT, () => {
-      console.log(`[Server] running on http://localhost:${ENV.PORT}`)
-    })
-  })()
+  app.listen(ENV.PORT, () => {
+    console.log(`[Server] running on http://localhost:${ENV.PORT}`)
+  })
 }
 
 export default app

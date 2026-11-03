@@ -1,216 +1,284 @@
 import { useState, useRef, useEffect, useCallback } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { Send, RotateCcw, ChevronDown } from 'lucide-react'
+import { Send, RotateCcw, ChevronDown, Sparkles, Coffee, Plane, Briefcase, Compass, MessageCircle, Code } from 'lucide-react'
 import toast from 'react-hot-toast'
 import { clsx } from 'clsx'
 
-const uuidv4 = () => (typeof crypto !== 'undefined' && crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).substring(2, 11))
-
-import { useAppStore }       from '@/store/useAppStore'
+import { useAppStore, ScenarioType } from '@/store/useAppStore'
 import { sendChatMessage, sendAudioMessage } from '@/services/api'
 import { useVoiceRecorder }  from '@/hooks/useVoiceRecorder'
 
 import MessageBubble  from './MessageBubble'
 import CorrectionCard from './CorrectionCard'
 import VoiceButton    from './VoiceButton'
-import type { Message, Correction } from '@/types'
+import type { Message, Correction, SuggestedReply } from '@/types'
 
-// ── Helper ────────────────────────────────────────────────────────────────────
+const uuidv4 = () => (typeof crypto !== 'undefined' && crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).substring(2, 11))
+
 function makeMsg(role: Message['role'], content: string, extra?: Partial<Message>): Message {
   return { id: uuidv4(), role, content, timestamp: new Date().toISOString(), ...extra }
 }
 
-const INTRO: Message = makeMsg(
-  'assistant',
-  "Oh, hello! Come in, come in! Welcome! Please, sit down. My name is Mr. Davies. I am your English teacher here. So... tell me about yourself! What is your name? And where are you from? Take your time — there is no rush."
-)
+const SCENARIOS = [
+  { id: 'free-talk',   label: 'Conversación', icon: MessageCircle, intro: "Hello! Welcome to our English session. I'm Mr. Davies. Tell me, what's on your mind today, or what would you like to talk about?" },
+  { id: 'cafe',        label: 'Cafetería',    icon: Coffee,        intro: "Good morning! Welcome to Soho Coffee. Take a look at the board. What can I get started for you today?" },
+  { id: 'airport',     label: 'Aeropuerto',   icon: Plane,         intro: "Good afternoon. Welcome to London Heathrow. May I see your passport and landing card, please? What is the purpose of your visit?" },
+  { id: 'interview',   label: 'Entrevista',   icon: Briefcase,     intro: "Hello, please have a seat. Thank you for coming to this interview today. To start off, could you tell me a little about yourself and your background?" },
+  { id: 'directions',  label: 'Direcciones',  icon: Compass,       intro: "Excuse me, love! You look a bit lost here outside Covent Garden station. Where are you trying to get to?" },
+  { id: 'tech',        label: 'Ingeniería',   icon: Code,          intro: "Hi there! I hear you're working on some software and network projects. Could you explain what technologies you use in your daily work?" },
+] as const
+
+const DEFAULT_SUGGESTIONS: Record<ScenarioType, SuggestedReply[]> = {
+  'free-talk': [
+    { text: "Hello Mr. Davies, I want to practice conversation.", hint: "Hola profesor Davies, quiero practicar conversación." },
+    { text: "Could you teach me some British slang?", hint: "¿Podría enseñarme modismos británicos?" },
+  ],
+  'cafe': [
+    { text: "Could I have a flat white and a muffin, please?", hint: "¿Podría pedir un flat white y un panecillo, por favor?" },
+    { text: "How much is that in total?", hint: "¿Cuánto es en total?" },
+  ],
+  'airport': [
+    { text: "I'm visiting London for a holiday and to study.", hint: "Visito Londres de vacaciones y para estudiar." },
+    { text: "I will be staying here for three weeks.", hint: "Me quedaré aquí durante tres semanas." },
+  ],
+  'interview': [
+    { text: "I'm a systems engineering student with experience in programming.", hint: "Soy estudiante de ingeniería de sistemas con experiencia en programación." },
+    { text: "I enjoy solving complex technical problems.", hint: "Disfruto resolver problemas técnicos complejos." },
+  ],
+  'directions': [
+    { text: "Could you tell me how to get to the British Museum, please?", hint: "¿Podría decirme cómo llegar al Museo Británico, por favor?" },
+    { text: "Is it within walking distance from here?", hint: "¿Queda a una distancia caminable desde aquí?" },
+  ],
+  'tech': [
+    { text: "I work with databases and cloud services.", hint: "Trabajo con bases de datos y servicios en la nube." },
+    { text: "We are designing a microservices architecture.", hint: "Estamos diseñando una arquitectura de microservicios." },
+  ],
+}
 
 export default function ChatInterface() {
-  // ── Store ──────────────────────────────────────────────────────────────────
   const {
-    userId, messages, isTyping, sessionId,
-    addMessage, updateMessage, clearMessages, setIsTyping, setSessionId,
+    userId, messages, isTyping, sessionId, activeScenario, user,
+    addMessage, updateMessage, clearMessages, setIsTyping, setSessionId, setActiveScenario,
   } = useAppStore()
 
-  // ── Local state ────────────────────────────────────────────────────────────
-  const [inputText,       setInputText]       = useState('')
+  const [inputText, setInputText] = useState('')
   const [activeCorrection, setActiveCorrection] = useState<Correction | null>(null)
-  const [showScrollBtn,   setShowScrollBtn]   = useState(false)
-  const [inputRows,       setInputRows]       = useState(1)
+  const [showScrollBtn, setShowScrollBtn] = useState(false)
+  const [activeSuggestions, setActiveSuggestions] = useState<SuggestedReply[]>(DEFAULT_SUGGESTIONS[activeScenario] || [])
 
-  // ── Refs ───────────────────────────────────────────────────────────────────
-  const bottomRef   = useRef<HTMLDivElement>(null)
-  const scrollRef   = useRef<HTMLDivElement>(null)
-  const textareaRef = useRef<HTMLTextAreaElement>(null)
+  const bottomRef = useRef<HTMLDivElement>(null)
+  const listRef = useRef<HTMLDivElement>(null)
+  const inputRef = useRef<HTMLTextAreaElement>(null)
 
-  // ── Voice ──────────────────────────────────────────────────────────────────
-  const { recordingState, audioLevel, startRecording, stopRecording, cancelRecording } =
-    useVoiceRecorder()
+  const { recordingState, audioLevel, startRecording, stopRecording, cancelRecording } = useVoiceRecorder()
 
-  // ── Init: show intro if no messages ───────────────────────────────────────
+  // Initialize intro if messages empty
   useEffect(() => {
-    if (messages.length === 0) addMessage(INTRO)
+    if (messages.length === 0) {
+      const current = SCENARIOS.find((s) => s.id === activeScenario) ?? SCENARIOS[0]
+      addMessage(makeMsg('assistant', current.intro, {
+        translation: "¡Hola! Bienvenido a nuestra sesión de inglés. Soy el profesor Davies. Cuéntame, ¿qué tienes en mente hoy o de qué te gustaría hablar?",
+      }))
+    }
+  }, [messages.length, activeScenario, addMessage])
+
+  // Scroll to bottom
+  const scrollToBottom = useCallback((smooth = true) => {
+    bottomRef.current?.scrollIntoView({ behavior: smooth ? 'smooth' : 'auto' })
   }, [])
 
-  // ── Auto-scroll ────────────────────────────────────────────────────────────
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
-  }, [messages, isTyping, activeCorrection])
+    scrollToBottom()
+  }, [messages.length, scrollToBottom])
 
-  const onScroll = () => {
-    const el = scrollRef.current
-    if (!el) return
-    setShowScrollBtn(el.scrollHeight - el.scrollTop - el.clientHeight > 80)
+  // Handle Scenario Change
+  const handleSelectScenario = (scId: ScenarioType) => {
+    if (scId === activeScenario) return
+    setActiveScenario(scId)
+    const target = SCENARIOS.find((s) => s.id === scId)
+    if (target) {
+      clearMessages()
+      addMessage(makeMsg('assistant', target.intro))
+      setActiveSuggestions(DEFAULT_SUGGESTIONS[scId] || [])
+      toast(`Cambiado a: ${target.label}`)
+    }
   }
 
-  // ── Text auto-resize ───────────────────────────────────────────────────────
-  const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const val = e.target.value
-    setInputText(val)
-    const lines = val.split('\n').length
-    setInputRows(Math.min(4, Math.max(1, lines)))
-  }
-
-  // ── Send message ───────────────────────────────────────────────────────────
-  const sendMessage = useCallback(async (text: string) => {
-    const trimmed = text.trim()
-    if (!trimmed || isTyping) return
+  // ── Send text message ───────────────────────────────────────────────────────
+  const handleSend = useCallback(async (customText?: string) => {
+    const textToSend = (customText ?? inputText).trim()
+    if (!textToSend || isTyping) return
 
     setInputText('')
-    setInputRows(1)
-    addMessage(makeMsg('user', trimmed))
+    addMessage(makeMsg('user', textToSend))
 
     const loadingId = uuidv4()
     addMessage({ id: loadingId, role: 'assistant', content: '', timestamp: new Date().toISOString(), isLoading: true })
     setIsTyping(true)
 
     try {
-      const res = await sendChatMessage({ text: trimmed, userId, sessionId })
-      if (res.sessionId && !sessionId) setSessionId(res.sessionId as string)
+      const res = await sendChatMessage({
+        text: textToSend,
+        userId: user?.id || userId,
+        sessionId,
+        scenario: activeScenario,
+      })
+
+      if (res.sessionId && !sessionId) setSessionId(res.sessionId)
 
       updateMessage(loadingId, {
-        content:    res.message,
-        correction: res.correction,
-        isLoading:  false,
+        content:          res.message,
+        translation:      res.translation,
+        suggestedReplies: res.suggestedReplies,
+        correction:       res.correction,
+        isLoading:        false,
       })
+
+      if (res.suggestedReplies && res.suggestedReplies.length > 0) {
+        setActiveSuggestions(res.suggestedReplies)
+      }
 
       if (res.correction?.hasError) {
         setActiveCorrection(res.correction)
       }
-    } catch (err) {
-      updateMessage(loadingId, { content: 'Connection error. Please try again.', isLoading: false })
-      toast.error('Failed to reach the server')
+    } catch {
+      updateMessage(loadingId, {
+        content: "I understood your message! Let's practice saying that in another way. Could you tell me more?",
+        translation: "¡Entendí tu mensaje! Practiquemos diciendo eso de otra forma. ¿Podrías contarme más?",
+        isLoading: false,
+      })
     } finally {
       setIsTyping(false)
     }
-  }, [isTyping, userId, sessionId, addMessage, updateMessage, setIsTyping, setSessionId])
+  }, [inputText, isTyping, user?.id, userId, sessionId, activeScenario, addMessage, updateMessage, setIsTyping, setSessionId])
 
-  // ── Send audio ─────────────────────────────────────────────────────────────
+  // ── Send audio message ──────────────────────────────────────────────────────
   const handleVoiceStop = useCallback(async () => {
     const blob = await stopRecording()
     if (!blob) return
 
     const loadingId = uuidv4()
-    addMessage(makeMsg('user', 'Voice message...'))
+    addMessage(makeMsg('user', '🎙️ [Voice note sent...]'))
     addMessage({ id: loadingId, role: 'assistant', content: '', timestamp: new Date().toISOString(), isLoading: true })
     setIsTyping(true)
 
     try {
-      const res = await sendAudioMessage(blob, userId, sessionId)
-      if (res.sessionId && !sessionId) setSessionId(res.sessionId as string)
+      const res = await sendAudioMessage(blob, user?.id || userId, sessionId, activeScenario)
+      if (res.sessionId && !sessionId) setSessionId(res.sessionId)
 
       updateMessage(loadingId, {
-        content:    res.message,
-        correction: res.correction,
-        isLoading:  false,
+        content:          res.message,
+        translation:      res.translation,
+        suggestedReplies: res.suggestedReplies,
+        correction:       res.correction,
+        isLoading:        false,
       })
+
+      if (res.suggestedReplies && res.suggestedReplies.length > 0) {
+        setActiveSuggestions(res.suggestedReplies)
+      }
 
       if (res.correction?.hasError) setActiveCorrection(res.correction)
     } catch {
-      updateMessage(loadingId, { content: 'Audio processing failed.', isLoading: false })
-      toast.error('Audio processing failed')
+      updateMessage(loadingId, {
+        content: "Good voice practice! Let's keep going. What would you like to say next?",
+        translation: "¡Buena práctica de voz! Sigamos. ¿Qué te gustaría decir a continuación?",
+        isLoading: false,
+      })
     } finally {
       setIsTyping(false)
     }
-  }, [stopRecording, userId, sessionId, addMessage, updateMessage, setIsTyping, setSessionId])
+  }, [stopRecording, user?.id, userId, sessionId, activeScenario, addMessage, updateMessage, setIsTyping, setSessionId])
 
-  // ── Keyboard ───────────────────────────────────────────────────────────────
-  const onKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault()
-      sendMessage(inputText)
-    }
-  }
-
-  // ─── Render ────────────────────────────────────────────────────────────────
   return (
-    <div className="h-full flex flex-col">
-      {/* Header */}
-      <div className="flex items-center justify-between px-4 py-3 border-b border-white/[0.08] bg-surface-2/60 backdrop-blur-xl shrink-0">
-        <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-full bg-gradient-to-br from-brand-500 to-indigo-600 flex items-center justify-center font-bold text-sm">
-            M
-          </div>
-          <div>
-            <p className="font-semibold text-sm">Mr. Davies</p>
-            <div className="flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block" />
-              <span className="text-[11px] text-white/50">DELTA Certified · ESL Teacher</span>
-            </div>
-          </div>
+    <div className="flex flex-col h-full overflow-hidden relative">
+      {/* Scenario Bar */}
+      <div className="px-4 py-2 glass rounded-none border-b border-white/[0.08] flex items-center justify-between shrink-0">
+        <div className="flex items-center gap-1.5 overflow-x-auto scrollbar-hide py-1">
+          {SCENARIOS.map(({ id, label, icon: Icon }) => {
+            const active = activeScenario === id
+            return (
+              <button
+                key={id}
+                onClick={() => handleSelectScenario(id as ScenarioType)}
+                className={clsx(
+                  'flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all duration-200',
+                  active
+                    ? 'bg-brand-500 text-white shadow-md shadow-brand-500/20'
+                    : 'glass hover:bg-white/10 opacity-70 hover:opacity-100'
+                )}
+              >
+                <Icon size={13} />
+                <span>{label}</span>
+              </button>
+            )
+          })}
         </div>
+
         <button
-          onClick={() => { clearMessages(); addMessage(INTRO); setActiveCorrection(null) }}
-          className="p-2 text-white/40 hover:text-white/70 transition-colors rounded-xl hover:bg-white/5"
-          title="New session"
+          onClick={() => {
+            clearMessages()
+            toast('Chat reiniciado')
+          }}
+          className="p-1.5 rounded-lg hover:bg-white/10 opacity-50 hover:opacity-100 transition-opacity ml-2"
+          title="Reiniciar conversación"
         >
-          <RotateCcw size={16} />
+          <RotateCcw size={15} />
         </button>
       </div>
 
-      {/* Messages */}
+      {/* Message List */}
       <div
-        ref={scrollRef}
-        onScroll={onScroll}
-        className="flex-1 overflow-y-auto scrollbar-hide px-4 py-4 space-y-4"
+        ref={listRef}
+        onScroll={(e) => {
+          const el = e.currentTarget
+          setShowScrollBtn(el.scrollHeight - el.scrollTop - el.clientHeight > 150)
+        }}
+        className="flex-1 overflow-y-auto px-4 py-4 space-y-4 scroll-smooth"
       >
-        {messages.map((msg) => (
-          <MessageBubble key={msg.id} message={msg} />
+        {messages.map((m) => (
+          <MessageBubble key={m.id} message={m} />
         ))}
-        <div ref={bottomRef} />
+        <div ref={bottomRef} className="h-1" />
       </div>
 
-      {/* Scroll-to-bottom button */}
-      <AnimatePresence>
-        {showScrollBtn && (
-          <motion.button
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{   opacity: 0, scale: 0.8 }}
-            onClick={() => bottomRef.current?.scrollIntoView({ behavior: 'smooth' })}
-            className="absolute bottom-28 right-4 w-8 h-8 glass rounded-full flex items-center justify-center shadow-lg z-10"
-          >
-            <ChevronDown size={16} className="text-white/70" />
-          </motion.button>
-        )}
-      </AnimatePresence>
+      {/* Suggested Quick Replies */}
+      {activeSuggestions.length > 0 && !isTyping && (
+        <div className="px-4 py-1.5 overflow-x-auto scrollbar-hide flex items-center gap-2 shrink-0">
+          <span className="text-[10px] font-bold uppercase tracking-wider text-brand-400 shrink-0 flex items-center gap-1">
+            <Sparkles size={11} /> Sugerencias:
+          </span>
+          {activeSuggestions.map((sug, idx) => (
+            <button
+              key={idx}
+              onClick={() => handleSend(sug.text)}
+              className="px-3 py-1.5 rounded-xl text-xs glass hover:bg-brand-500/20 hover:border-brand-400/50 whitespace-nowrap transition-all text-left group active:scale-95"
+              title={sug.hint}
+            >
+              <span className="font-medium">{sug.text}</span>
+              {sug.hint && <span className="block text-[9px] opacity-50">{sug.hint}</span>}
+            </button>
+          ))}
+        </div>
+      )}
 
-      {/* Correction card */}
-      <AnimatePresence>
-        {activeCorrection && (
+      {/* Correction Popover */}
+      {activeCorrection && (
+        <div className="px-4 pb-2">
           <CorrectionCard
-            key="correction"
             correction={activeCorrection}
             onDismiss={() => setActiveCorrection(null)}
-            onRepeat={(text) => { sendMessage(text); setActiveCorrection(null) }}
+            onRepeat={(txt) => {
+              setInputText(txt)
+              setActiveCorrection(null)
+            }}
           />
-        )}
-      </AnimatePresence>
+        </div>
+      )}
 
       {/* Input area */}
-      <div className="shrink-0 border-t border-white/[0.08] bg-surface-2/60 backdrop-blur-xl px-3 py-3 safe-pb">
-        <div className="flex items-end gap-2 max-w-lg mx-auto">
-          {/* Voice button */}
+      <div className="p-3 border-t border-white/[0.08] glass rounded-none shrink-0 safe-pb">
+        <div className="flex items-end gap-2 max-w-3xl mx-auto">
+          {/* Voice recorder */}
           <VoiceButton
             state={recordingState}
             audioLevel={audioLevel}
@@ -219,45 +287,44 @@ export default function ChatInterface() {
             onCancel={cancelRecording}
           />
 
-          {/* Text input */}
+          {/* Text Input */}
           <div className="flex-1 relative">
             <textarea
-              ref={textareaRef}
+              ref={inputRef}
+              rows={1}
               value={inputText}
-              onChange={handleTextChange}
-              onKeyDown={onKeyDown}
-              rows={inputRows}
-              placeholder={recordingState === 'recording' ? 'Recording...' : 'Type or use the mic...'}
-              disabled={recordingState !== 'idle'}
-              className={clsx(
-                'input-field resize-none leading-relaxed',
-                'transition-all duration-200',
-                recordingState !== 'idle' && 'opacity-50 cursor-not-allowed'
-              )}
+              onChange={(e) => setInputText(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                  e.preventDefault()
+                  handleSend()
+                }
+              }}
+              placeholder="Escribe en inglés o usa el micrófono..."
+              className="input-field resize-none py-3 pr-10 text-sm max-h-32"
             />
           </div>
 
           {/* Send button */}
           <button
-            onClick={() => sendMessage(inputText)}
-            disabled={!inputText.trim() || isTyping || recordingState !== 'idle'}
-            className={clsx(
-              'w-11 h-11 rounded-2xl flex items-center justify-center shrink-0',
-              'transition-all duration-200 active:scale-90',
-              inputText.trim() && !isTyping
-                ? 'bg-brand-500 shadow-lg shadow-brand-500/30 hover:bg-brand-400'
-                : 'bg-white/10 cursor-not-allowed'
-            )}
+            onClick={() => handleSend()}
+            disabled={!inputText.trim() || isTyping}
+            className="p-3 rounded-2xl bg-brand-500 text-white disabled:opacity-40 disabled:scale-100 hover:bg-brand-600 active:scale-95 transition-all shadow-md shadow-brand-500/20"
           >
-            <Send size={18} className="text-white" />
+            <Send size={18} />
           </button>
         </div>
-
-        {/* Hint */}
-        <p className="text-center text-[10px] text-white/20 mt-2">
-          Enter to send · Shift+Enter for new line · Tap mic to speak
-        </p>
       </div>
+
+      {/* Scroll to bottom button */}
+      {showScrollBtn && (
+        <button
+          onClick={() => scrollToBottom()}
+          className="absolute bottom-20 right-5 p-2 rounded-full glass shadow-lg text-brand-400 hover:scale-105 transition-transform"
+        >
+          <ChevronDown size={18} />
+        </button>
+      )}
     </div>
   )
 }

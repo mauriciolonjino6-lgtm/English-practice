@@ -1,7 +1,7 @@
 import axios from 'axios'
-import type { ChatResponse, SRSCard, SRSGrade, UserProgress } from '@/types'
+import type { ChatResponse, SRSCard, SRSGrade, UserProgress, UserProfile } from '@/types'
 
-const rawApiUrl = import.meta.env.VITE_API_URL as string | undefined
+const rawApiUrl = (import.meta as any).env?.VITE_API_URL as string | undefined
 const baseURL = rawApiUrl
   ? `${rawApiUrl.replace(/\/$/, '')}/api`
   : '/api'
@@ -15,14 +15,33 @@ const http = axios.create({
 http.interceptors.response.use(
   (res) => res,
   (err) => {
-    const msg = err.response?.data?.error ?? 'Network error'
+    const msg = err.response?.data?.error ?? err.message ?? 'Network error'
     return Promise.reject(new Error(msg))
   }
 )
 
+// ── Auth ──────────────────────────────────────────────────────────────────────
+export const authLogin = async (payload: {
+  name?: string
+  email?: string
+  level?: string
+  goal?: string
+}): Promise<{ user: UserProfile }> => {
+  const { data } = await http.post<{ user: UserProfile }>('/auth/login', payload)
+  return data
+}
+
+export const updateUserProfile = async (
+  id: string,
+  payload: { name?: string; level?: string; goal?: string }
+): Promise<{ user: UserProfile }> => {
+  const { data } = await http.put<{ user: UserProfile }>(`/auth/user/${id}`, payload)
+  return data
+}
+
 // ── Chat ──────────────────────────────────────────────────────────────────────
 export const sendChatMessage = async (
-  payload: { text: string; userId: string; sessionId: string | null }
+  payload: { text: string; userId: string; sessionId: string | null; scenario?: string }
 ): Promise<ChatResponse> => {
   const { data } = await http.post<ChatResponse>('/chat/message', payload)
   return data
@@ -31,12 +50,14 @@ export const sendChatMessage = async (
 export const sendAudioMessage = async (
   blob: Blob,
   userId: string,
-  sessionId: string | null
+  sessionId: string | null,
+  scenario?: string
 ): Promise<ChatResponse> => {
   const form = new FormData()
   form.append('audio', blob, 'recording.webm')
   form.append('userId', userId)
   if (sessionId) form.append('sessionId', sessionId)
+  if (scenario) form.append('scenario', scenario)
   const { data } = await http.post<ChatResponse>('/chat/audio', form, {
     headers: { 'Content-Type': 'multipart/form-data' },
   })
@@ -45,8 +66,12 @@ export const sendAudioMessage = async (
 
 // ── SRS ───────────────────────────────────────────────────────────────────────
 export const getDueCards = async (userId: string): Promise<SRSCard[]> => {
-  const { data } = await http.get<SRSCard[]>(`/srs/due/${userId}`)
-  return data
+  try {
+    const { data } = await http.get<SRSCard[]>(`/srs/due/${userId}`)
+    return data
+  } catch {
+    return []
+  }
 }
 
 export const reviewCard = async (
@@ -59,6 +84,19 @@ export const reviewCard = async (
 
 // ── Progress ──────────────────────────────────────────────────────────────────
 export const getUserProgress = async (userId: string): Promise<UserProgress> => {
-  const { data } = await http.get<UserProgress>(`/progress/${userId}`)
-  return data
+  try {
+    const { data } = await http.get<UserProgress>(`/progress/${userId}`)
+    return data
+  } catch {
+    return {
+      userId,
+      streak: 1,
+      totalMessages: 0,
+      totalWords: 0,
+      cardsReviewedToday: 0,
+      cardsDueToday: 0,
+      level: 'A1',
+      xp: 10,
+    }
+  }
 }

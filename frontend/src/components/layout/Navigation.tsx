@@ -3,10 +3,10 @@ import { LayoutDashboard, MessageCircle, Mic2, BookOpen } from 'lucide-react'
 import { clsx } from 'clsx'
 
 const tabs = [
-  { path: '/dashboard',  label: 'Home',       icon: LayoutDashboard },
-  { path: '/chat',       label: 'Chat',        icon: MessageCircle   },
-  { path: '/shadowing',  label: 'Shadow',      icon: Mic2            },
-  { path: '/flashcards', label: 'Cards',       icon: BookOpen        },
+  { path: '/dashboard',  label: 'Inicio',      icon: LayoutDashboard },
+  { path: '/chat',       label: 'Profesor AI', icon: MessageCircle   },
+  { path: '/shadowing',  label: 'Shadowing',   icon: Mic2            },
+  { path: '/flashcards', label: 'Tarjetas',    icon: BookOpen        },
 ] as const
 
 export default function Navigation() {
@@ -16,10 +16,11 @@ export default function Navigation() {
   return (
     <nav className="
       flex items-center justify-around
-      bg-surface-2/80 backdrop-blur-xl
+      glass rounded-none
       border-t border-white/[0.08]
       safe-pb
       px-2 pt-2 pb-[max(0.75rem,env(safe-area-inset-bottom))]
+      shrink-0
     ">
       {tabs.map(({ path, label, icon: Icon }) => {
         const active = pathname === path
@@ -29,10 +30,10 @@ export default function Navigation() {
             onClick={() => navigate(path)}
             className={clsx(
               'flex flex-col items-center gap-1 px-4 py-1.5 rounded-2xl',
-              'transition-all duration-200 select-none min-w-[60px]',
+              'transition-all duration-200 select-none min-w-[64px]',
               active
-                ? 'text-brand-400'
-                : 'text-white/40 hover:text-white/70 active:scale-95'
+                ? 'text-brand-500 font-bold'
+                : 'opacity-50 hover:opacity-100 active:scale-95'
             )}
           >
             <div className={clsx(
@@ -41,10 +42,7 @@ export default function Navigation() {
             )}>
               <Icon size={20} strokeWidth={active ? 2.5 : 1.8} />
             </div>
-            <span className={clsx(
-              'text-[10px] font-semibold tracking-wide',
-              active ? 'text-brand-400' : 'text-white/40'
-            )}>
+            <span className="text-[10px] tracking-wide">
               {label}
             </span>
           </button>
