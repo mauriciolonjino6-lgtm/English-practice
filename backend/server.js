@@ -1,3 +1,5 @@
 const appModule = require('./dist/server.js')
-module.exports = appModule.default || appModule
-
+const app = appModule.default || appModule
+module.exports = app
+module.exports.default = app
+module.exports.app = app

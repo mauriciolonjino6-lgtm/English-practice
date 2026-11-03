@@ -64,9 +64,15 @@ if (!process.env.VERCEL) {
 // ── Error Handler ─────────────────────────────────────────────────────────────
 app.use(errorHandler)
 
+// ── Database Initialization (Non-blocking background warm-up) ─────────────────
+if (process.env.DATABASE_URL || ENV.DATABASE_URL) {
+  connectDB().catch((err: any) => {
+    console.warn('[DB] Background connection notice:', err?.message || err)
+  })
+}
+
 // ── Start Server (Only for non-serverless environments) ────────────────────────
 if (!process.env.VERCEL) {
-  connectDB().catch(console.warn)
   app.listen(ENV.PORT, () => {
     console.log(`[Server] running on http://localhost:${ENV.PORT}`)
   })
