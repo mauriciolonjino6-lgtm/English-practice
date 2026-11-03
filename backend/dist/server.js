@@ -86722,6 +86722,16 @@ function errorHandler(err, _req, res, _next) {
 // src/server.ts
 var app = (0, import_express5.default)();
 app.set("trust proxy", 1);
+app.use((req, _res, next) => {
+  if (!req.socket) req.socket = {};
+  if (!req.connection) req.connection = req.socket;
+  if (!req.connection.remoteAddress) {
+    const forwarded = req.headers["x-forwarded-for"];
+    const ip = typeof forwarded === "string" ? forwarded.split(",")[0].trim() : "127.0.0.1";
+    req.connection.remoteAddress = ip;
+  }
+  next();
+});
 app.use(helmet({
   contentSecurityPolicy: false
 }));
@@ -86729,7 +86739,9 @@ app.use((0, import_cors.default)({
   origin: true,
   credentials: true
 }));
-app.use((0, import_morgan.default)(ENV.NODE_ENV === "development" ? "dev" : "combined"));
+if (!process.env.VERCEL && ENV.NODE_ENV === "development") {
+  app.use((0, import_morgan.default)("dev"));
+}
 app.use(import_express5.default.json({ limit: "10mb" }));
 app.use(import_express5.default.urlencoded({ extended: true }));
 app.use((_req, _res, next) => {
@@ -86760,6 +86772,7 @@ app.get(["/health", "/api/health"], (_req, res) => {
 app.use("/api", lib_default({
   windowMs: 60 * 1e3,
   max: 120,
+  validate: false,
   message: { error: "Too many requests, slow down." }
 }));
 app.use("/api", routes_default);
@@ -86774,7 +86787,7 @@ if (!process.env.VERCEL) {
   }
 }
 app.use(errorHandler);
-if (!process.env.VERCEL && process.env.NODE_ENV !== "production") {
+if (require.main === module && !process.env.VERCEL) {
   app.listen(ENV.PORT, () => {
     console.log(`[Server] running on http://localhost:${ENV.PORT}`);
   });

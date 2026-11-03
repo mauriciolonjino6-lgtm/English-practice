@@ -14,6 +14,18 @@ import { errorHandler } from './middleware/errorHandler'
 const app = express()
 app.set('trust proxy', 1)
 
+// ── Serverless Request Normalization (Ensures req.socket and connection are defined) ─
+app.use((req, _res, next) => {
+  if (!req.socket) req.socket = {} as any
+  if (!req.connection) req.connection = req.socket
+  if (!(req.connection as any).remoteAddress) {
+    const forwarded = req.headers['x-forwarded-for']
+    const ip = typeof forwarded === 'string' ? forwarded.split(',')[0].trim() : '127.0.0.1'
+    ;(req.connection as any).remoteAddress = ip
+  }
+  next()
+})
+
 // ── Security & Middleware ──────────────────────────────────────────────────────
 app.use(helmet({
   contentSecurityPolicy: false,
@@ -24,7 +36,10 @@ app.use(cors({
   credentials: true,
 }))
 
-app.use(morgan(ENV.NODE_ENV === 'development' ? 'dev' : 'combined'))
+if (!process.env.VERCEL && ENV.NODE_ENV === 'development') {
+  app.use(morgan('dev'))
+}
+
 app.use(express.json({ limit: '10mb' }))
 app.use(express.urlencoded({ extended: true }))
 
@@ -61,6 +76,7 @@ app.get(['/health', '/api/health'], (_req, res) => {
 app.use('/api', rateLimit({
   windowMs: 60 * 1000,
   max:      120,
+  validate: false,
   message:  { error: 'Too many requests, slow down.' },
 }))
 
@@ -82,8 +98,8 @@ if (!process.env.VERCEL) {
 // ── Error Handler ─────────────────────────────────────────────────────────────
 app.use(errorHandler)
 
-// ── Start Server (Only for local development, never in Vercel or production) ─
-if (!process.env.VERCEL && process.env.NODE_ENV !== 'production') {
+// ── Start Server (Only for local direct execution, never when required by Vercel) ─
+if (require.main === module && !process.env.VERCEL) {
   app.listen(ENV.PORT, () => {
     console.log(`[Server] running on http://localhost:${ENV.PORT}`)
   })
