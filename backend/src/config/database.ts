@@ -65,8 +65,6 @@ export async function connectDB(): Promise<boolean> {
     try {
       await sequelize.authenticate()
       console.log('[DB] PostgreSQL connected successfully')
-      await sequelize.sync({ alter: true })
-      console.log('[DB] Models synced successfully')
       isConnected = true
       return true
     } catch (err: any) {

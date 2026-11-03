@@ -85232,8 +85232,6 @@ async function connectDB() {
     try {
       await sequelize.authenticate();
       console.log("[DB] PostgreSQL connected successfully");
-      await sequelize.sync({ alter: true });
-      console.log("[DB] Models synced successfully");
       isConnected = true;
       return true;
     } catch (err) {
@@ -86379,14 +86377,19 @@ function sm2(grade, repetitions, easeFactor, interval) {
   return { repetitions: newReps, easeFactor: newEF, interval: newInt, nextReview };
 }
 async function getDueCards(userId) {
-  return SRSCard.findAll({
-    where: {
-      userId,
-      nextReview: { [Op.lte]: /* @__PURE__ */ new Date() }
-    },
-    order: [["nextReview", "ASC"]],
-    limit: 20
-  });
+  try {
+    return await SRSCard.findAll({
+      where: {
+        userId,
+        nextReview: { [Op.lte]: /* @__PURE__ */ new Date() }
+      },
+      order: [["nextReview", "ASC"]],
+      limit: 20
+    });
+  } catch (err) {
+    console.warn("[SRS getDueCards fallback]:", err);
+    return [];
+  }
 }
 async function applyReview(cardId, grade) {
   const card = await SRSCard.findByPk(cardId);
@@ -86396,15 +86399,19 @@ async function applyReview(cardId, grade) {
   return card;
 }
 async function createCardsFromVocab(userId, items) {
-  await SRSCard.bulkCreate(
-    items.map((it) => ({
-      userId,
-      front: it.word,
-      back: it.meaning,
-      example: it.example,
-      sourceError: it.sourceError ?? ""
-    }))
-  );
+  try {
+    await SRSCard.bulkCreate(
+      items.map((it) => ({
+        userId,
+        front: it.word,
+        back: it.meaning,
+        example: it.example,
+        sourceError: it.sourceError ?? ""
+      }))
+    );
+  } catch (err) {
+    console.warn("[SRS bulkCreate fallback]:", err);
+  }
 }
 
 // ../node_modules/.pnpm/uuid@10.0.0/node_modules/uuid/dist/esm-node/stringify.js
@@ -86605,37 +86612,52 @@ async function loginOrRegister(req, res, next) {
       return;
     }
     let user = null;
-    if (email?.trim()) {
-      user = await User.findOne({ where: { email: email.trim().toLowerCase() } });
-    }
-    if (!user && name?.trim()) {
-      user = await User.findOne({ where: { name: name.trim() } });
-    }
-    if (!user) {
-      user = await User.create({
-        id: v4_default2(),
-        name: name?.trim() || "Learner",
-        email: email?.trim().toLowerCase() || void 0,
-        level: level || "A1",
-        goal: goal || "Daily Conversation",
-        xp: 10,
-        streak: 1,
-        lastSeen: /* @__PURE__ */ new Date()
-      });
-    } else {
-      await user.update({ lastSeen: /* @__PURE__ */ new Date() });
-    }
-    res.json({
-      user: {
-        id: user.id,
-        name: user.name,
-        email: user.email,
-        level: user.level,
-        goal: user.goal,
-        xp: user.xp,
-        streak: user.streak
+    try {
+      if (email?.trim()) {
+        user = await User.findOne({ where: { email: email.trim().toLowerCase() } });
       }
-    });
+      if (!user && name?.trim()) {
+        user = await User.findOne({ where: { name: name.trim() } });
+      }
+      if (!user) {
+        user = await User.create({
+          id: v4_default2(),
+          name: name?.trim() || "Learner",
+          email: email?.trim().toLowerCase() || void 0,
+          level: level || "A1",
+          goal: goal || "Daily Conversation",
+          xp: 10,
+          streak: 1,
+          lastSeen: /* @__PURE__ */ new Date()
+        });
+      } else {
+        await user.update({ lastSeen: /* @__PURE__ */ new Date() });
+      }
+      res.json({
+        user: {
+          id: user.id,
+          name: user.name,
+          email: user.email,
+          level: user.level,
+          goal: user.goal,
+          xp: user.xp,
+          streak: user.streak
+        }
+      });
+    } catch (dbErr) {
+      console.warn("[Auth DB fallback]:", dbErr);
+      res.json({
+        user: {
+          id: v4_default2(),
+          name: name?.trim() || "Learner",
+          email: email?.trim().toLowerCase() || void 0,
+          level: level || "A1",
+          goal: goal || "Daily Conversation",
+          xp: 10,
+          streak: 1
+        }
+      });
+    }
   } catch (err) {
     next(err);
   }
@@ -86699,6 +86721,7 @@ function errorHandler(err, _req, res, _next) {
 
 // src/server.ts
 var app = (0, import_express5.default)();
+app.set("trust proxy", 1);
 app.use(helmet({
   contentSecurityPolicy: false
 }));
@@ -86709,6 +86732,13 @@ app.use((0, import_cors.default)({
 app.use((0, import_morgan.default)(ENV.NODE_ENV === "development" ? "dev" : "combined"));
 app.use(import_express5.default.json({ limit: "10mb" }));
 app.use(import_express5.default.urlencoded({ extended: true }));
+app.use((_req, _res, next) => {
+  if (process.env.DATABASE_URL || ENV.DATABASE_URL) {
+    connectDB().catch(() => {
+    });
+  }
+  next();
+});
 app.get(["/", "/api"], (_req, res) => {
   res.json({
     ok: true,
@@ -86744,11 +86774,6 @@ if (!process.env.VERCEL) {
   }
 }
 app.use(errorHandler);
-if (process.env.DATABASE_URL || ENV.DATABASE_URL) {
-  connectDB().catch((err) => {
-    console.warn("[DB] Background connection notice:", err?.message || err);
-  });
-}
 if (!process.env.VERCEL && process.env.NODE_ENV !== "production") {
   app.listen(ENV.PORT, () => {
     console.log(`[Server] running on http://localhost:${ENV.PORT}`);

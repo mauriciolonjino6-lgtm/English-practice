@@ -12,6 +12,7 @@ import routes           from './routes'
 import { errorHandler } from './middleware/errorHandler'
 
 const app = express()
+app.set('trust proxy', 1)
 
 // ── Security & Middleware ──────────────────────────────────────────────────────
 app.use(helmet({
@@ -26,6 +27,14 @@ app.use(cors({
 app.use(morgan(ENV.NODE_ENV === 'development' ? 'dev' : 'combined'))
 app.use(express.json({ limit: '10mb' }))
 app.use(express.urlencoded({ extended: true }))
+
+// ── Non-blocking Database Lazy Warm-up Middleware ────────────────────────────
+app.use((_req, _res, next) => {
+  if (process.env.DATABASE_URL || ENV.DATABASE_URL) {
+    connectDB().catch(() => {})
+  }
+  next()
+})
 
 // ── Root & Instant Health Check (Responds immediately, no DB blocking) ───────
 app.get(['/', '/api'], (_req, res) => {
@@ -72,13 +81,6 @@ if (!process.env.VERCEL) {
 
 // ── Error Handler ─────────────────────────────────────────────────────────────
 app.use(errorHandler)
-
-// ── Database Initialization (Non-blocking background warm-up) ─────────────────
-if (process.env.DATABASE_URL || ENV.DATABASE_URL) {
-  connectDB().catch((err: any) => {
-    console.warn('[DB] Background connection notice:', err?.message || err)
-  })
-}
 
 // ── Start Server (Only for local development, never in Vercel or production) ─
 if (!process.env.VERCEL && process.env.NODE_ENV !== 'production') {

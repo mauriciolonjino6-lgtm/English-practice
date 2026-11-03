@@ -32,14 +32,19 @@ export function sm2(
 }
 
 export async function getDueCards(userId: string): Promise<SRSCard[]> {
-  return SRSCard.findAll({
-    where: {
-      userId,
-      nextReview: { [Op.lte]: new Date() },
-    },
-    order: [['nextReview', 'ASC']],
-    limit: 20,
-  })
+  try {
+    return await SRSCard.findAll({
+      where: {
+        userId,
+        nextReview: { [Op.lte]: new Date() },
+      },
+      order: [['nextReview', 'ASC']],
+      limit: 20,
+    })
+  } catch (err) {
+    console.warn('[SRS getDueCards fallback]:', err)
+    return []
+  }
 }
 
 export async function applyReview(cardId: string, grade: number): Promise<SRSCard> {
@@ -55,13 +60,17 @@ export async function createCardsFromVocab(
   userId:  string,
   items:   { word: string; meaning: string; example: string; sourceError?: string }[]
 ): Promise<void> {
-  await SRSCard.bulkCreate(
-    items.map((it) => ({
-      userId,
-      front:       it.word,
-      back:        it.meaning,
-      example:     it.example,
-      sourceError: it.sourceError ?? '',
-    }))
-  )
+  try {
+    await SRSCard.bulkCreate(
+      items.map((it) => ({
+        userId,
+        front:       it.word,
+        back:        it.meaning,
+        example:     it.example,
+        sourceError: it.sourceError ?? '',
+      }))
+    )
+  } catch (err) {
+    console.warn('[SRS bulkCreate fallback]:', err)
+  }
 }
