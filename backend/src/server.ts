@@ -15,7 +15,7 @@ const app = express()
 
 // ── Security & Middleware ──────────────────────────────────────────────────────
 app.use(helmet({
-  contentSecurityPolicy: false, // Prevents strict CSP from blocking frontend assets if served together
+  contentSecurityPolicy: false,
 }))
 
 const allowedOrigins = ENV.FRONTEND_URL ? ENV.FRONTEND_URL.split(',').map((u) => u.trim()) : ['http://localhost:5173']
@@ -24,7 +24,6 @@ app.use(cors({
     if (!origin || allowedOrigins.includes('*') || allowedOrigins.includes(origin)) {
       return callback(null, true)
     }
-    // Allow request but reflect origin for CORS support
     return callback(null, true)
   },
   credentials: true,
@@ -41,27 +40,58 @@ app.use('/api', rateLimit({
   message:  { error: 'Too many requests, slow down.' },
 }))
 
+// ── Database Connection Middleware for Serverless (Vercel) ────────────────────
+let dbConnected = false
+let dbPromise: Promise<void> | null = null
+
+const ensureDB = async (_req: express.Request, _res: express.Response, next: express.NextFunction) => {
+  if (dbConnected) return next()
+  if (!dbPromise) {
+    dbPromise = connectDB()
+      .then(() => { dbConnected = true })
+      .catch((err) => {
+        dbPromise = null
+        throw err
+      })
+  }
+  try {
+    await dbPromise
+    next()
+  } catch (err) {
+    next(err)
+  }
+}
+
+app.use('/api', ensureDB)
+
 // ── API Routes ─────────────────────────────────────────────────────────────────
 app.use('/api', routes)
 
 app.get('/health', (_req, res) => res.json({ ok: true, env: ENV.NODE_ENV, status: 'healthy' }))
 
-// ── Static Frontend Serving (if frontend is built in monorepo) ────────────────
-const frontendDist = path.resolve(__dirname, '../../frontend/dist')
-if (fs.existsSync(frontendDist)) {
-  app.use(express.static(frontendDist))
-  app.get('*', (_req, res) => {
-    res.sendFile(path.join(frontendDist, 'index.html'))
-  })
+// ── Static Frontend Serving (if running standalone server outside Vercel) ─────
+if (!process.env.VERCEL) {
+  const frontendDist = path.resolve(__dirname, '../../frontend/dist')
+  if (fs.existsSync(frontendDist)) {
+    app.use(express.static(frontendDist))
+    app.get('*', (_req, res) => {
+      res.sendFile(path.join(frontendDist, 'index.html'))
+    })
+  }
 }
 
 // ── Error Handler ─────────────────────────────────────────────────────────────
 app.use(errorHandler)
 
-// ── Start ─────────────────────────────────────────────────────────────────────
-;(async () => {
-  await connectDB()
-  app.listen(ENV.PORT, () => {
-    console.log(`[Server] running on http://localhost:${ENV.PORT}`)
-  })
-})()
+// ── Start Server (Local / Render / Railway) ───────────────────────────────────
+if (!process.env.VERCEL) {
+  ;(async () => {
+    await connectDB()
+    app.listen(ENV.PORT, () => {
+      console.log(`[Server] running on http://localhost:${ENV.PORT}`)
+    })
+  })()
+}
+
+export default app
+export { app }
