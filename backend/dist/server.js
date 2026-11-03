@@ -86709,6 +86709,14 @@ app.use((0, import_cors.default)({
 app.use((0, import_morgan.default)(ENV.NODE_ENV === "development" ? "dev" : "combined"));
 app.use(import_express5.default.json({ limit: "10mb" }));
 app.use(import_express5.default.urlencoded({ extended: true }));
+app.get(["/", "/api"], (_req, res) => {
+  res.json({
+    ok: true,
+    service: "FluentAI Backend API",
+    status: "running",
+    timestamp: (/* @__PURE__ */ new Date()).toISOString()
+  });
+});
 app.get(["/health", "/api/health"], (_req, res) => {
   res.json({
     ok: true,
@@ -86741,7 +86749,7 @@ if (process.env.DATABASE_URL || ENV.DATABASE_URL) {
     console.warn("[DB] Background connection notice:", err?.message || err);
   });
 }
-if (!process.env.VERCEL) {
+if (!process.env.VERCEL && process.env.NODE_ENV !== "production") {
   app.listen(ENV.PORT, () => {
     console.log(`[Server] running on http://localhost:${ENV.PORT}`);
   });

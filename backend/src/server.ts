@@ -27,7 +27,16 @@ app.use(morgan(ENV.NODE_ENV === 'development' ? 'dev' : 'combined'))
 app.use(express.json({ limit: '10mb' }))
 app.use(express.urlencoded({ extended: true }))
 
-// ── Instant Health Check (Responds immediately, no DB blocking) ───────────────
+// ── Root & Instant Health Check (Responds immediately, no DB blocking) ───────
+app.get(['/', '/api'], (_req, res) => {
+  res.json({
+    ok:           true,
+    service:      'FluentAI Backend API',
+    status:       'running',
+    timestamp:    new Date().toISOString(),
+  })
+})
+
 app.get(['/health', '/api/health'], (_req, res) => {
   res.json({
     ok:           true,
@@ -71,8 +80,8 @@ if (process.env.DATABASE_URL || ENV.DATABASE_URL) {
   })
 }
 
-// ── Start Server (Only for non-serverless environments) ────────────────────────
-if (!process.env.VERCEL) {
+// ── Start Server (Only for local development, never in Vercel or production) ─
+if (!process.env.VERCEL && process.env.NODE_ENV !== 'production') {
   app.listen(ENV.PORT, () => {
     console.log(`[Server] running on http://localhost:${ENV.PORT}`)
   })
