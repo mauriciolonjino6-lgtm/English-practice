@@ -9,3 +9,4 @@ router.get('/user/:id', getUser)
 router.put('/user/:id', updateUser)
 
 export default router
+

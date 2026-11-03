@@ -89,3 +89,4 @@ export async function updateUser(req: Request, res: Response, next: NextFunction
     next(err)
   }
 }
+
