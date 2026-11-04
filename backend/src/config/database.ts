@@ -1,4 +1,5 @@
 import { Sequelize } from 'sequelize'
+import pg from 'pg'
 import { ENV } from './env'
 
 const sslOptions = ENV.DB_SSL
@@ -15,6 +16,7 @@ const hasValidDb = Boolean(process.env.DATABASE_URL || (process.env.DB_HOST && p
 export const sequelize = process.env.DATABASE_URL
   ? new Sequelize(process.env.DATABASE_URL, {
       dialect: 'postgres',
+      dialectModule: pg,
       dialectOptions: sslOptions,
       logging: false,
       pool: {
@@ -30,6 +32,7 @@ export const sequelize = process.env.DATABASE_URL
     })
   : new Sequelize({
       dialect:  'postgres',
+      dialectModule: pg,
       host:     process.env.DB_HOST || 'localhost',
       port:     parseInt(process.env.DB_PORT || '5432'),
       database: process.env.DB_NAME || 'english_app',
