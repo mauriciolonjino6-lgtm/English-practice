@@ -86778,13 +86778,6 @@ if (!process.env.VERCEL && ENV.NODE_ENV === "development") {
 }
 app.use(import_express5.default.json({ limit: "10mb" }));
 app.use(import_express5.default.urlencoded({ extended: true }));
-app.use((_req, _res, next) => {
-  if (process.env.DATABASE_URL || ENV.DATABASE_URL) {
-    connectDB().catch(() => {
-    });
-  }
-  next();
-});
 app.get(["/", "/api"], (_req, res) => {
   res.json({
     ok: true,
@@ -86802,6 +86795,13 @@ app.get(["/health", "/api/health"], (_req, res) => {
     status: "healthy",
     timestamp: (/* @__PURE__ */ new Date()).toISOString()
   });
+});
+app.use((_req, _res, next) => {
+  if (process.env.DATABASE_URL || ENV.DATABASE_URL) {
+    connectDB().catch(() => {
+    });
+  }
+  next();
 });
 app.use("/api", lib_default({
   windowMs: 60 * 1e3,

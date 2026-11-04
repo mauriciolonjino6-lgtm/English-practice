@@ -43,15 +43,7 @@ if (!process.env.VERCEL && ENV.NODE_ENV === 'development') {
 app.use(express.json({ limit: '10mb' }))
 app.use(express.urlencoded({ extended: true }))
 
-// ── Non-blocking Database Lazy Warm-up Middleware ────────────────────────────
-app.use((_req, _res, next) => {
-  if (process.env.DATABASE_URL || ENV.DATABASE_URL) {
-    connectDB().catch(() => {})
-  }
-  next()
-})
-
-// ── Root & Instant Health Check (Responds immediately, no DB blocking) ───────
+// ── Root & Instant Health Check (Responds immediately, zero dependencies) ─────
 app.get(['/', '/api'], (_req, res) => {
   res.json({
     ok:           true,
@@ -70,6 +62,14 @@ app.get(['/health', '/api/health'], (_req, res) => {
     status:       'healthy',
     timestamp:    new Date().toISOString(),
   })
+})
+
+// ── Non-blocking Database Lazy Warm-up Middleware (Only for API routes) ───────
+app.use((_req, _res, next) => {
+  if (process.env.DATABASE_URL || ENV.DATABASE_URL) {
+    connectDB().catch(() => {})
+  }
+  next()
 })
 
 // ── Rate Limiting ─────────────────────────────────────────────────────────────
