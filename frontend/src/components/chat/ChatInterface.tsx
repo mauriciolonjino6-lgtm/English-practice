@@ -140,10 +140,10 @@ export default function ChatInterface() {
       if (res.correction?.hasError) {
         setActiveCorrection(res.correction)
       }
-    } catch {
+    } catch (err: any) {
+      toast.error('Error de conexión con el servidor. Intenta de nuevo.')
       updateMessage(loadingId, {
-        content: "I understood your message! Let's practice saying that in another way. Could you tell me more?",
-        translation: "¡Entendí tu mensaje! Practiquemos diciendo eso de otra forma. ¿Podrías contarme más?",
+        content: "I apologize, our Oxford line seemed to disconnect for a moment. Please click below to send your message again!",
         isLoading: false,
       })
     } finally {
@@ -179,9 +179,9 @@ export default function ChatInterface() {
 
       if (res.correction?.hasError) setActiveCorrection(res.correction)
     } catch {
+      toast.error('Error de audio o conexión. Intenta de nuevo.')
       updateMessage(loadingId, {
-        content: "Good voice practice! Let's keep going. What would you like to say next?",
-        translation: "¡Buena práctica de voz! Sigamos. ¿Qué te gustaría decir a continuación?",
+        content: "I could not quite catch that audio recording. Would you mind pressing the microphone to speak once more?",
         isLoading: false,
       })
     } finally {

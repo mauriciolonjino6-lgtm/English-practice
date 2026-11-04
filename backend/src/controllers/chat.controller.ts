@@ -25,16 +25,19 @@ export async function handleMessage(req: Request, res: Response, next: NextFunct
     let history: AIMessageItem[] = []
     let session: Session | null = null
 
+    const isUUID = userId && /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(userId)
+    const isSessionUUID = sessionId && /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(sessionId)
+
     // Safe DB access: if DB fails, fallback gracefully
     try {
-      if (userId) {
+      if (isUUID) {
         const [userRecord] = await User.findOrCreate({
           where: { id: userId },
           defaults: { id: userId, name: 'Learner', level: 'A1' },
         })
         userLevel = userRecord.level || 'A1'
 
-        if (sessionId) {
+        if (isSessionUUID) {
           session = (await Session.findByPk(sessionId)) ?? (await Session.create({ id: uuidv4(), userId, taskType: scenario }))
         } else {
           session = await Session.create({ id: uuidv4(), userId, taskType: scenario })
@@ -91,13 +94,16 @@ export async function handleMessage(req: Request, res: Response, next: NextFunct
     }
 
     res.json({
-      sessionId:        session?.id ?? sessionId ?? uuidv4(),
-      message:          aiResult.message,
-      translation:      aiResult.translation,
-      suggestedReplies: aiResult.suggestedReplies,
-      correction:       aiResult.correction,
-      vocabulary:       aiResult.vocabulary,
-      taskStatus:       aiResult.taskStatus,
+      sessionId:          session?.id ?? sessionId ?? uuidv4(),
+      message:            aiResult.message,
+      reply:              aiResult.reply,
+      follow_up_question: aiResult.follow_up_question,
+      rawCorrection:      aiResult.rawCorrection,
+      translation:        aiResult.translation,
+      suggestedReplies:   aiResult.suggestedReplies,
+      correction:         aiResult.correction,
+      vocabulary:         aiResult.vocabulary,
+      taskStatus:         aiResult.taskStatus,
     })
   } catch (err) {
     next(err)

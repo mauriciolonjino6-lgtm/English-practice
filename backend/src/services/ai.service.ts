@@ -8,60 +8,34 @@ function getGenAI() {
 
 // ─── Scenarios Guidance ───────────────────────────────────────────────────────
 const SCENARIOS: Record<string, string> = {
-  'cafe': 'Roleplay: You are a friendly barista in a traditional London coffee shop (Soho). The student is ordering drinks and food. Teach them how to order politely, ask for the bill, and chat about the day.',
-  'airport': 'Roleplay: You are a British border control officer and airport staff at Heathrow Airport Terminal 5. Ask the student why they are visiting the UK, where they are staying, and guide them through passport control and baggage claim.',
-  'interview': 'Roleplay: You are a welcoming tech manager conducting an English job interview for an IT / engineering position in London. Ask them about their background, their tech projects, and their strengths.',
-  'directions': 'Roleplay: You are a helpful London local on Oxford Street near the Underground station. The student is lost and asking for directions to Covent Garden or the British Museum.',
-  'tech': 'Roleplay: You are an English senior software architect discussing network engineering, cloud architecture, and modern programming. Help them explain technical concepts smoothly in professional English.',
-  'free-talk': 'Roleplay: You are Mr. Davies, an experienced, encouraging British ESL teacher in Cambridge. Chat warmly with the student, ask about their hobbies, culture, and daily life in English.',
+  'cafe': 'The student is visiting a traditional coffee shop in Soho, London. Guide them in ordering politely, asking about tea or pastries, and casual British banter.',
+  'airport': 'The student has arrived at London Heathrow Terminal 5. Roleplay passport control and baggage inquiries with polite British border etiquette.',
+  'interview': 'The student is interviewing for a professional software/IT role in London. Ask them about their technical experience and background.',
+  'directions': 'The student is near Oxford Street or Covent Garden and asking how to get to the British Museum or the Underground.',
+  'tech': 'A professional discussion with a London software architect on cloud systems, programming, and engineering terms.',
+  'free-talk': 'An engaging, friendly conversation in Oxford about daily life, hobbies, work, and cultural exchanges.',
 }
 
-function buildSystemPrompt(scenario = 'free-talk', studentLevel = 'A1'): string {
+export function buildSystemPrompt(scenario = 'free-talk'): string {
   const scenarioContext = SCENARIOS[scenario] ?? SCENARIOS['free-talk']
 
-  return `You are Mr. Davies, an enthusiastic, certified DELTA English teacher with 15 years of experience in England.
-Current Student Level: ${studentLevel} (Beginner to Intermediate).
-Active Context / Scenario: ${scenarioContext}
+  return `You are Professor Davies, an expert British English tutor residing in Oxford. Your primary goal is to help the student practice real-world conversational British English, utilizing the Communicative Language Teaching (CLT) method.
+Context: ${scenarioContext}
 
-TEACHING METHODOLOGY:
-1. COMPREHENSIBLE INPUT & NATURAL DIALOGUE:
-   - Speak in clear, natural British English adapted to level ${studentLevel}.
-   - Keep messages engaging, friendly, and concise (2-4 sentences max).
-   - Always end your message with a clear, inviting question or follow-up to keep the conversation flowing.
+CRITICAL BEHAVIORAL RULES:
+1. NO GENERIC REPETITION: Never reply with canned, robotic phrases like "I understood your message! Let's practice saying that in another way." Every response must directly and uniquely address the user's specific input.
+2. ACTIVE CORRECTION: Analyze the user's text. If there are grammatical, structural, or lexical errors, provide a clear, friendly correction. If the sentence is perfect, acknowledge it naturally.
+3. CONVERSATIONAL CONTINUITY: Keep the flow alive by asking exactly one relevant, open-ended follow-up question tied to the user's topic.
+4. BILINGUAL SCAFFOLDING: If the user writes in Spanish or gets stuck, provide the English translation or structure briefly, then encourage them to reply in English.
+5. BRITISH CONTEXT: Incorporate British vocabulary, idioms, and cultural references where natural.
 
-2. INSTANT SPANISH TRANSLATION:
-   - Provide a natural Spanish translation of your message in the "translation" field so the learner can check their understanding.
+STRICT OUTPUT FORMAT (JSON ONLY):
+You are communicating with a Node.js/Express API. You must return your response EXCLUSIVELY as a valid JSON object. Do not wrap it in markdown blockquotes (\`\`\`json). Use the following structure:
 
-3. CONVERSATIONAL SUGGESTED REPLIES:
-   - ALWAYS provide 2-3 suggested replies in English in "suggestedReplies" that the student could choose to say next, along with a helpful Spanish hint.
-
-4. RECAST & FRIENDLY CORRECTION:
-   - If the user made any grammatical, pronunciation (spelling) or vocabulary error, set "hasError": true.
-   - Explain the correction warmly in SPANISH in the "explanation" field.
-   - If user wrote with no errors, set "hasError": false.
-
-5. VOCABULARY EXTRACTOR:
-   - Extract 1-3 useful words or expressions from this turn with their Spanish meaning and an example sentence.
-
-RESPONSE FORMAT (Respond ONLY with valid JSON):
 {
-  "message": "your response in English",
-  "translation": "traducción al español de tu mensaje",
-  "suggestedReplies": [
-    { "text": "English reply option 1", "hint": "Traducción / pista en español" },
-    { "text": "English reply option 2", "hint": "Traducción / pista en español" }
-  ],
-  "correction": {
-    "hasError": boolean,
-    "original": "user text with error or empty string",
-    "corrected": "corrected version or empty string",
-    "explanation": "explicación en español or empty string",
-    "rule": "nombre de la regla gramatical or empty string"
-  },
-  "vocabulary": [
-    { "word": "word/phrase", "meaning": "significado en español", "example": "example sentence" }
-  ],
-  "taskStatus": "ongoing or completed"
+  "correction": "If the user made a mistake, provide the correction and a brief explanation here. If the user's input was flawless, set this to null.",
+  "reply": "Your conversational response continuing the dialogue naturally.",
+  "follow_up_question": "Your engaging follow-up question."
 }`
 }
 
@@ -70,15 +44,24 @@ export interface AIMessageItem {
   content: string
 }
 
+export interface RawProfessorResponse {
+  correction: string | null
+  reply: string
+  follow_up_question: string
+}
+
 export interface SuggestedReply {
   text: string
   hint: string
 }
 
 export interface AIResponse {
-  message:          string
-  translation?:     string
-  suggestedReplies?: SuggestedReply[]
+  message:            string
+  reply:              string
+  follow_up_question: string
+  rawCorrection:      string | null
+  translation?:       string
+  suggestedReplies?:  SuggestedReply[]
   correction: {
     hasError:    boolean
     original:    string
@@ -86,94 +69,160 @@ export interface AIResponse {
     explanation: string
     rule:        string
   }
-  vocabulary:  { word: string; meaning: string; example: string }[]
-  taskStatus:  'ongoing' | 'completed'
+  vocabulary:         { word: string; meaning: string; example: string }[]
+  taskStatus:         'ongoing' | 'completed'
+}
+
+function cleanJson(raw: string): string {
+  let cleaned = raw.trim()
+  if (cleaned.startsWith('```json')) {
+    cleaned = cleaned.replace(/^```json\s*/, '').replace(/\s*```$/, '')
+  } else if (cleaned.startsWith('```')) {
+    cleaned = cleaned.replace(/^```\s*/, '').replace(/\s*```$/, '')
+  }
+  return cleaned.trim()
 }
 
 export async function processChat(
   userInput:   string,
   history:     AIMessageItem[],
   scenario   = 'free-talk',
-  studentLevel = 'A1'
+  _studentLevel = 'A1'
 ): Promise<AIResponse> {
   const apiKey = process.env.GEMINI_API_KEY || ENV.GEMINI_API_KEY
+
   if (!apiKey || apiKey === 'AI...') {
     return {
-      message: "Hello! Welcome to class! I am Mr. Davies. To start our AI conversation, please make sure your GEMINI_API_KEY is configured in your environment variables.",
-      translation: "¡Hola! ¡Bienvenido a clase! Soy el profesor Davies. Para comenzar nuestra conversación con IA, asegúrate de que tu GEMINI_API_KEY esté configurada.",
-      suggestedReplies: [
-        { text: "Hello Mr. Davies, nice to meet you!", hint: "Hola profesor Davies, ¡encantado de conocerte!" },
-        { text: "I want to practice my English.", hint: "Quiero practicar mi inglés." },
-      ],
-      correction: { hasError: false, original: '', corrected: '', explanation: '', rule: '' },
-      vocabulary: [
-        { word: 'welcome', meaning: 'bienvenido', example: 'Welcome to our English lesson!' },
-      ],
-      taskStatus: 'ongoing',
-    }
-  }
-
-  try {
-    const genAI = getGenAI()
-    const model = genAI.getGenerativeModel({
-      model: ENV.GEMINI_MODEL || 'gemini-1.5-pro',
-      systemInstruction: buildSystemPrompt(scenario, studentLevel),
-      generationConfig: {
-        responseMimeType: 'application/json',
-        temperature:      0.7,
-        maxOutputTokens:  1024,
-      },
-    })
-
-    const geminiHistory: Content[] = history.map((m) => ({
-      role:  m.role === 'assistant' ? 'model' : 'user',
-      parts: [{ text: m.content }],
-    }))
-
-    const chat   = model.startChat({ history: geminiHistory })
-    const result = await chat.sendMessage(userInput)
-    const raw    = result.response.text()
-
-    return JSON.parse(raw) as AIResponse
-  } catch (err: any) {
-    console.error('[AI Error]', err?.message || err)
-    return {
-      message: "I heard you! Let's keep practicing. Tell me, what did you do today?",
-      translation: "¡Te escuché! Sigamos practicando. Cuéntame, ¿qué hiciste hoy?",
-      suggestedReplies: [
-        { text: "I worked and studied today.", hint: "Trabajé y estudié hoy." },
-        { text: "I had a busy day, but I'm ready to learn.", hint: "Tuve un día ocupado, pero estoy listo para aprender." },
-      ],
+      message: "Hello! Welcome to our tutorial. I am Professor Davies, writing to you from Oxford. To begin our live conversation, please make sure your GEMINI_API_KEY is configured in your project settings.",
+      reply: "Hello! Welcome to our tutorial. I am Professor Davies, writing to you from Oxford.",
+      follow_up_question: "Are you ready to practice some British English together?",
+      rawCorrection: null,
       correction: { hasError: false, original: '', corrected: '', explanation: '', rule: '' },
       vocabulary: [],
       taskStatus: 'ongoing',
     }
   }
+
+  const modelCandidates = [
+    ENV.GEMINI_MODEL,
+    'gemini-3.6-flash',
+    'gemini-3.5-flash',
+    'gemini-flash-latest',
+  ].filter(Boolean) as string[]
+
+  let lastError: any = null
+
+  for (const modelName of modelCandidates) {
+    try {
+      const genAI = getGenAI()
+      const model = genAI.getGenerativeModel({
+        model: modelName,
+        systemInstruction: buildSystemPrompt(scenario),
+        generationConfig: {
+          responseMimeType: 'application/json',
+          temperature:      0.7,
+          maxOutputTokens:  1024,
+        },
+      })
+
+      const geminiHistory: Content[] = history.slice(-10).map((m) => ({
+        role:  m.role === 'assistant' ? 'model' : 'user',
+        parts: [{ text: m.content }],
+      }))
+
+      const chat   = model.startChat({ history: geminiHistory })
+      const result = await chat.sendMessage(userInput)
+      const raw    = result.response.text()
+
+      let parsed: RawProfessorResponse
+      try {
+        parsed = JSON.parse(cleanJson(raw))
+      } catch (parseErr) {
+        console.warn('[AI JSON Parse Warning] Raw output was:', raw)
+        parsed = {
+          correction: null,
+          reply: raw.trim(),
+          follow_up_question: "What else would you like to discuss today?",
+        }
+      }
+
+      const replyText = parsed.reply?.trim() || ''
+      const questionText = parsed.follow_up_question?.trim() || ''
+      const fullMessage = questionText ? `${replyText}\n\n${questionText}` : replyText
+
+      const hasCorrection = Boolean(
+        parsed.correction &&
+        typeof parsed.correction === 'string' &&
+        parsed.correction.trim() !== '' &&
+        parsed.correction.trim().toLowerCase() !== 'null'
+      )
+
+      return {
+        message: fullMessage,
+        reply: replyText,
+        follow_up_question: questionText,
+        rawCorrection: parsed.correction ?? null,
+        correction: {
+          hasError:    hasCorrection,
+          original:    hasCorrection ? userInput : '',
+          corrected:   hasCorrection ? parsed.correction! : '',
+          explanation: hasCorrection ? parsed.correction! : '',
+          rule:        hasCorrection ? "Professor Davies' Advice" : '',
+        },
+        vocabulary: [],
+        taskStatus: 'ongoing',
+      }
+    } catch (err: any) {
+      lastError = err
+      console.warn(`[AI Model ${modelName} warning]:`, err?.message || err)
+    }
+  }
+
+  console.error('[AI Error after all models]', lastError?.message || lastError)
+  return {
+    message: "Good heavens, our Oxford connection experienced a brief hiccup! Could you tell me once more what you said? I want to make sure we keep our conversation going.",
+    reply: "Good heavens, our Oxford connection experienced a brief hiccup!",
+    follow_up_question: "Could you repeat what you just said so we can continue?",
+    rawCorrection: null,
+    correction: { hasError: false, original: '', corrected: '', explanation: '', rule: '' },
+    vocabulary: [],
+    taskStatus: 'ongoing',
+  }
 }
 
 export async function transcribeAudio(audioBuffer: Buffer): Promise<string> {
   const apiKey = process.env.GEMINI_API_KEY || ENV.GEMINI_API_KEY
-  if (!apiKey) return "Hello Mr. Davies"
+  if (!apiKey) return "Hello Professor Davies"
 
-  try {
-    const genAI = getGenAI()
-    const model = genAI.getGenerativeModel({ model: ENV.GEMINI_MODEL || 'gemini-1.5-pro' })
+  const modelCandidates = [
+    ENV.GEMINI_MODEL,
+    'gemini-3.6-flash',
+    'gemini-3.5-flash',
+    'gemini-flash-latest',
+  ].filter(Boolean) as string[]
 
-    const audioPart = {
-      inlineData: {
-        data:     audioBuffer.toString('base64'),
-        mimeType: 'audio/webm',
-      },
+  for (const modelName of modelCandidates) {
+    try {
+      const genAI = getGenAI()
+      const model = genAI.getGenerativeModel({ model: modelName })
+
+      const audioPart = {
+        inlineData: {
+          data:     audioBuffer.toString('base64'),
+          mimeType: 'audio/webm',
+        },
+      }
+
+      const result = await model.generateContent([
+        'Transcribe this English voice recording into clean text. Return ONLY the English words spoken, nothing else.',
+        audioPart,
+      ])
+
+      return result.response.text().trim()
+    } catch (err) {
+      console.warn(`[Audio Model ${modelName} warning]`, err)
     }
-
-    const result = await model.generateContent([
-      'Transcribe this English voice recording into clean text. Return ONLY the English words spoken, nothing else.',
-      audioPart,
-    ])
-
-    return result.response.text().trim()
-  } catch (err) {
-    console.error('[Audio Transcription Error]', err)
-    return "Hello teacher, I am practicing speaking."
   }
+
+  return "Hello Professor Davies, I am practicing speaking."
 }
