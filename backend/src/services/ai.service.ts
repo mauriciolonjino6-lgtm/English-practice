@@ -36,7 +36,7 @@ You are communicating with a Node.js/Express API. You must return your response 
   "correction": "If the user made a mistake, provide the correction and explanation here. If the user's input was flawless, set this to null.",
   "reply": "Your conversational response continuing the dialogue naturally in British English.",
   "follow_up_question": "Your engaging follow-up question in British English.",
-  "translation": "Traducción completa y natural al español de tu reply y follow_up_question para que el alumno pueda consultarla."
+  "translation": "Traducción completa y fluida en español de tu reply y follow_up_question (ambas partes deben estar traducidas al español para el alumno)."
 }`
 }
 
@@ -107,7 +107,12 @@ export async function processChat(
     }
   }
 
-  const modelCandidates = ['gemini-3.6-flash']
+  const modelCandidates = [
+    'gemini-3.1-flash-lite',
+    'gemini-3.5-flash',
+    'gemini-flash-lite-latest',
+    'gemini-3.6-flash',
+  ]
 
   // Clean history for Gemini: MUST start with 'user' and alternate roles
   const geminiHistory: Content[] = []
@@ -138,14 +143,14 @@ export async function processChat(
         generationConfig: {
           responseMimeType: 'application/json',
           temperature:      0.7,
-          maxOutputTokens:  1024,
+          maxOutputTokens:  600,
         },
       })
 
       const chat = model.startChat({ history: geminiHistory })
 
       const timeoutPromise = new Promise<never>((_, reject) =>
-        setTimeout(() => reject(new Error(`AI generation timed out on model ${modelName}`)), 9000)
+        setTimeout(() => reject(new Error(`AI generation timed out on model ${modelName}`)), 7000)
       )
 
       const result = await Promise.race([chat.sendMessage(userInput), timeoutPromise])

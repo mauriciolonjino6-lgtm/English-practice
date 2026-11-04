@@ -91395,7 +91395,7 @@ You are communicating with a Node.js/Express API. You must return your response 
   "correction": "If the user made a mistake, provide the correction and explanation here. If the user's input was flawless, set this to null.",
   "reply": "Your conversational response continuing the dialogue naturally in British English.",
   "follow_up_question": "Your engaging follow-up question in British English.",
-  "translation": "Traducci\xF3n completa y natural al espa\xF1ol de tu reply y follow_up_question para que el alumno pueda consultarla."
+  "translation": "Traducci\xF3n completa y fluida en espa\xF1ol de tu reply y follow_up_question (ambas partes deben estar traducidas al espa\xF1ol para el alumno)."
 }`;
 }
 function cleanJson(raw) {
@@ -91421,7 +91421,12 @@ async function processChat(userInput, history, scenario = "free-talk", _studentL
       taskStatus: "ongoing"
     };
   }
-  const modelCandidates = ["gemini-3.6-flash"];
+  const modelCandidates = [
+    "gemini-3.1-flash-lite",
+    "gemini-3.5-flash",
+    "gemini-flash-lite-latest",
+    "gemini-3.6-flash"
+  ];
   const geminiHistory = [];
   for (const m of history.slice(-10)) {
     const role = m.role === "assistant" ? "model" : "user";
@@ -91446,12 +91451,12 @@ ${text}`;
         generationConfig: {
           responseMimeType: "application/json",
           temperature: 0.7,
-          maxOutputTokens: 1024
+          maxOutputTokens: 600
         }
       });
       const chat = model.startChat({ history: geminiHistory });
       const timeoutPromise = new Promise(
-        (_3, reject2) => setTimeout(() => reject2(new Error(`AI generation timed out on model ${modelName}`)), 9e3)
+        (_3, reject2) => setTimeout(() => reject2(new Error(`AI generation timed out on model ${modelName}`)), 7e3)
       );
       const result2 = await Promise.race([chat.sendMessage(userInput), timeoutPromise]);
       const raw = result2.response.text();
