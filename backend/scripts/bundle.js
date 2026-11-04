@@ -17,4 +17,7 @@ esbuild.buildSync({
 fs.copyFileSync('server.js', 'index.js');
 fs.mkdirSync('dist', { recursive: true });
 fs.copyFileSync('server.js', 'dist/server.js');
-console.log('Successfully bundled server.js, index.js, dist/server.js');
+fs.mkdirSync('../api', { recursive: true });
+fs.copyFileSync('server.js', '../api/index.js');
+fs.copyFileSync('server.js', '../api/server.js');
+console.log('Successfully bundled server.js, index.js, dist/server.js, and api/index.js');
