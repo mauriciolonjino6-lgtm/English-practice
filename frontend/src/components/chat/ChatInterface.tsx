@@ -192,7 +192,7 @@ export default function ChatInterface() {
   return (
     <div className="flex flex-col h-full overflow-hidden relative">
       {/* Scenario Bar */}
-      <div className="px-4 py-2 glass rounded-none border-b border-white/[0.08] flex items-center justify-between shrink-0">
+      <div className="px-4 py-2 bg-white/90 dark:bg-slate-900/90 border-b border-slate-200 dark:border-white/10 backdrop-blur-xl flex items-center justify-between shrink-0 z-10">
         <div className="flex items-center gap-1.5 overflow-x-auto scrollbar-hide py-1">
           {SCENARIOS.map(({ id, label, icon: Icon }) => {
             const active = activeScenario === id
@@ -203,8 +203,8 @@ export default function ChatInterface() {
                 className={clsx(
                   'flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all duration-200',
                   active
-                    ? 'bg-brand-500 text-white shadow-md shadow-brand-500/20'
-                    : 'glass hover:bg-white/10 opacity-70 hover:opacity-100'
+                    ? 'bg-brand-600 text-white shadow-md shadow-brand-500/20'
+                    : 'bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-white/10 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700'
                 )}
               >
                 <Icon size={13} />
@@ -219,7 +219,7 @@ export default function ChatInterface() {
             clearMessages()
             toast('Chat reiniciado')
           }}
-          className="p-1.5 rounded-lg hover:bg-white/10 opacity-50 hover:opacity-100 transition-opacity ml-2"
+          className="p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-white/10 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors ml-2"
           title="Reiniciar conversación"
         >
           <RotateCcw size={15} />
@@ -243,19 +243,19 @@ export default function ChatInterface() {
 
       {/* Suggested Quick Replies */}
       {activeSuggestions.length > 0 && !isTyping && (
-        <div className="px-4 py-1.5 overflow-x-auto scrollbar-hide flex items-center gap-2 shrink-0">
-          <span className="text-[10px] font-bold uppercase tracking-wider text-brand-400 shrink-0 flex items-center gap-1">
-            <Sparkles size={11} /> Sugerencias:
+        <div className="px-4 py-2 bg-slate-100/95 dark:bg-slate-900/90 border-t border-b border-slate-200 dark:border-white/10 overflow-x-auto scrollbar-hide flex items-center gap-2 shrink-0">
+          <span className="text-[11px] font-extrabold uppercase tracking-wider text-brand-700 dark:text-brand-300 shrink-0 flex items-center gap-1">
+            <Sparkles size={12} className="text-brand-600 dark:text-brand-400" /> Sugerencias:
           </span>
           {activeSuggestions.map((sug, idx) => (
             <button
               key={idx}
               onClick={() => handleSend(sug.text)}
-              className="px-3 py-1.5 rounded-xl text-xs glass hover:bg-brand-500/20 hover:border-brand-400/50 whitespace-nowrap transition-all text-left group active:scale-95"
+              className="px-3.5 py-1.5 rounded-xl text-xs bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-brand-500 dark:hover:border-brand-400 text-slate-800 dark:text-slate-100 shadow-sm whitespace-nowrap transition-all text-left group active:scale-95"
               title={sug.hint}
             >
-              <span className="font-medium">{sug.text}</span>
-              {sug.hint && <span className="block text-[9px] opacity-50">{sug.hint}</span>}
+              <span className="font-semibold block text-slate-900 dark:text-white">{sug.text}</span>
+              {sug.hint && <span className="block text-[10px] text-slate-500 dark:text-slate-400 font-medium">{sug.hint}</span>}
             </button>
           ))}
         </div>
@@ -263,7 +263,7 @@ export default function ChatInterface() {
 
       {/* Correction Popover */}
       {activeCorrection && (
-        <div className="px-4 pb-2">
+        <div className="px-2 sm:px-4 pb-2">
           <CorrectionCard
             correction={activeCorrection}
             onDismiss={() => setActiveCorrection(null)}
@@ -276,7 +276,7 @@ export default function ChatInterface() {
       )}
 
       {/* Input area */}
-      <div className="p-3 border-t border-white/[0.08] glass rounded-none shrink-0 safe-pb">
+      <div className="p-3 bg-white/95 dark:bg-slate-900/95 border-t border-slate-200 dark:border-white/10 rounded-none shrink-0 safe-pb shadow-lg">
         <div className="flex items-end gap-2 max-w-3xl mx-auto">
           {/* Voice recorder */}
           <VoiceButton
@@ -301,7 +301,7 @@ export default function ChatInterface() {
                 }
               }}
               placeholder="Escribe en inglés o usa el micrófono..."
-              className="input-field resize-none py-3 pr-10 text-sm max-h-32"
+              className="w-full rounded-xl px-4 py-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white placeholder:text-slate-400 focus:bg-white dark:focus:bg-slate-800 focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500/20 resize-none py-3 pr-10 text-sm max-h-32 transition-all shadow-sm"
             />
           </div>
 
@@ -309,7 +309,7 @@ export default function ChatInterface() {
           <button
             onClick={() => handleSend()}
             disabled={!inputText.trim() || isTyping}
-            className="p-3 rounded-2xl bg-brand-500 text-white disabled:opacity-40 disabled:scale-100 hover:bg-brand-600 active:scale-95 transition-all shadow-md shadow-brand-500/20"
+            className="p-3 rounded-2xl bg-brand-600 text-white disabled:opacity-40 disabled:scale-100 hover:bg-brand-700 active:scale-95 transition-all shadow-md shadow-brand-500/20"
           >
             <Send size={18} />
           </button>
