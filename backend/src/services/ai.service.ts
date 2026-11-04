@@ -8,12 +8,12 @@ function getGenAI() {
 
 // ─── Scenarios Guidance ───────────────────────────────────────────────────────
 const SCENARIOS: Record<string, string> = {
-  'cafe': 'The student is visiting a traditional coffee shop in Soho, London. Guide them in ordering politely, asking about tea or pastries, and casual British banter.',
+  'cafe': 'The student is visiting a traditional coffee shop in Soho, London. Guide them in ordering politely, asking about tea, coffee, pastries, British slang, and casual banter.',
   'airport': 'The student has arrived at London Heathrow Terminal 5. Roleplay passport control and baggage inquiries with polite British border etiquette.',
   'interview': 'The student is interviewing for a professional software/IT role in London. Ask them about their technical experience and background.',
   'directions': 'The student is near Oxford Street or Covent Garden and asking how to get to the British Museum or the Underground.',
   'tech': 'A professional discussion with a London software architect on cloud systems, programming, and engineering terms.',
-  'free-talk': 'An engaging, friendly conversation in Oxford about daily life, hobbies, work, and cultural exchanges.',
+  'free-talk': 'An engaging, friendly conversation in Oxford about daily life, hobbies, work, British slang, and cultural exchanges.',
 }
 
 export function buildSystemPrompt(scenario = 'free-talk'): string {
@@ -24,18 +24,19 @@ Context: ${scenarioContext}
 
 CRITICAL BEHAVIORAL RULES:
 1. NO GENERIC REPETITION: Never reply with canned, robotic phrases like "I understood your message! Let's practice saying that in another way." Every response must directly and uniquely address the user's specific input.
-2. ACTIVE CORRECTION: Analyze the user's text. If there are grammatical, structural, or lexical errors, provide a clear, friendly correction. If the sentence is perfect, acknowledge it naturally.
+2. ACTIVE CORRECTION: Analyze the user's text. If there are grammatical, structural, or lexical errors, provide a clear, friendly correction in English (with Spanish explanations if helpful). If the sentence is perfect, acknowledge it naturally or set correction to null.
 3. CONVERSATIONAL CONTINUITY: Keep the flow alive by asking exactly one relevant, open-ended follow-up question tied to the user's topic.
-4. BILINGUAL SCAFFOLDING: If the user writes in Spanish or gets stuck, provide the English translation or structure briefly, then encourage them to reply in English.
-5. BRITISH CONTEXT: Incorporate British vocabulary, idioms, and cultural references where natural.
+4. BILINGUAL SCAFFOLDING & TRANSLATION: If the user writes in Spanish or gets stuck, provide the English translation or structure briefly. Always provide the full Spanish translation of your reply and follow_up_question in the "translation" field so the student can toggle translation.
+5. BRITISH CONTEXT: Incorporate British vocabulary, idioms, slang, and cultural references where natural.
 
 STRICT OUTPUT FORMAT (JSON ONLY):
 You are communicating with a Node.js/Express API. You must return your response EXCLUSIVELY as a valid JSON object. Do not wrap it in markdown blockquotes (\`\`\`json). Use the following structure:
 
 {
-  "correction": "If the user made a mistake, provide the correction and a brief explanation here. If the user's input was flawless, set this to null.",
-  "reply": "Your conversational response continuing the dialogue naturally.",
-  "follow_up_question": "Your engaging follow-up question."
+  "correction": "If the user made a mistake, provide the correction and explanation here. If the user's input was flawless, set this to null.",
+  "reply": "Your conversational response continuing the dialogue naturally in British English.",
+  "follow_up_question": "Your engaging follow-up question in British English.",
+  "translation": "Traducción completa y natural al español de tu reply y follow_up_question para que el alumno pueda consultarla."
 }`
 }
 
@@ -48,6 +49,7 @@ export interface RawProfessorResponse {
   correction: string | null
   reply: string
   follow_up_question: string
+  translation?: string
 }
 
 export interface SuggestedReply {
@@ -96,6 +98,7 @@ export async function processChat(
       message: "Hello! Welcome to our tutorial. I am Professor Davies, writing to you from Oxford. To begin our live conversation, please make sure your GEMINI_API_KEY is configured in your project settings.",
       reply: "Hello! Welcome to our tutorial. I am Professor Davies, writing to you from Oxford.",
       follow_up_question: "Are you ready to practice some British English together?",
+      translation: "¡Hola! Bienvenido a nuestra tutoría. Soy el profesor Davies, escribiéndote desde Oxford. ¿Estás listo para practicar inglés británico juntos?",
       rawCorrection: null,
       correction: { hasError: false, original: '', corrected: '', explanation: '', rule: '' },
       vocabulary: [],
@@ -108,6 +111,24 @@ export async function processChat(
     'gemini-3.6-flash',
     'gemini-flash-latest',
   ].filter(Boolean))) as string[]
+
+  // Clean history for Gemini: MUST start with 'user' and alternate roles
+  const geminiHistory: Content[] = []
+  for (const m of history.slice(-10)) {
+    const role = m.role === 'assistant' ? 'model' : 'user'
+    const text = m.content?.trim()
+    if (!text) continue
+
+    // First message in Gemini history MUST be 'user'
+    if (geminiHistory.length === 0 && role !== 'user') continue
+
+    const last = geminiHistory[geminiHistory.length - 1]
+    if (last && last.role === role) {
+      last.parts[0].text += `\n${text}`
+    } else {
+      geminiHistory.push({ role, parts: [{ text }] })
+    }
+  }
 
   let lastError: any = null
 
@@ -124,15 +145,10 @@ export async function processChat(
         },
       })
 
-      const geminiHistory: Content[] = history.slice(-10).map((m) => ({
-        role:  m.role === 'assistant' ? 'model' : 'user',
-        parts: [{ text: m.content }],
-      }))
-
       const chat = model.startChat({ history: geminiHistory })
 
       const timeoutPromise = new Promise<never>((_, reject) =>
-        setTimeout(() => reject(new Error(`AI generation timed out on model ${modelName}`)), 7000)
+        setTimeout(() => reject(new Error(`AI generation timed out on model ${modelName}`)), 25000)
       )
 
       const result = await Promise.race([chat.sendMessage(userInput), timeoutPromise])
@@ -153,6 +169,7 @@ export async function processChat(
       const replyText = parsed.reply?.trim() || ''
       const questionText = parsed.follow_up_question?.trim() || ''
       const fullMessage = questionText ? `${replyText}\n\n${questionText}` : replyText
+      const translationText = parsed.translation?.trim() || ''
 
       const hasCorrection = Boolean(
         parsed.correction &&
@@ -165,6 +182,7 @@ export async function processChat(
         message: fullMessage,
         reply: replyText,
         follow_up_question: questionText,
+        translation: translationText,
         rawCorrection: parsed.correction ?? null,
         correction: {
           hasError:    hasCorrection,
@@ -187,6 +205,7 @@ export async function processChat(
     message: "Good heavens, our Oxford connection experienced a brief hiccup! Could you tell me once more what you said? I want to make sure we keep our conversation going.",
     reply: "Good heavens, our Oxford connection experienced a brief hiccup!",
     follow_up_question: "Could you repeat what you just said so we can continue?",
+    translation: "¡Cielos, nuestra conexión de Oxford tuvo una pequeña interferencia! ¿Podrías repetir lo que dijiste para continuar nuestra conversación?",
     rawCorrection: null,
     correction: { hasError: false, original: '', corrected: '', explanation: '', rule: '' },
     vocabulary: [],
@@ -201,7 +220,6 @@ export async function transcribeAudio(audioBuffer: Buffer): Promise<string> {
   const modelCandidates = [
     ENV.GEMINI_MODEL,
     'gemini-3.6-flash',
-    'gemini-3.5-flash',
     'gemini-flash-latest',
   ].filter(Boolean) as string[]
 
