@@ -91734,6 +91734,7 @@ async function handleMessage(req, res, _next) {
       reply: "Hello! It is splendid to hear from you.",
       follow_up_question: "What would you like to explore or practice today?",
       rawCorrection: null,
+      translation: "\xA1Hola! Es un placer saber de ti. \xBFQu\xE9 te gustar\xEDa explorar o practicar hoy?",
       correction: { hasError: false, original: "", corrected: "", explanation: "", rule: "" },
       vocabulary: [],
       taskStatus: "ongoing"

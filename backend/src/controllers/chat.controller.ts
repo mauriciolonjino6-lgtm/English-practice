@@ -113,6 +113,7 @@ export async function handleMessage(req: Request, res: Response, _next?: NextFun
       reply:              "Hello! It is splendid to hear from you.",
       follow_up_question: "What would you like to explore or practice today?",
       rawCorrection:      null,
+      translation:        "¡Hola! Es un placer saber de ti. ¿Qué te gustaría explorar o practicar hoy?",
       correction:         { hasError: false, original: '', corrected: '', explanation: '', rule: '' },
       vocabulary:         [],
       taskStatus:         'ongoing',
