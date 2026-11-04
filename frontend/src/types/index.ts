@@ -37,6 +37,15 @@ export interface Message {
   isLoading?:        boolean
 }
 
+export interface ChatSession {
+  id:        string
+  title:     string
+  scenario:  'free-talk' | 'cafe' | 'airport' | 'interview' | 'directions' | 'tech'
+  messages:  Message[]
+  createdAt: string
+  updatedAt: string
+}
+
 // ─── SRS / Flashcard ──────────────────────────────────────────────────────────
 export type SRSGrade = 0 | 1 | 2 | 3 | 4 | 5   // SM-2 grades
 

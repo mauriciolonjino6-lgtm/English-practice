@@ -9,11 +9,12 @@ const MAX_HISTORY = 10
 // ── POST /api/chat/message ─────────────────────────────────────────────────────
 export async function handleMessage(req: Request, res: Response, _next?: NextFunction) {
   try {
-    const { text, userId, sessionId, scenario = 'free-talk' } = (req.body || {}) as {
+    const { text, userId, sessionId, scenario = 'free-talk', history: clientHistory } = (req.body || {}) as {
       text:      string
       userId:    string
       sessionId: string | null
       scenario?: string
+      history?:  AIMessageItem[]
     }
 
     if (!text?.trim()) {
@@ -22,7 +23,9 @@ export async function handleMessage(req: Request, res: Response, _next?: NextFun
     }
 
     let userLevel = 'A1'
-    let history: AIMessageItem[] = []
+    let history: AIMessageItem[] = Array.isArray(clientHistory) && clientHistory.length > 0
+      ? clientHistory.slice(-MAX_HISTORY)
+      : []
     let session: Session | null = null
 
     const isUUID = userId && /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(userId)
@@ -43,7 +46,7 @@ export async function handleMessage(req: Request, res: Response, _next?: NextFun
           session = await Session.create({ id: uuidv4(), userId, taskType: scenario })
         }
 
-        if (session.context && Array.isArray(session.context)) {
+        if (history.length === 0 && session.context && Array.isArray(session.context)) {
           history = (session.context as AIMessageItem[]).slice(-MAX_HISTORY)
         }
       }
@@ -136,6 +139,14 @@ export async function handleAudio(req: Request, res: Response, next: NextFunctio
     }
 
     const transcript = await transcribeAudio(file.buffer)
+
+    if (typeof req.body.history === 'string') {
+      try {
+        req.body.history = JSON.parse(req.body.history)
+      } catch {
+        req.body.history = []
+      }
+    }
 
     req.body.text      = transcript
     req.body.userId    = userId

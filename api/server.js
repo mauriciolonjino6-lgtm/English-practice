@@ -91652,13 +91652,13 @@ var v4_default2 = v42;
 var MAX_HISTORY = 10;
 async function handleMessage(req, res, _next) {
   try {
-    const { text, userId, sessionId, scenario = "free-talk" } = req.body || {};
+    const { text, userId, sessionId, scenario = "free-talk", history: clientHistory } = req.body || {};
     if (!text?.trim()) {
       res.status(400).json({ error: "text is required" });
       return;
     }
     let userLevel = "A1";
-    let history = [];
+    let history = Array.isArray(clientHistory) && clientHistory.length > 0 ? clientHistory.slice(-MAX_HISTORY) : [];
     let session = null;
     const isUUID = userId && /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(userId);
     const isSessionUUID = sessionId && /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(sessionId);
@@ -91674,7 +91674,7 @@ async function handleMessage(req, res, _next) {
         } else {
           session = await Session.create({ id: v4_default2(), userId, taskType: scenario });
         }
-        if (session.context && Array.isArray(session.context)) {
+        if (history.length === 0 && session.context && Array.isArray(session.context)) {
           history = session.context.slice(-MAX_HISTORY);
         }
       }
@@ -91755,6 +91755,13 @@ async function handleAudio(req, res, next) {
       return;
     }
     const transcript = await transcribeAudio(file.buffer);
+    if (typeof req.body.history === "string") {
+      try {
+        req.body.history = JSON.parse(req.body.history);
+      } catch {
+        req.body.history = [];
+      }
+    }
     req.body.text = transcript;
     req.body.userId = userId;
     req.body.sessionId = sessionId;

@@ -1,8 +1,35 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
-import type { Message, SRSCard, UserProgress, UserProfile } from '@/types'
+import type { Message, SRSCard, UserProgress, UserProfile, ChatSession } from '@/types'
 
 export type ScenarioType = 'free-talk' | 'cafe' | 'airport' | 'interview' | 'directions' | 'tech'
+
+const uuidv4 = () =>
+  typeof crypto !== 'undefined' && crypto.randomUUID
+    ? crypto.randomUUID()
+    : 'sess_' + Math.random().toString(36).substring(2, 11)
+
+const DEFAULT_INTRO = "Hello! Welcome to our English session. I'm Mr. Davies. Tell me, what's on your mind today, or what would you like to talk about?"
+
+function createInitialSession(scenario: ScenarioType = 'free-talk'): ChatSession {
+  const id = uuidv4()
+  return {
+    id,
+    title: 'Nueva Conversación',
+    scenario,
+    messages: [
+      {
+        id: uuidv4(),
+        role: 'assistant',
+        content: DEFAULT_INTRO,
+        translation: "¡Hola! Bienvenido a nuestra sesión de inglés. Soy el profesor Davies. Cuéntame, ¿qué tienes en mente hoy o de qué te gustaría hablar?",
+        timestamp: new Date().toISOString(),
+      },
+    ],
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  }
+}
 
 interface AppState {
   // ── Theme ──────────────────────────────────────────
@@ -15,7 +42,15 @@ interface AppState {
   setUser: (user: UserProfile | null) => void
   setUserId: (id: string) => void
 
-  // ── Session & Chat ─────────────────────────────────
+  // ── Multi-Chat Sessions ────────────────────────────
+  sessions: ChatSession[]
+  activeSessionId: string
+  createNewSession: (scenario?: ScenarioType) => string
+  switchSession: (id: string) => void
+  deleteSession: (id: string) => void
+  renameSession: (id: string, title: string) => void
+
+  // ── Active Chat State (Mirrored with activeSession) ─
   messages: Message[]
   isTyping: boolean
   sessionId: string | null
@@ -47,16 +82,20 @@ interface AppState {
   logout:         () => void
 }
 
+const initialSession = createInitialSession()
+
 export const useAppStore = create<AppState>()(
   persist(
     (set, get) => ({
       theme:             'dark',
       user:              null,
-      userId:            'user_' + Math.random().toString(36).substring(2, 9),
-      messages:          [],
+      userId:            uuidv4(),
+      sessions:          [initialSession],
+      activeSessionId:   initialSession.id,
+      messages:          initialSession.messages,
       isTyping:          false,
-      sessionId:         null,
-      activeScenario:    'free-talk',
+      sessionId:         initialSession.id,
+      activeScenario:    initialSession.scenario,
       progress:          null,
       dueCards:          [],
       reviewedToday:     0,
@@ -85,14 +124,137 @@ export const useAppStore = create<AppState>()(
 
       setUserId:         (id)       => set({ userId: id }),
       setAuthModalOpen:  (open)     => set({ isAuthModalOpen: open }),
-      setActiveScenario: (scenario) => set({ activeScenario: scenario }),
 
-      addMessage: (msg) => set((s) => ({ messages: [...s.messages, msg] })),
-      updateMessage: (id, patch) =>
+      // ── Multi-Chat Management ────────────────────────
+      createNewSession: (scenario = 'free-talk') => {
+        const newSess = createInitialSession(scenario)
         set((s) => ({
-          messages: s.messages.map((m) => (m.id === id ? { ...m, ...patch } : m)),
-        })),
-      clearMessages:  ()        => set({ messages: [] }),
+          sessions: [newSess, ...s.sessions],
+          activeSessionId: newSess.id,
+          messages: newSess.messages,
+          sessionId: newSess.id,
+          activeScenario: scenario,
+        }))
+        return newSess.id
+      },
+
+      switchSession: (id: string) => {
+        const target = get().sessions.find((s) => s.id === id)
+        if (target) {
+          set({
+            activeSessionId: target.id,
+            messages:        target.messages,
+            sessionId:       target.id,
+            activeScenario:  target.scenario,
+          })
+        }
+      },
+
+      deleteSession: (id: string) => {
+        const remaining = get().sessions.filter((s) => s.id !== id)
+        if (remaining.length === 0) {
+          const fresh = createInitialSession()
+          set({
+            sessions: [fresh],
+            activeSessionId: fresh.id,
+            messages: fresh.messages,
+            sessionId: fresh.id,
+            activeScenario: fresh.scenario,
+          })
+        } else {
+          const nextActive = remaining[0]
+          set({
+            sessions: remaining,
+            activeSessionId: nextActive.id,
+            messages: nextActive.messages,
+            sessionId: nextActive.id,
+            activeScenario: nextActive.scenario,
+          })
+        }
+      },
+
+      renameSession: (id: string, title: string) => {
+        set((s) => ({
+          sessions: s.sessions.map((sess) =>
+            sess.id === id ? { ...sess, title, updatedAt: new Date().toISOString() } : sess
+          ),
+        }))
+      },
+
+      setActiveScenario: (scenario) => {
+        const activeId = get().activeSessionId
+        set((s) => ({
+          activeScenario: scenario,
+          sessions: s.sessions.map((sess) =>
+            sess.id === activeId ? { ...sess, scenario, updatedAt: new Date().toISOString() } : sess
+          ),
+        }))
+      },
+
+      // ── Message handling with Auto-Session Sync ───────
+      addMessage: (msg) => {
+        const { activeSessionId, sessions } = get()
+        const currentSession = sessions.find((s) => s.id === activeSessionId)
+        const updatedMessages = [...(currentSession?.messages || get().messages), msg]
+
+        // Derive title from first user message if still default
+        let newTitle = currentSession?.title || 'Conversación'
+        if (msg.role === 'user' && (!currentSession || currentSession.title === 'Nueva Conversación')) {
+          newTitle = msg.content.trim().slice(0, 32)
+          if (msg.content.trim().length > 32) newTitle += '…'
+        }
+
+        const updatedSessions = sessions.map((sess) =>
+          sess.id === activeSessionId
+            ? {
+                ...sess,
+                title: newTitle,
+                messages: updatedMessages,
+                updatedAt: new Date().toISOString(),
+              }
+            : sess
+        )
+
+        set({
+          messages: updatedMessages,
+          sessions: updatedSessions,
+        })
+      },
+
+      updateMessage: (id, patch) => {
+        const { activeSessionId, sessions, messages } = get()
+        const updatedMessages = messages.map((m) => (m.id === id ? { ...m, ...patch } : m))
+        const updatedSessions = sessions.map((sess) =>
+          sess.id === activeSessionId
+            ? { ...sess, messages: updatedMessages, updatedAt: new Date().toISOString() }
+            : sess
+        )
+        set({
+          messages: updatedMessages,
+          sessions: updatedSessions,
+        })
+      },
+
+      clearMessages: () => {
+        const { activeSessionId, sessions } = get()
+        const emptyIntro: Message = {
+          id: uuidv4(),
+          role: 'assistant',
+          content: DEFAULT_INTRO,
+          translation: "¡Hola! Bienvenido a nuestra sesión de inglés. Soy el profesor Davies. Cuéntame, ¿qué tienes en mente hoy o de qué te gustaría hablar?",
+          timestamp: new Date().toISOString(),
+        }
+        const updatedSessions = sessions.map((sess) =>
+          sess.id === activeSessionId
+            ? { ...sess, messages: [emptyIntro], title: 'Nueva Conversación', updatedAt: new Date().toISOString() }
+            : sess
+        )
+        set({
+          messages: [emptyIntro],
+          sessions: updatedSessions,
+        })
+      },
+
       setIsTyping:    (v)       => set({ isTyping: v }),
       setSessionId:   (id)      => set({ sessionId: id }),
       setProgress:    (p)       => set({ progress: p }),
@@ -101,18 +263,27 @@ export const useAppStore = create<AppState>()(
       setActiveTab:   (tab)     => set({ activeTab: tab }),
 
       logout: () => {
-        const newId = 'user_' + Math.random().toString(36).substring(2, 9)
-        set({ user: null, userId: newId, messages: [], sessionId: null })
+        const fresh = createInitialSession()
+        set({
+          user: null,
+          userId: uuidv4(),
+          sessions: [fresh],
+          activeSessionId: fresh.id,
+          messages: fresh.messages,
+          sessionId: fresh.id,
+        })
       },
     }),
     {
-      name: 'fluent-ai-v2',
+      name: 'fluent-ai-v3-multichat',
       partialize: (s) => ({
-        theme:          s.theme,
-        user:           s.user,
-        userId:         s.userId,
-        reviewedToday:  s.reviewedToday,
-        activeScenario: s.activeScenario,
+        theme:            s.theme,
+        user:             s.user,
+        userId:           s.userId,
+        sessions:         s.sessions,
+        activeSessionId:  s.activeSessionId,
+        activeScenario:   s.activeScenario,
+        reviewedToday:    s.reviewedToday,
       }),
     }
   )

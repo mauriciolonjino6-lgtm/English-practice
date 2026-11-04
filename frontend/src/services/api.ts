@@ -41,23 +41,33 @@ export const updateUserProfile = async (
 
 // ── Chat ──────────────────────────────────────────────────────────────────────
 export const sendChatMessage = async (
-  payload: { text: string; userId: string; sessionId: string | null; scenario?: string }
+  payload: {
+    text:       string
+    userId:     string
+    sessionId:  string | null
+    scenario?:  string
+    history?:   { role: string; content: string }[]
+  }
 ): Promise<ChatResponse> => {
   const { data } = await http.post<ChatResponse>('/chat/message', payload)
   return data
 }
 
 export const sendAudioMessage = async (
-  blob: Blob,
-  userId: string,
-  sessionId: string | null,
-  scenario?: string
+  blob:       Blob,
+  userId:     string,
+  sessionId:  string | null,
+  scenario?:  string,
+  history?:   { role: string; content: string }[]
 ): Promise<ChatResponse> => {
   const form = new FormData()
   form.append('audio', blob, 'recording.webm')
   form.append('userId', userId)
   if (sessionId) form.append('sessionId', sessionId)
-  if (scenario) form.append('scenario', scenario)
+  if (scenario)  form.append('scenario', scenario)
+  if (history && history.length > 0) {
+    form.append('history', JSON.stringify(history))
+  }
   const { data } = await http.post<ChatResponse>('/chat/audio', form, {
     headers: { 'Content-Type': 'multipart/form-data' },
   })
