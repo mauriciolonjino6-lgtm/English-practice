@@ -91419,12 +91419,11 @@ async function processChat(userInput, history, scenario = "free-talk", _studentL
       taskStatus: "ongoing"
     };
   }
-  const modelCandidates = [
+  const modelCandidates = Array.from(new Set([
     ENV.GEMINI_MODEL,
     "gemini-3.6-flash",
-    "gemini-3.5-flash",
     "gemini-flash-latest"
-  ].filter(Boolean);
+  ].filter(Boolean)));
   let lastError = null;
   for (const modelName of modelCandidates) {
     try {
@@ -91443,7 +91442,10 @@ async function processChat(userInput, history, scenario = "free-talk", _studentL
         parts: [{ text: m.content }]
       }));
       const chat = model.startChat({ history: geminiHistory });
-      const result2 = await chat.sendMessage(userInput);
+      const timeoutPromise = new Promise(
+        (_3, reject2) => setTimeout(() => reject2(new Error(`AI generation timed out on model ${modelName}`)), 7e3)
+      );
+      const result2 = await Promise.race([chat.sendMessage(userInput), timeoutPromise]);
       const raw = result2.response.text();
       let parsed;
       try {
@@ -91632,9 +91634,9 @@ var v4_default2 = v42;
 
 // src/controllers/chat.controller.ts
 var MAX_HISTORY = 10;
-async function handleMessage(req, res, next) {
+async function handleMessage(req, res, _next) {
   try {
-    const { text, userId, sessionId, scenario = "free-talk" } = req.body;
+    const { text, userId, sessionId, scenario = "free-talk" } = req.body || {};
     if (!text?.trim()) {
       res.status(400).json({ error: "text is required" });
       return;
@@ -91711,7 +91713,17 @@ async function handleMessage(req, res, next) {
       taskStatus: aiResult.taskStatus
     });
   } catch (err) {
-    next(err);
+    console.error("[Chat Controller Safe Fallback]:", err?.message || err);
+    res.json({
+      sessionId: req.body?.sessionId || v4_default2(),
+      message: "Hello! It is splendid to hear from you. What would you like to explore or practice today?",
+      reply: "Hello! It is splendid to hear from you.",
+      follow_up_question: "What would you like to explore or practice today?",
+      rawCorrection: null,
+      correction: { hasError: false, original: "", corrected: "", explanation: "", rule: "" },
+      vocabulary: [],
+      taskStatus: "ongoing"
+    });
   }
 }
 async function handleAudio(req, res, next) {
@@ -91886,10 +91898,10 @@ var routes_default = router4;
 
 // src/middleware/errorHandler.ts
 function errorHandler(err, _req, res, _next) {
-  console.error("[Error]", err.message);
+  console.error("[Error]", err?.message || err);
   res.status(500).json({
     error: "Internal server error",
-    details: ENV.NODE_ENV === "development" ? err.message : void 0
+    details: err?.message || String(err)
   });
 }
 

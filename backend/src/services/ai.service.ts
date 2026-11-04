@@ -103,12 +103,11 @@ export async function processChat(
     }
   }
 
-  const modelCandidates = [
+  const modelCandidates = Array.from(new Set([
     ENV.GEMINI_MODEL,
     'gemini-3.6-flash',
-    'gemini-3.5-flash',
     'gemini-flash-latest',
-  ].filter(Boolean) as string[]
+  ].filter(Boolean))) as string[]
 
   let lastError: any = null
 
@@ -130,8 +129,13 @@ export async function processChat(
         parts: [{ text: m.content }],
       }))
 
-      const chat   = model.startChat({ history: geminiHistory })
-      const result = await chat.sendMessage(userInput)
+      const chat = model.startChat({ history: geminiHistory })
+
+      const timeoutPromise = new Promise<never>((_, reject) =>
+        setTimeout(() => reject(new Error(`AI generation timed out on model ${modelName}`)), 7000)
+      )
+
+      const result = await Promise.race([chat.sendMessage(userInput), timeoutPromise])
       const raw    = result.response.text()
 
       let parsed: RawProfessorResponse
