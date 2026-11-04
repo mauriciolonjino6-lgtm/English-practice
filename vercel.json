@@ -1,15 +1,9 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "functions": {
-    "api/**/*.js": {
-      "maxDuration": 30
-    }
-  },
   "services": {
     "backend": {
       "root": "backend",
-      "framework": "express",
-      "maxDuration": 30
+      "framework": "express"
     },
     "frontend": {
       "root": "frontend",
