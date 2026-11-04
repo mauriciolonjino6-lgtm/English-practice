@@ -100,6 +100,7 @@ export async function handleMessage(req: Request, res: Response, _next?: NextFun
       follow_up_question: aiResult.follow_up_question,
       rawCorrection:      aiResult.rawCorrection,
       translation:        aiResult.translation,
+      debugError:         aiResult.debugError,
       suggestedReplies:   aiResult.suggestedReplies,
       correction:         aiResult.correction,
       vocabulary:         aiResult.vocabulary,

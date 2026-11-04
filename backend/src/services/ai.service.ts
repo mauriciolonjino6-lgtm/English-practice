@@ -63,6 +63,7 @@ export interface AIResponse {
   follow_up_question: string
   rawCorrection:      string | null
   translation?:       string
+  debugError?:        string
   suggestedReplies?:  SuggestedReply[]
   correction: {
     hasError:    boolean
@@ -106,11 +107,7 @@ export async function processChat(
     }
   }
 
-  const modelCandidates = Array.from(new Set([
-    ENV.GEMINI_MODEL,
-    'gemini-3.6-flash',
-    'gemini-flash-latest',
-  ].filter(Boolean))) as string[]
+  const modelCandidates = ['gemini-3.6-flash']
 
   // Clean history for Gemini: MUST start with 'user' and alternate roles
   const geminiHistory: Content[] = []
@@ -148,7 +145,7 @@ export async function processChat(
       const chat = model.startChat({ history: geminiHistory })
 
       const timeoutPromise = new Promise<never>((_, reject) =>
-        setTimeout(() => reject(new Error(`AI generation timed out on model ${modelName}`)), 25000)
+        setTimeout(() => reject(new Error(`AI generation timed out on model ${modelName}`)), 9000)
       )
 
       const result = await Promise.race([chat.sendMessage(userInput), timeoutPromise])
@@ -206,6 +203,7 @@ export async function processChat(
     reply: "Good heavens, our Oxford connection experienced a brief hiccup!",
     follow_up_question: "Could you repeat what you just said so we can continue?",
     translation: "¡Cielos, nuestra conexión de Oxford tuvo una pequeña interferencia! ¿Podrías repetir lo que dijiste para continuar nuestra conversación?",
+    debugError: lastError?.message || String(lastError),
     rawCorrection: null,
     correction: { hasError: false, original: '', corrected: '', explanation: '', rule: '' },
     vocabulary: [],

@@ -91421,11 +91421,7 @@ async function processChat(userInput, history, scenario = "free-talk", _studentL
       taskStatus: "ongoing"
     };
   }
-  const modelCandidates = Array.from(new Set([
-    ENV.GEMINI_MODEL,
-    "gemini-3.6-flash",
-    "gemini-flash-latest"
-  ].filter(Boolean)));
+  const modelCandidates = ["gemini-3.6-flash"];
   const geminiHistory = [];
   for (const m of history.slice(-10)) {
     const role = m.role === "assistant" ? "model" : "user";
@@ -91455,7 +91451,7 @@ ${text}`;
       });
       const chat = model.startChat({ history: geminiHistory });
       const timeoutPromise = new Promise(
-        (_3, reject2) => setTimeout(() => reject2(new Error(`AI generation timed out on model ${modelName}`)), 25e3)
+        (_3, reject2) => setTimeout(() => reject2(new Error(`AI generation timed out on model ${modelName}`)), 9e3)
       );
       const result2 = await Promise.race([chat.sendMessage(userInput), timeoutPromise]);
       const raw = result2.response.text();
@@ -91506,6 +91502,7 @@ ${questionText}` : replyText;
     reply: "Good heavens, our Oxford connection experienced a brief hiccup!",
     follow_up_question: "Could you repeat what you just said so we can continue?",
     translation: "\xA1Cielos, nuestra conexi\xF3n de Oxford tuvo una peque\xF1a interferencia! \xBFPodr\xEDas repetir lo que dijiste para continuar nuestra conversaci\xF3n?",
+    debugError: lastError?.message || String(lastError),
     rawCorrection: null,
     correction: { hasError: false, original: "", corrected: "", explanation: "", rule: "" },
     vocabulary: [],
@@ -91721,6 +91718,7 @@ async function handleMessage(req, res, _next) {
       follow_up_question: aiResult.follow_up_question,
       rawCorrection: aiResult.rawCorrection,
       translation: aiResult.translation,
+      debugError: aiResult.debugError,
       suggestedReplies: aiResult.suggestedReplies,
       correction: aiResult.correction,
       vocabulary: aiResult.vocabulary,
