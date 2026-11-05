@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Volume2, Mic, MicOff, CheckCircle2, XCircle, ChevronRight, RotateCcw, Award, Sparkles, X, Lightbulb } from 'lucide-react'
+import { Volume2, Mic, MicOff, CheckCircle2, XCircle, ChevronRight, RotateCcw, Award, X, Lightbulb } from 'lucide-react'
 import { clsx } from 'clsx'
 import { useSpeechSynthesis } from '@/hooks/useSpeechSynthesis'
 import { useAppStore } from '@/store/useAppStore'

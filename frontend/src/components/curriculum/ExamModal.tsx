@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { Award, CheckCircle2, XCircle, X, ChevronRight, GraduationCap, Volume2, RotateCcw, ShieldCheck } from 'lucide-react'
+import { motion } from 'framer-motion'
+import { Award, XCircle, X, ChevronRight, GraduationCap, Volume2, RotateCcw, ShieldCheck } from 'lucide-react'
 import { clsx } from 'clsx'
 import { useSpeechSynthesis } from '@/hooks/useSpeechSynthesis'
 import { useAppStore } from '@/store/useAppStore'

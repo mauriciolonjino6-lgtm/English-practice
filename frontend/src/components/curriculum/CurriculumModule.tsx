@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { GraduationCap, CheckCircle2, Lock, Play, Award, Volume2, Mic, BookOpen, Sparkles, ChevronRight, Star, Trophy } from 'lucide-react'
+import { GraduationCap, CheckCircle2, Play, Award, ChevronRight, Trophy } from 'lucide-react'
 import { clsx } from 'clsx'
 import { CURRICULUM_A2, FINAL_A2_EXAM, type Lesson, type Exam, type Unit } from '@/data/curriculumA2'
 import { useAppStore } from '@/store/useAppStore'
@@ -8,7 +8,7 @@ import LessonPlayer from './LessonPlayer'
 import ExamModal from './ExamModal'
 
 export default function CurriculumModule() {
-  const { user, levelProgress } = useAppStore()
+  const { levelProgress } = useAppStore()
   const [activeLesson, setActiveLesson] = useState<Lesson | null>(null)
   const [activeExam, setActiveExam] = useState<Exam | null>(null)
 
@@ -17,7 +17,6 @@ export default function CurriculumModule() {
   const completedA2Count = allA2Lessons.filter((l) => levelProgress.completedLessons.includes(l.id)).length
   const totalLessons = allA2Lessons.length
   const progressPercent = Math.round((completedA2Count / totalLessons) * 100)
-  const isFinalExamUnlocked = completedA2Count >= Math.floor(totalLessons * 0.75) // Unlocks at 75% completion
   const hasPassedFinal = levelProgress.passedExams.includes(FINAL_A2_EXAM.id)
 
   return (
