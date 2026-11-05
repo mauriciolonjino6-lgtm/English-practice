@@ -30,14 +30,20 @@ CRITICAL BEHAVIORAL RULES:
 3. CONVERSATIONAL CONTINUITY: Keep the flow alive by asking exactly one relevant, open-ended follow-up question tied to the user's topic.
 4. BILINGUAL SCAFFOLDING & TRANSLATION: If the user writes in Spanish or gets stuck, provide the English translation or structure briefly. Always provide the full Spanish translation of your reply and follow_up_question in the "translation" field so the student can toggle translation.
 5. BRITISH CONTEXT: Incorporate British vocabulary, idioms, slang, and cultural references where natural.
-6. MULTIMODAL & DOCUMENT ASSISTANCE: If an image or file is attached (homework, book photo, document, sign, handwritten text), inspect the image carefully, transcribe/evaluate the English, correct any errors, explain the exercises, and provide constructive feedback.
+6. MULTIMODAL IMAGE & DOCUMENT VISION (MANDATORY WHEN AN IMAGE IS ATTACHED):
+   - DETAILED VISUAL DESCRIPTION: In your "reply", explicitly mention and describe what you see in the image (identify objects, setting, people, colors, scenery, food, actions, or text/exercises). Paint a vivid picture in English so the student learns how to describe what is seen.
+   - TEACH RELEVANT ENGLISH & ANSWER: Answer any question the user asked about the picture. Introduce 2-3 useful British English words or expressions for the items or situation shown.
+   - TEXT & HOMEWORK: If the image contains a worksheet, book page, or handwritten text, transcribe and evaluate the English, solve/explain the exercises, and provide constructive feedback.
+   - ACCURATE CORRECTIONS: If there is an English error (in the student's text or in the exercises), provide the clean correction in "corrected_sentence" and the grammar explanation in Spanish in "explanation". If there are NO English errors, both "corrected_sentence" and "explanation" MUST be strictly null.
+   - ENGAGING QUESTION: In "follow_up_question", ask an open-ended question directly about the image/scene to invite further conversation.
+   - SPANISH TRANSLATION: In "translation", provide the full Spanish translation of your "reply" and "follow_up_question".
 
 STRICT OUTPUT FORMAT (JSON ONLY):
 You must return your response EXCLUSIVELY as a valid JSON object matching this exact schema:
 {
   "corrected_sentence": "Write ONLY the clean corrected English sentence here without explanations. If flawless, set this to null.",
   "explanation": "Explain the grammar rule and WHY in clear, friendly Spanish so the student learns. If flawless, set this to null.",
-  "reply": "Your conversational response continuing the dialogue naturally in British English.",
+  "reply": "Your conversational response continuing the dialogue naturally in British English, describing the image in detail if an image is attached.",
   "follow_up_question": "Your engaging follow-up question in British English.",
   "translation": "Traducción completa y fluida en español de tu reply y follow_up_question."
 }`
@@ -167,8 +173,8 @@ export async function processChat(
       let sendPayload: any = userInput || "Hello Professor Davies."
       if (imageData && imageData.data) {
         const textPrompt = userInput?.trim()
-          ? `${userInput}\n(Note: I have attached an image/document. Please inspect it carefully to help with my English)`
-          : "Please inspect this attached image/document carefully. Read any English text or exercises, correct any errors, explain the grammar, and teach me."
+          ? `[Student message]: ${userInput}\n\n[Visual input attached]: The student has shared an image/document. Please examine it carefully. Start your reply by clearly describing what you see in the image in detail (mention specific objects, colors, people, setting, actions, or text visible), answer the student's message, teach useful British English expressions or vocabulary for what is shown in the photo, and ask an engaging follow-up question about it.`
+          : `[Visual input attached]: The student has shared an image/document without text. Please examine it thoroughly. In your reply, start by clearly describing what you see in the image in detail (mention specific objects, colors, people, setting, actions, or text visible), explain it in natural British English, teach 2-3 useful British expressions or vocabulary words related to what is shown in the image, and ask an engaging question about it.`
         sendPayload = [
           textPrompt,
           {
@@ -202,10 +208,11 @@ export async function processChat(
       const translationText = parsed.translation?.trim() || ''
 
       const cleanCorrected = (parsed.corrected_sentence || parsed.correction || '').trim()
+      const isNullString = ['null', 'none', 'n/a', 'no error', 'no mistakes', 'undefined'].includes(cleanCorrected.toLowerCase())
       const cleanExplanation = (parsed.explanation || '').trim()
       const hasCorrection = Boolean(
         cleanCorrected &&
-        cleanCorrected.toLowerCase() !== 'null' &&
+        !isNullString &&
         cleanCorrected !== ''
       )
 
@@ -217,7 +224,7 @@ export async function processChat(
         rawCorrection: cleanCorrected || null,
         correction: {
           hasError:    hasCorrection,
-          original:    hasCorrection ? (userInput || 'Imagen adjunta') : '',
+          original:    hasCorrection ? (userInput || 'Texto o ejercicio en imagen adjunta') : '',
           corrected:   hasCorrection ? cleanCorrected : '',
           explanation: hasCorrection ? (cleanExplanation || "Practica diciendo la frase en su forma correcta.") : '',
           rule:        hasCorrection ? "Regla Gramatical Británica" : '',

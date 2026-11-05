@@ -61,9 +61,10 @@ export async function handleMessage(req: Request, res: Response, _next?: NextFun
     // Save session context and vocab if DB is available
     try {
       if (session) {
+        const userContent = text && image ? `${text} [📷 Foto/Documento adjunto]` : (text || '[📷 Foto/Documento adjunto]')
         const updatedHistory: AIMessageItem[] = [
           ...history,
-          { role: 'user',      content: text || '[Sent an image/document]' },
+          { role: 'user',      content: userContent },
           { role: 'assistant', content: aiResult.message },
         ]
         await session.update({ context: updatedHistory })
