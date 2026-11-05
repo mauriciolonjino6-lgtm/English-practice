@@ -1,9 +1,10 @@
 import { useNavigate, useLocation } from 'react-router-dom'
-import { LayoutDashboard, MessageCircle, Mic2, BookOpen } from 'lucide-react'
+import { LayoutDashboard, GraduationCap, MessageCircle, Mic2, BookOpen } from 'lucide-react'
 import { clsx } from 'clsx'
 
 const tabs = [
   { path: '/dashboard',  label: 'Inicio',      icon: LayoutDashboard },
+  { path: '/learn',      label: 'Aprender',    icon: GraduationCap   },
   { path: '/chat',       label: 'Profesor AI', icon: MessageCircle   },
   { path: '/shadowing',  label: 'Shadowing',   icon: Mic2            },
   { path: '/flashcards', label: 'Tarjetas',    icon: BookOpen        },

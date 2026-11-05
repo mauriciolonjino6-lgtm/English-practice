@@ -4,6 +4,7 @@ import Dashboard from '@/components/dashboard/Dashboard'
 import ChatInterface from '@/components/chat/ChatInterface'
 import ShadowingModule from '@/components/shadowing/ShadowingModule'
 import FlashcardModule from '@/components/flashcards/FlashcardModule'
+import CurriculumModule from '@/components/curriculum/CurriculumModule'
 
 export default function App() {
   return (
@@ -11,6 +12,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Navigate to="/dashboard" replace />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/learn" element={<CurriculumModule />} />
         <Route path="/chat" element={<ChatInterface />} />
         <Route path="/shadowing" element={<ShadowingModule />} />
         <Route path="/flashcards" element={<FlashcardModule />} />

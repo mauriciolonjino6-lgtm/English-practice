@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { MessageCircle, Mic2, BookOpen, ChevronRight, Zap, Lightbulb, Coffee, Plane, Briefcase, Volume2, Sparkles } from 'lucide-react'
+import { MessageCircle, Mic2, BookOpen, ChevronRight, Zap, Lightbulb, Coffee, Plane, Briefcase, Volume2, Sparkles, GraduationCap } from 'lucide-react'
 import { useAppStore, ScenarioType } from '@/store/useAppStore'
 import { getUserProgress, getDueCards } from '@/services/api'
 import { useSpeechSynthesis } from '@/hooks/useSpeechSynthesis'
@@ -20,7 +20,7 @@ const item = {
 
 export default function Dashboard() {
   const navigate = useNavigate()
-  const { user, userId, progress, dueCards, setProgress, setDueCards, setActiveScenario, setAuthModalOpen } = useAppStore()
+  const { user, userId, progress, dueCards, setProgress, setDueCards, setActiveScenario, setAuthModalOpen, levelProgress } = useAppStore()
   const { speak } = useSpeechSynthesis()
 
   useEffect(() => {
@@ -78,8 +78,45 @@ export default function Dashboard() {
         {/* Stats row */}
         <motion.div variants={item} className="grid grid-cols-3 gap-3">
           <StreakCard  streak={progress?.streak ?? 1} />
-          <ProgressCard level={user?.level ?? progress?.level ?? 'A1'} xp={user?.xp ?? progress?.xp ?? 20} />
+          <ProgressCard level={levelProgress.currentLevel || user?.level || progress?.level || 'A2'} xp={user?.xp ?? progress?.xp ?? 20} />
           <VocabCard   count={progress?.totalWords ?? 0} />
+        </motion.div>
+
+        {/* Learning Path Banner */}
+        <motion.div variants={item}>
+          <div
+            onClick={() => navigate('/learn')}
+            className="p-5 rounded-3xl bg-gradient-to-r from-brand-600 via-indigo-600 to-purple-600 text-white shadow-xl hover:shadow-2xl hover:scale-[1.01] transition-all cursor-pointer relative overflow-hidden group"
+          >
+            <div className="flex items-center justify-between mb-2">
+              <span className="px-3 py-1 rounded-full bg-white/20 text-[10px] font-black uppercase tracking-wider flex items-center gap-1.5 backdrop-blur-md">
+                <GraduationCap size={13} />
+                Ruta Pedagógica • Nivel {levelProgress.currentLevel}
+              </span>
+              <span className="text-xs font-bold text-amber-300">
+                {levelProgress.completedLessons.length} lecciones completadas
+              </span>
+            </div>
+
+            <h2 className="text-xl font-black mt-1">
+              Continuar Aprendiendo ({levelProgress.currentLevel})
+            </h2>
+            <p className="text-xs text-indigo-100 mt-0.5 line-clamp-1">
+              Ejercicios dinámicos de escucha, pronunciación, gramática y exámenes periódicos.
+            </p>
+
+            <div className="mt-4 flex items-center justify-between gap-4">
+              <div className="flex-1 bg-black/20 h-2.5 rounded-full overflow-hidden">
+                <div
+                  className="h-full bg-gradient-to-r from-amber-400 to-emerald-400 rounded-full transition-all duration-500"
+                  style={{ width: `${Math.min(100, Math.round((levelProgress.completedLessons.length / 11) * 100))}%` }}
+                />
+              </div>
+              <span className="text-xs font-extrabold flex items-center gap-1 text-white group-hover:translate-x-1 transition-transform">
+                Entrar a la ruta →
+              </span>
+            </div>
+          </div>
         </motion.div>
 
         {/* Real-Life Scenarios Section */}

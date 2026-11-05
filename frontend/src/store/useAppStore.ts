@@ -41,6 +41,23 @@ const safeStorage = {
 
 export type ScenarioType = 'free-talk' | 'cafe' | 'airport' | 'interview' | 'directions' | 'tech'
 
+export interface LevelProgressState {
+  currentLevel: 'A2' | 'B1' | 'B2'
+  completedLessons: string[]
+  lessonScores: Record<string, number>
+  passedExams: string[]
+  examScores: Record<string, number>
+  lastExamDate?: string
+}
+
+const initialLevelProgress: LevelProgressState = {
+  currentLevel: 'A2',
+  completedLessons: [],
+  lessonScores: {},
+  passedExams: [],
+  examScores: {},
+}
+
 const uuidv4 = () =>
   typeof crypto !== 'undefined' && crypto.randomUUID
     ? crypto.randomUUID()
@@ -101,8 +118,15 @@ interface AppState {
   dueCards: SRSCard[]
   reviewedToday: number
 
+  // ── Level Progression ──────────────────────────────
+  levelProgress: LevelProgressState
+  completeLesson: (lessonId: string, score: number) => void
+  recordExamResult: (examId: string, score: number, passed: boolean) => void
+  setCurrentLevel: (level: 'A2' | 'B1' | 'B2') => void
+  resetLevelProgress: () => void
+
   // ── UI ─────────────────────────────────────────────
-  activeTab: 'dashboard' | 'chat' | 'shadowing' | 'flashcards'
+  activeTab: 'dashboard' | 'chat' | 'shadowing' | 'flashcards' | 'curriculum'
   isAuthModalOpen: boolean
   setAuthModalOpen: (open: boolean) => void
 
@@ -138,6 +162,69 @@ export const useAppStore = create<AppState>()(
       reviewedToday:     0,
       activeTab:         'dashboard',
       isAuthModalOpen:   false,
+      levelProgress:     initialLevelProgress,
+
+      completeLesson: (lessonId: string, score: number) => {
+        set((s) => {
+          const completed = s.levelProgress.completedLessons.includes(lessonId)
+            ? s.levelProgress.completedLessons
+            : [...s.levelProgress.completedLessons, lessonId]
+          const updatedScores = {
+            ...s.levelProgress.lessonScores,
+            [lessonId]: Math.max(score, s.levelProgress.lessonScores[lessonId] || 0),
+          }
+          const currentXp = s.user?.xp || s.progress?.xp || 20
+          const newXp = currentXp + 25
+          return {
+            levelProgress: {
+              ...s.levelProgress,
+              completedLessons: completed,
+              lessonScores: updatedScores,
+            },
+            user: s.user ? { ...s.user, xp: newXp } : null,
+            progress: s.progress ? { ...s.progress, xp: newXp } : null,
+          }
+        })
+      },
+
+      recordExamResult: (examId: string, score: number, passed: boolean) => {
+        set((s) => {
+          const passedList = passed && !s.levelProgress.passedExams.includes(examId)
+            ? [...s.levelProgress.passedExams, examId]
+            : s.levelProgress.passedExams
+          const nextLevel = passed && examId === 'final-exam-a2' ? 'B1' : s.levelProgress.currentLevel
+          const currentXp = s.user?.xp || s.progress?.xp || 20
+          const newXp = passed ? currentXp + 100 : currentXp + 30
+          return {
+            levelProgress: {
+              ...s.levelProgress,
+              passedExams: passedList,
+              examScores: {
+                ...s.levelProgress.examScores,
+                [examId]: Math.max(score, s.levelProgress.examScores[examId] || 0),
+              },
+              currentLevel: nextLevel as 'A2' | 'B1' | 'B2',
+              lastExamDate: new Date().toISOString(),
+            },
+            user: s.user ? { ...s.user, xp: newXp, level: nextLevel } : null,
+            progress: s.progress ? { ...s.progress, xp: newXp, level: nextLevel } : null,
+          }
+        })
+      },
+
+      setCurrentLevel: (level: 'A2' | 'B1' | 'B2') => {
+        set((s) => ({
+          levelProgress: { ...s.levelProgress, currentLevel: level },
+          user: s.user ? { ...s.user, level } : null,
+          progress: s.progress ? { ...s.progress, level } : null,
+        }))
+      },
+
+      resetLevelProgress: () => {
+        set({
+          levelProgress: initialLevelProgress,
+        })
+      },
 
       toggleTheme: () => {
         const next = get().theme === 'dark' ? 'light' : 'dark'
@@ -335,6 +422,7 @@ export const useAppStore = create<AppState>()(
         sessionId:        s.sessionId,
         activeScenario:   s.activeScenario,
         reviewedToday:    s.reviewedToday,
+        levelProgress:    s.levelProgress,
       }),
     }
   )
