@@ -1,6 +1,43 @@
 import { create } from 'zustand'
-import { persist } from 'zustand/middleware'
+import { persist, createJSONStorage } from 'zustand/middleware'
 import type { Message, SRSCard, UserProgress, UserProfile, ChatSession } from '@/types'
+
+const safeStorage = {
+  getItem: (name: string): string | null => {
+    try {
+      return localStorage.getItem(name)
+    } catch {
+      return null
+    }
+  },
+  setItem: (name: string, value: string): void => {
+    try {
+      localStorage.setItem(name, value)
+    } catch (e) {
+      console.warn('[Storage Quota Exceeded]: Cleaning up image data from persisted sessions', e)
+      try {
+        const parsed = JSON.parse(value)
+        if (parsed?.state?.messages) {
+          parsed.state.messages = parsed.state.messages.map((m: any) => ({ ...m, imageUrl: undefined }))
+        }
+        if (parsed?.state?.sessions) {
+          parsed.state.sessions = parsed.state.sessions.map((s: any) => ({
+            ...s,
+            messages: (s.messages || []).map((m: any) => ({ ...m, imageUrl: undefined })),
+          }))
+        }
+        localStorage.setItem(name, JSON.stringify(parsed))
+      } catch (innerErr) {
+        console.error('[SafeStorage Fallback Failed]:', innerErr)
+      }
+    }
+  },
+  removeItem: (name: string): void => {
+    try {
+      localStorage.removeItem(name)
+    } catch {}
+  },
+}
 
 export type ScenarioType = 'free-talk' | 'cafe' | 'airport' | 'interview' | 'directions' | 'tech'
 
@@ -276,6 +313,7 @@ export const useAppStore = create<AppState>()(
     }),
     {
       name: 'fluent-ai-v4-storage',
+      storage: createJSONStorage(() => safeStorage),
       onRehydrateStorage: () => (state) => {
         if (state && state.sessions && state.sessions.length > 0) {
           const active = state.sessions.find((s) => s.id === state.activeSessionId) || state.sessions[0]

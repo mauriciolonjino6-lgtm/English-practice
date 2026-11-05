@@ -141,31 +141,97 @@ export default function ChatInterface() {
     }
   }
 
+  // ── Compress & Resize Image on Client (prevents payload & quota errors) ───
+  const compressImage = async (file: File): Promise<{ dataUrl: string; base64: string; mimeType: string }> => {
+    if (!file.type.startsWith('image/')) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader()
+        reader.onload = () => {
+          const result = reader.result as string
+          const base64 = result.split(',')[1] || ''
+          resolve({ dataUrl: result, base64, mimeType: file.type || 'application/octet-stream' })
+        }
+        reader.onerror = reject
+        reader.readAsDataURL(file)
+      })
+    }
+
+    return new Promise((resolve) => {
+      const img = new Image()
+      const objectUrl = URL.createObjectURL(file)
+      img.onload = () => {
+        URL.revokeObjectURL(objectUrl)
+        const maxDimension = 1280
+        let { width, height } = img
+
+        if (width > maxDimension || height > maxDimension) {
+          if (width > height) {
+            height = Math.round((height * maxDimension) / width)
+            width = maxDimension
+          } else {
+            width = Math.round((width * maxDimension) / height)
+            height = maxDimension
+          }
+        }
+
+        const canvas = document.createElement('canvas')
+        canvas.width = width
+        canvas.height = height
+        const ctx = canvas.getContext('2d')
+        if (!ctx) {
+          const reader = new FileReader()
+          reader.onload = () => {
+            const result = reader.result as string
+            resolve({ dataUrl: result, base64: result.split(',')[1] || '', mimeType: 'image/jpeg' })
+          }
+          reader.readAsDataURL(file)
+          return
+        }
+
+        ctx.drawImage(img, 0, 0, width, height)
+        const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.82)
+        const base64 = compressedDataUrl.split(',')[1] || ''
+        resolve({ dataUrl: compressedDataUrl, base64, mimeType: 'image/jpeg' })
+      }
+      img.onerror = () => {
+        URL.revokeObjectURL(objectUrl)
+        const reader = new FileReader()
+        reader.onload = () => {
+          const result = reader.result as string
+          resolve({ dataUrl: result, base64: result.split(',')[1] || '', mimeType: file.type || 'image/jpeg' })
+        }
+        reader.readAsDataURL(file)
+      }
+      img.src = objectUrl
+    })
+  }
+
   // ── Handle file selection (Photo / Document) ───────────────────────────────
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (!file) return
 
-    if (file.size > 8 * 1024 * 1024) {
-      toast.error('El archivo excede el límite de 8MB.')
+    if (file.size > 25 * 1024 * 1024) {
+      toast.error('El archivo excede el límite de 25MB.')
       return
     }
 
-    const reader = new FileReader()
-    reader.onload = () => {
-      const result = reader.result as string
-      const base64Data = result.split(',')[1] || ''
+    const toastId = toast.loading('Optimizando foto/documento...')
+    try {
+      const { dataUrl, base64, mimeType } = await compressImage(file)
       setAttachedFile({
         name:       file.name,
-        mimeType:   file.type || 'image/jpeg',
-        data:       base64Data,
-        previewUrl: result,
+        mimeType:   mimeType,
+        data:       base64,
+        previewUrl: dataUrl,
       })
       setShowAttachMenu(false)
-      toast.success('Foto/archivo listo para enviar a Mr. Davies')
+      toast.success('Foto lista para enviar a Mr. Davies', { id: toastId })
+    } catch {
+      toast.error('No se pudo procesar la imagen.', { id: toastId })
+    } finally {
+      e.target.value = ''
     }
-    reader.readAsDataURL(file)
-    e.target.value = ''
   }
 
   // ── Send text/image message with Full Memory ────────────────────────────────
@@ -181,9 +247,13 @@ export default function ChatInterface() {
 
     // User message in chat
     const userDisplayContent = textToSend || (currentAttachment ? '📷 [Foto/Documento adjunto]' : '')
-    addMessage(makeMsg('user', userDisplayContent, {
-      imageUrl: currentAttachment?.previewUrl,
-    }))
+    try {
+      addMessage(makeMsg('user', userDisplayContent, {
+        imageUrl: currentAttachment?.previewUrl,
+      }))
+    } catch (e) {
+      console.warn('[AddMessage Warn]:', e)
+    }
 
     const loadingId = uuidv4()
     addMessage({ id: loadingId, role: 'assistant', content: '', timestamp: new Date().toISOString(), isLoading: true })
