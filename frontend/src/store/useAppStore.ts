@@ -275,13 +275,26 @@ export const useAppStore = create<AppState>()(
       },
     }),
     {
-      name: 'fluent-ai-v3-multichat',
+      name: 'fluent-ai-v4-storage',
+      onRehydrateStorage: () => (state) => {
+        if (state && state.sessions && state.sessions.length > 0) {
+          const active = state.sessions.find((s) => s.id === state.activeSessionId) || state.sessions[0]
+          if (active) {
+            state.activeSessionId = active.id
+            state.sessionId = active.id
+            state.messages = active.messages || []
+            state.activeScenario = active.scenario || 'free-talk'
+          }
+        }
+      },
       partialize: (s) => ({
         theme:            s.theme,
         user:             s.user,
         userId:           s.userId,
         sessions:         s.sessions,
         activeSessionId:  s.activeSessionId,
+        messages:         s.messages,
+        sessionId:        s.sessionId,
         activeScenario:   s.activeScenario,
         reviewedToday:    s.reviewedToday,
       }),

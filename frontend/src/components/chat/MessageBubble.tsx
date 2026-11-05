@@ -56,6 +56,18 @@ export default function MessageBubble({ message }: Props) {
               : 'bg-white dark:bg-slate-800/95 border border-slate-200/90 dark:border-white/10 text-slate-900 dark:text-slate-100 rounded-[22px_22px_22px_4px]'
           )}
         >
+          {/* Attached Image/Document Preview */}
+          {message.imageUrl && (
+            <div className="mb-2.5 rounded-xl overflow-hidden border border-black/10 dark:border-white/10 max-w-xs shadow-sm bg-black/5">
+              <img
+                src={message.imageUrl}
+                alt="Foto o archivo adjunto"
+                className="w-full max-h-56 object-cover cursor-pointer hover:opacity-95 transition-opacity"
+                onClick={() => window.open(message.imageUrl, '_blank')}
+              />
+            </div>
+          )}
+
           {/* English Message Text */}
           <div className="font-normal whitespace-pre-wrap">{message.content}</div>
 

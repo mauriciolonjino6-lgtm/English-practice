@@ -9,16 +9,17 @@ const MAX_HISTORY = 10
 // ── POST /api/chat/message ─────────────────────────────────────────────────────
 export async function handleMessage(req: Request, res: Response, _next?: NextFunction) {
   try {
-    const { text, userId, sessionId, scenario = 'free-talk', history: clientHistory } = (req.body || {}) as {
-      text:      string
-      userId:    string
-      sessionId: string | null
-      scenario?: string
-      history?:  AIMessageItem[]
+    const { text = '', userId, sessionId, scenario = 'free-talk', history: clientHistory, image } = (req.body || {}) as {
+      text?:      string
+      userId?:    string
+      sessionId?: string | null
+      scenario?:  string
+      history?:   AIMessageItem[]
+      image?:     { mimeType: string; data: string }
     }
 
-    if (!text?.trim()) {
-      res.status(400).json({ error: 'text is required' })
+    if (!text?.trim() && !image?.data) {
+      res.status(400).json({ error: 'text or image is required' })
       return
     }
 
@@ -54,15 +55,15 @@ export async function handleMessage(req: Request, res: Response, _next?: NextFun
       console.warn('[DB non-critical warning]:', dbErr)
     }
 
-    // Call AI with scenario and student level
-    const aiResult = await processChat(text, history, scenario, userLevel)
+    // Call AI with scenario, student level and optional image
+    const aiResult = await processChat(text || '', history, scenario, userLevel, image)
 
     // Save session context and vocab if DB is available
     try {
       if (session) {
         const updatedHistory: AIMessageItem[] = [
           ...history,
-          { role: 'user',      content: text },
+          { role: 'user',      content: text || '[Sent an image/document]' },
           { role: 'assistant', content: aiResult.message },
         ]
         await session.update({ context: updatedHistory })

@@ -14,6 +14,10 @@ import {
   Code,
   ChevronDown,
   Check,
+  Camera,
+  Image as ImageIcon,
+  Paperclip,
+  FileText,
 } from 'lucide-react'
 import toast from 'react-hot-toast'
 import { clsx } from 'clsx'
@@ -72,6 +76,13 @@ const DEFAULT_SUGGESTIONS: Record<ScenarioType, SuggestedReply[]> = {
   ],
 }
 
+interface AttachedFile {
+  name:       string
+  mimeType:   string
+  data:       string // base64 without prefix
+  previewUrl: string
+}
+
 export default function ChatInterface() {
   const {
     userId,
@@ -96,6 +107,8 @@ export default function ChatInterface() {
   const [activeCorrection, setActiveCorrection] = useState<Correction | null>(null)
   const [showScrollBtn, setShowScrollBtn] = useState(false)
   const [showHistoryModal, setShowHistoryModal] = useState(false)
+  const [showAttachMenu, setShowAttachMenu] = useState(false)
+  const [attachedFile, setAttachedFile] = useState<AttachedFile | null>(null)
   const [activeSuggestions, setActiveSuggestions] = useState<SuggestedReply[]>(
     DEFAULT_SUGGESTIONS[activeScenario] || []
   )
@@ -103,6 +116,8 @@ export default function ChatInterface() {
   const bottomRef = useRef<HTMLDivElement>(null)
   const listRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLTextAreaElement>(null)
+  const cameraInputRef = useRef<HTMLInputElement>(null)
+  const fileInputRef = useRef<HTMLInputElement>(null)
 
   const { recordingState, audioLevel, startRecording, stopRecording, cancelRecording } = useVoiceRecorder()
 
@@ -113,7 +128,7 @@ export default function ChatInterface() {
 
   useEffect(() => {
     scrollToBottom()
-  }, [messages.length, activeCorrection, scrollToBottom])
+  }, [messages.length, activeCorrection, attachedFile, scrollToBottom])
 
   // Handle Scenario Change
   const handleSelectScenario = (scId: ScenarioType) => {
@@ -126,13 +141,49 @@ export default function ChatInterface() {
     }
   }
 
-  // ── Send text message with Full Memory ──────────────────────────────────────
+  // ── Handle file selection (Photo / Document) ───────────────────────────────
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+
+    if (file.size > 8 * 1024 * 1024) {
+      toast.error('El archivo excede el límite de 8MB.')
+      return
+    }
+
+    const reader = new FileReader()
+    reader.onload = () => {
+      const result = reader.result as string
+      const base64Data = result.split(',')[1] || ''
+      setAttachedFile({
+        name:       file.name,
+        mimeType:   file.type || 'image/jpeg',
+        data:       base64Data,
+        previewUrl: result,
+      })
+      setShowAttachMenu(false)
+      toast.success('Foto/archivo listo para enviar a Mr. Davies')
+    }
+    reader.readAsDataURL(file)
+    e.target.value = ''
+  }
+
+  // ── Send text/image message with Full Memory ────────────────────────────────
   const handleSend = useCallback(async (customText?: string) => {
     const textToSend = (customText ?? inputText).trim()
-    if (!textToSend || isTyping) return
+    const currentAttachment = attachedFile
+
+    if ((!textToSend && !currentAttachment) || isTyping) return
 
     setInputText('')
-    addMessage(makeMsg('user', textToSend))
+    setAttachedFile(null)
+    setShowAttachMenu(false)
+
+    // User message in chat
+    const userDisplayContent = textToSend || (currentAttachment ? '📷 [Foto/Documento adjunto]' : '')
+    addMessage(makeMsg('user', userDisplayContent, {
+      imageUrl: currentAttachment?.previewUrl,
+    }))
 
     const loadingId = uuidv4()
     addMessage({ id: loadingId, role: 'assistant', content: '', timestamp: new Date().toISOString(), isLoading: true })
@@ -151,6 +202,12 @@ export default function ChatInterface() {
         sessionId,
         scenario: activeScenario,
         history,
+        image: currentAttachment
+          ? {
+              mimeType: currentAttachment.mimeType,
+              data:     currentAttachment.data,
+            }
+          : undefined,
       })
 
       if (res.sessionId && !sessionId) setSessionId(res.sessionId)
@@ -180,7 +237,7 @@ export default function ChatInterface() {
       setIsTyping(false)
       setTimeout(() => scrollToBottom(), 100)
     }
-  }, [inputText, isTyping, messages, user?.id, userId, sessionId, activeScenario, addMessage, updateMessage, setIsTyping, setSessionId, scrollToBottom])
+  }, [inputText, attachedFile, isTyping, messages, user?.id, userId, sessionId, activeScenario, addMessage, updateMessage, setIsTyping, setSessionId, scrollToBottom])
 
   // ── Send audio message with Full Memory ─────────────────────────────────────
   const handleVoiceStop = useCallback(async () => {
@@ -230,6 +287,23 @@ export default function ChatInterface() {
 
   return (
     <div className="flex flex-col h-full overflow-hidden relative">
+      {/* Hidden File / Camera Inputs */}
+      <input
+        ref={cameraInputRef}
+        type="file"
+        accept="image/*"
+        capture="environment"
+        className="hidden"
+        onChange={handleFileChange}
+      />
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept="image/*,.pdf,.doc,.docx,.txt"
+        className="hidden"
+        onChange={handleFileChange}
+      />
+
       {/* Top Actions Bar: Multi-Chat & Scenarios */}
       <div className="px-3 sm:px-4 py-2 bg-white/95 dark:bg-slate-900/95 border-b border-slate-200 dark:border-white/10 backdrop-blur-xl flex flex-col gap-2 shrink-0 z-10 shadow-sm">
         <div className="flex items-center justify-between gap-2">
@@ -313,7 +387,7 @@ export default function ChatInterface() {
             <button
               key={idx}
               onClick={() => handleSend(sug.text)}
-              className="px-3 py-1.5 rounded-xl text-xs bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-brand-500 dark:hover:border-brand-400 text-slate-800 dark:text-slate-100 shadow-sm whitespace-nowrap transition-all text-left group active:scale-95"
+              className="px-3.5 py-1.5 rounded-xl text-xs bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-brand-500 dark:hover:border-brand-400 text-slate-800 dark:text-slate-100 shadow-sm whitespace-nowrap transition-all text-left group active:scale-95"
               title={sug.hint}
             >
               <span className="font-semibold block text-slate-900 dark:text-white">{sug.text}</span>
@@ -337,9 +411,85 @@ export default function ChatInterface() {
         </div>
       )}
 
+      {/* Attached File Preview Banner */}
+      {attachedFile && (
+        <div className="px-3 py-2 bg-brand-50 dark:bg-brand-950/60 border-t border-brand-200 dark:border-brand-800/60 flex items-center justify-between gap-3 shrink-0 z-20">
+          <div className="flex items-center gap-2.5 overflow-hidden">
+            {attachedFile.previewUrl.startsWith('data:image/') ? (
+              <img
+                src={attachedFile.previewUrl}
+                alt="Miniatura"
+                className="w-10 h-10 rounded-lg object-cover border border-brand-300 dark:border-brand-700 shrink-0 shadow-sm"
+              />
+            ) : (
+              <div className="w-10 h-10 rounded-lg bg-brand-100 dark:bg-brand-900 flex items-center justify-center shrink-0">
+                <FileText size={20} className="text-brand-600 dark:text-brand-300" />
+              </div>
+            )}
+            <div className="truncate">
+              <span className="text-xs font-bold text-slate-900 dark:text-slate-100 block truncate">
+                {attachedFile.name}
+              </span>
+              <span className="text-[10px] font-medium text-brand-700 dark:text-brand-300 block">
+                Adjunto listo para enviar a Mr. Davies
+              </span>
+            </div>
+          </div>
+
+          <button
+            onClick={() => setAttachedFile(null)}
+            className="p-1 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition-colors"
+            title="Quitar archivo adjunto"
+          >
+            <X size={18} />
+          </button>
+        </div>
+      )}
+
       {/* Input area */}
       <div className="p-3 bg-white/95 dark:bg-slate-900/95 border-t border-slate-200 dark:border-white/10 rounded-none shrink-0 safe-pb shadow-lg">
-        <div className="flex items-end gap-2 max-w-3xl mx-auto">
+        <div className="flex items-end gap-2 max-w-3xl mx-auto relative">
+          {/* Attachment / Camera Menu Button */}
+          <div className="relative">
+            <button
+              type="button"
+              onClick={() => setShowAttachMenu((v) => !v)}
+              className="p-3 rounded-2xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 transition-all active:scale-95 shadow-sm"
+              title="Adjuntar foto o documento para Mr. Davies"
+            >
+              <Paperclip size={18} className="text-brand-600 dark:text-brand-400" />
+            </button>
+
+            {/* Popup options */}
+            {showAttachMenu && (
+              <div className="absolute bottom-14 left-0 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl shadow-2xl p-1.5 w-48 z-40 flex flex-col gap-1">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setShowAttachMenu(false)
+                    cameraInputRef.current?.click()
+                  }}
+                  className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold text-slate-800 dark:text-slate-100 hover:bg-brand-50 dark:hover:bg-brand-950/40 hover:text-brand-600 transition-colors w-full text-left"
+                >
+                  <Camera size={16} className="text-brand-600 dark:text-brand-400" />
+                  <span>Tomar foto</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    setShowAttachMenu(false)
+                    fileInputRef.current?.click()
+                  }}
+                  className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold text-slate-800 dark:text-slate-100 hover:bg-brand-50 dark:hover:bg-brand-950/40 hover:text-brand-600 transition-colors w-full text-left"
+                >
+                  <ImageIcon size={16} className="text-brand-600 dark:text-brand-400" />
+                  <span>Subir foto o archivo</span>
+                </button>
+              </div>
+            )}
+          </div>
+
           {/* Voice recorder */}
           <VoiceButton
             state={recordingState}
@@ -362,7 +512,7 @@ export default function ChatInterface() {
                   handleSend()
                 }
               }}
-              placeholder="Escribe en inglés o usa el micrófono..."
+              placeholder={attachedFile ? "Escribe un comentario sobre la imagen..." : "Escribe en inglés, usa el micrófono o adjunta..."}
               className="w-full rounded-xl px-4 py-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white placeholder:text-slate-400 focus:bg-white dark:focus:bg-slate-800 focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500/20 resize-none py-3 pr-10 text-sm max-h-32 transition-all shadow-sm"
             />
           </div>
@@ -370,7 +520,7 @@ export default function ChatInterface() {
           {/* Send button */}
           <button
             onClick={() => handleSend()}
-            disabled={!inputText.trim() || isTyping}
+            disabled={(!inputText.trim() && !attachedFile) || isTyping}
             className="p-3 rounded-2xl bg-brand-600 text-white disabled:opacity-40 disabled:scale-100 hover:bg-brand-700 active:scale-95 transition-all shadow-md shadow-brand-500/20"
           >
             <Send size={18} />

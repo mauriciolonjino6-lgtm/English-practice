@@ -47,6 +47,7 @@ export const sendChatMessage = async (
     sessionId:  string | null
     scenario?:  string
     history?:   { role: string; content: string }[]
+    image?:     { mimeType: string; data: string }
   }
 ): Promise<ChatResponse> => {
   const { data } = await http.post<ChatResponse>('/chat/message', payload)

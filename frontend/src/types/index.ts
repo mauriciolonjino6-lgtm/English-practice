@@ -29,6 +29,7 @@ export interface Message {
   id:                string
   role:              MessageRole
   content:           string
+  imageUrl?:         string
   translation?:      string
   suggestedReplies?: SuggestedReply[]
   timestamp:         string

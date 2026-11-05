@@ -23,20 +23,23 @@ export function buildSystemPrompt(scenario = 'free-talk'): string {
 Context: ${scenarioContext}
 
 CRITICAL BEHAVIORAL RULES:
-1. NO GENERIC REPETITION: Never reply with canned, robotic phrases like "I understood your message! Let's practice saying that in another way." Every response must directly and uniquely address the user's specific input.
-2. ACTIVE CORRECTION: Analyze the user's text. If there are grammatical, structural, or lexical errors, provide a clear, friendly correction in English (with Spanish explanations if helpful). If the sentence is perfect, acknowledge it naturally or set correction to null.
+1. NO GENERIC REPETITION: Never reply with canned, robotic phrases like "I understood your message! Let's practice saying that in another way." Every response must directly and uniquely address the user's specific input or image.
+2. ACTIVE CORRECTION & SEPARATION OF FIELDS (STRICT):
+   - In "corrected_sentence": Provide ONLY the clean, natural corrected English sentence (e.g. "I ate sushi in the evening, and I didn't have breakfast in the morning."). Do NOT include explanations here. If the student made no mistake, set this to null.
+   - In "explanation": Explain WHY and the grammar rule in clear, friendly Spanish so the student understands the rule. Do NOT repeat the whole sentence verbatim here; explain the grammar principle. If no mistake, set this to null.
 3. CONVERSATIONAL CONTINUITY: Keep the flow alive by asking exactly one relevant, open-ended follow-up question tied to the user's topic.
 4. BILINGUAL SCAFFOLDING & TRANSLATION: If the user writes in Spanish or gets stuck, provide the English translation or structure briefly. Always provide the full Spanish translation of your reply and follow_up_question in the "translation" field so the student can toggle translation.
 5. BRITISH CONTEXT: Incorporate British vocabulary, idioms, slang, and cultural references where natural.
+6. MULTIMODAL & DOCUMENT ASSISTANCE: If an image or file is attached (homework, book photo, document, sign, handwritten text), inspect the image carefully, transcribe/evaluate the English, correct any errors, explain the exercises, and provide constructive feedback.
 
 STRICT OUTPUT FORMAT (JSON ONLY):
-You are communicating with a Node.js/Express API. You must return your response EXCLUSIVELY as a valid JSON object. Do not wrap it in markdown blockquotes (\`\`\`json). Use the following structure:
-
+You must return your response EXCLUSIVELY as a valid JSON object matching this exact schema:
 {
-  "correction": "If the user made a mistake, provide the correction and explanation here. If the user's input was flawless, set this to null.",
+  "corrected_sentence": "Write ONLY the clean corrected English sentence here without explanations. If flawless, set this to null.",
+  "explanation": "Explain the grammar rule and WHY in clear, friendly Spanish so the student learns. If flawless, set this to null.",
   "reply": "Your conversational response continuing the dialogue naturally in British English.",
   "follow_up_question": "Your engaging follow-up question in British English.",
-  "translation": "Traducción completa y fluida en español de tu reply y follow_up_question (ambas partes deben estar traducidas al español para el alumno)."
+  "translation": "Traducción completa y fluida en español de tu reply y follow_up_question."
 }`
 }
 
@@ -45,8 +48,15 @@ export interface AIMessageItem {
   content: string
 }
 
+export interface ImageData {
+  mimeType: string
+  data:     string // base64
+}
+
 export interface RawProfessorResponse {
-  correction: string | null
+  corrected_sentence?: string | null
+  explanation?: string | null
+  correction?: string | null
   reply: string
   follow_up_question: string
   translation?: string
@@ -87,10 +97,11 @@ function cleanJson(raw: string): string {
 }
 
 export async function processChat(
-  userInput:   string,
-  history:     AIMessageItem[],
-  scenario   = 'free-talk',
-  _studentLevel = 'A1'
+  userInput:    string,
+  history:      AIMessageItem[],
+  scenario    = 'free-talk',
+  _studentLevel = 'A1',
+  imageData?:   ImageData
 ): Promise<AIResponse> {
   const apiKey = process.env.GEMINI_API_KEY || ENV.GEMINI_API_KEY
 
@@ -143,17 +154,33 @@ export async function processChat(
         generationConfig: {
           responseMimeType: 'application/json',
           temperature:      0.7,
-          maxOutputTokens:  600,
+          maxOutputTokens:  700,
         },
       })
 
       const chat = model.startChat({ history: geminiHistory })
 
       const timeoutPromise = new Promise<never>((_, reject) =>
-        setTimeout(() => reject(new Error(`AI generation timed out on model ${modelName}`)), 7000)
+        setTimeout(() => reject(new Error(`AI generation timed out on model ${modelName}`)), 8500)
       )
 
-      const result = await Promise.race([chat.sendMessage(userInput), timeoutPromise])
+      let sendPayload: any = userInput || "Hello Professor Davies."
+      if (imageData && imageData.data) {
+        const textPrompt = userInput?.trim()
+          ? `${userInput}\n(Note: I have attached an image/document. Please inspect it carefully to help with my English)`
+          : "Please inspect this attached image/document carefully. Read any English text or exercises, correct any errors, explain the grammar, and teach me."
+        sendPayload = [
+          textPrompt,
+          {
+            inlineData: {
+              mimeType: imageData.mimeType || 'image/jpeg',
+              data:     imageData.data,
+            },
+          },
+        ]
+      }
+
+      const result = await Promise.race([chat.sendMessage(sendPayload), timeoutPromise])
       const raw    = result.response.text()
 
       let parsed: RawProfessorResponse
@@ -162,7 +189,8 @@ export async function processChat(
       } catch (parseErr) {
         console.warn('[AI JSON Parse Warning] Raw output was:', raw)
         parsed = {
-          correction: null,
+          corrected_sentence: null,
+          explanation: null,
           reply: raw.trim(),
           follow_up_question: "What else would you like to discuss today?",
         }
@@ -173,11 +201,12 @@ export async function processChat(
       const fullMessage = questionText ? `${replyText}\n\n${questionText}` : replyText
       const translationText = parsed.translation?.trim() || ''
 
+      const cleanCorrected = (parsed.corrected_sentence || parsed.correction || '').trim()
+      const cleanExplanation = (parsed.explanation || '').trim()
       const hasCorrection = Boolean(
-        parsed.correction &&
-        typeof parsed.correction === 'string' &&
-        parsed.correction.trim() !== '' &&
-        parsed.correction.trim().toLowerCase() !== 'null'
+        cleanCorrected &&
+        cleanCorrected.toLowerCase() !== 'null' &&
+        cleanCorrected !== ''
       )
 
       return {
@@ -185,13 +214,13 @@ export async function processChat(
         reply: replyText,
         follow_up_question: questionText,
         translation: translationText,
-        rawCorrection: parsed.correction ?? null,
+        rawCorrection: cleanCorrected || null,
         correction: {
           hasError:    hasCorrection,
-          original:    hasCorrection ? userInput : '',
-          corrected:   hasCorrection ? parsed.correction! : '',
-          explanation: hasCorrection ? parsed.correction! : '',
-          rule:        hasCorrection ? "Professor Davies' Advice" : '',
+          original:    hasCorrection ? (userInput || 'Imagen adjunta') : '',
+          corrected:   hasCorrection ? cleanCorrected : '',
+          explanation: hasCorrection ? (cleanExplanation || "Practica diciendo la frase en su forma correcta.") : '',
+          rule:        hasCorrection ? "Regla Gramatical Británica" : '',
         },
         vocabulary: [],
         taskStatus: 'ongoing',
