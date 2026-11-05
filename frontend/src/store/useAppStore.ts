@@ -40,9 +40,10 @@ const safeStorage = {
 }
 
 export type ScenarioType = 'free-talk' | 'cafe' | 'airport' | 'interview' | 'directions' | 'tech'
+export type CEFRLevel = 'A2' | 'B1' | 'B2' | 'C1' | 'C2'
 
 export interface LevelProgressState {
-  currentLevel: 'A2' | 'B1' | 'B2'
+  currentLevel: CEFRLevel
   completedLessons: string[]
   lessonScores: Record<string, number>
   passedExams: string[]
@@ -122,7 +123,7 @@ interface AppState {
   levelProgress: LevelProgressState
   completeLesson: (lessonId: string, score: number) => void
   recordExamResult: (examId: string, score: number, passed: boolean) => void
-  setCurrentLevel: (level: 'A2' | 'B1' | 'B2') => void
+  setCurrentLevel: (level: CEFRLevel) => void
   resetLevelProgress: () => void
 
   // ── UI ─────────────────────────────────────────────
@@ -192,7 +193,15 @@ export const useAppStore = create<AppState>()(
           const passedList = passed && !s.levelProgress.passedExams.includes(examId)
             ? [...s.levelProgress.passedExams, examId]
             : s.levelProgress.passedExams
-          const nextLevel = passed && examId === 'final-exam-a2' ? 'B1' : s.levelProgress.currentLevel
+
+          const NEXT_LEVEL_MAP: Record<string, CEFRLevel> = {
+            'final-exam-a2': 'B1',
+            'final-exam-b1': 'B2',
+            'final-exam-b2': 'C1',
+            'final-exam-c1': 'C2',
+            'final-exam-c2': 'C2',
+          }
+          const nextLevel = passed && NEXT_LEVEL_MAP[examId] ? NEXT_LEVEL_MAP[examId] : s.levelProgress.currentLevel
           const currentXp = s.user?.xp || s.progress?.xp || 20
           const newXp = passed ? currentXp + 100 : currentXp + 30
           return {
@@ -203,7 +212,7 @@ export const useAppStore = create<AppState>()(
                 ...s.levelProgress.examScores,
                 [examId]: Math.max(score, s.levelProgress.examScores[examId] || 0),
               },
-              currentLevel: nextLevel as 'A2' | 'B1' | 'B2',
+              currentLevel: nextLevel,
               lastExamDate: new Date().toISOString(),
             },
             user: s.user ? { ...s.user, xp: newXp, level: nextLevel } : null,
@@ -212,7 +221,7 @@ export const useAppStore = create<AppState>()(
         })
       },
 
-      setCurrentLevel: (level: 'A2' | 'B1' | 'B2') => {
+      setCurrentLevel: (level: CEFRLevel) => {
         set((s) => ({
           levelProgress: { ...s.levelProgress, currentLevel: level },
           user: s.user ? { ...s.user, level } : null,

@@ -1,58 +1,107 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { GraduationCap, CheckCircle2, Play, Award, ChevronRight, Trophy } from 'lucide-react'
+import { GraduationCap, CheckCircle2, Play, Award, ChevronRight, Trophy, Sparkles, BookOpen } from 'lucide-react'
 import { clsx } from 'clsx'
-import { CURRICULUM_A2, FINAL_A2_EXAM, type Lesson, type Exam, type Unit } from '@/data/curriculumA2'
+import { ALL_LEVELS_DATA, type Lesson, type Exam, type Unit, type CEFRLevel } from '@/data/curriculumA2'
 import { useAppStore } from '@/store/useAppStore'
 import LessonPlayer from './LessonPlayer'
 import ExamModal from './ExamModal'
 
+const LEVELS_LIST: CEFRLevel[] = ['A2', 'B1', 'B2', 'C1', 'C2']
+
 export default function CurriculumModule() {
-  const { levelProgress } = useAppStore()
+  const { levelProgress, setCurrentLevel } = useAppStore()
+  const [selectedLevel, setSelectedLevel] = useState<CEFRLevel>(levelProgress.currentLevel || 'A2')
   const [activeLesson, setActiveLesson] = useState<Lesson | null>(null)
   const [activeExam, setActiveExam] = useState<Exam | null>(null)
 
-  // Calculate global A2 progress
-  const allA2Lessons = CURRICULUM_A2.flatMap((u) => u.lessons)
-  const completedA2Count = allA2Lessons.filter((l) => levelProgress.completedLessons.includes(l.id)).length
-  const totalLessons = allA2Lessons.length
-  const progressPercent = Math.round((completedA2Count / totalLessons) * 100)
-  const hasPassedFinal = levelProgress.passedExams.includes(FINAL_A2_EXAM.id)
+  const activeDescriptor = ALL_LEVELS_DATA[selectedLevel] || ALL_LEVELS_DATA['A2']
+
+  // Progress for the currently viewed level
+  const allCurrentLessons = activeDescriptor.units.flatMap((u) => u.lessons)
+  const completedCount = allCurrentLessons.filter((l) => levelProgress.completedLessons.includes(l.id)).length
+  const totalLessons = allCurrentLessons.length
+  const progressPercent = totalLessons > 0 ? Math.round((completedCount / totalLessons) * 100) : 0
+  const hasPassedFinal = levelProgress.passedExams.includes(activeDescriptor.finalExam.id)
 
   return (
     <div className="h-full overflow-y-auto scrollbar-hide p-4 sm:p-6 pb-24 max-w-3xl mx-auto space-y-6">
+      {/* Level Selector Tabs (A2 -> C2) */}
+      <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-hide">
+        {LEVELS_LIST.map((lvl) => {
+          const isSelected = selectedLevel === lvl
+          const isUserCurrent = levelProgress.currentLevel === lvl
+          const descriptor = ALL_LEVELS_DATA[lvl]
+          const isCertified = levelProgress.passedExams.includes(descriptor.finalExam.id)
+
+          return (
+            <button
+              key={lvl}
+              onClick={() => {
+                setSelectedLevel(lvl)
+                setCurrentLevel(lvl)
+              }}
+              className={clsx(
+                'flex items-center gap-2 px-4 py-2.5 rounded-2xl border text-xs font-bold transition-all shrink-0 select-none shadow-sm',
+                isSelected
+                  ? 'bg-gradient-to-r from-brand-600 to-indigo-600 text-white border-transparent shadow-brand-500/25 scale-[1.02]'
+                  : 'bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 border-slate-200 dark:border-white/10 hover:border-brand-400'
+              )}
+            >
+              <span className={clsx(
+                'px-1.5 py-0.5 rounded-lg text-[10px] font-black',
+                isSelected ? 'bg-white/20 text-white' : 'bg-brand-100 dark:bg-brand-950/60 text-brand-700 dark:text-brand-300'
+              )}>
+                {lvl}
+              </span>
+              <span>{descriptor.title}</span>
+              {isCertified && (
+                <CheckCircle2 size={14} className="text-emerald-400 shrink-0" />
+              )}
+              {isUserCurrent && !isCertified && (
+                <span className="w-2 h-2 rounded-full bg-amber-400 shrink-0 animate-ping" />
+              )}
+            </button>
+          )
+        })}
+      </div>
+
       {/* Header Level Banner */}
       <motion.div
+        key={selectedLevel}
         initial={{ opacity: 0, y: 15 }}
         animate={{ opacity: 1, y: 0 }}
-        className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-brand-600 via-indigo-700 to-purple-800 p-6 text-white shadow-xl"
+        className={clsx(
+          'relative overflow-hidden rounded-3xl p-6 text-white shadow-xl bg-gradient-to-br',
+          activeDescriptor.accentColor
+        )}
       >
         <div className="relative z-10">
           <div className="flex items-center justify-between gap-2 mb-2">
             <span className="px-3 py-1 rounded-full bg-white/20 backdrop-blur-md text-xs font-black uppercase tracking-wider flex items-center gap-1.5">
               <GraduationCap size={15} />
-              Ruta Estructurada • Nivel A2 (Pre-Intermedio)
+              {activeDescriptor.title} • {activeDescriptor.subtitle}
             </span>
             <div className="flex items-center gap-1 text-amber-300 font-extrabold text-xs">
               <Trophy size={14} />
-              <span>{levelProgress.passedExams.length} Certificados</span>
+              <span>{hasPassedFinal ? 'Nivel Certificado' : 'En Curso'}</span>
             </div>
           </div>
 
           <h1 className="text-2xl sm:text-3xl font-black mt-1">
-            Aprende Inglés Paso a Paso
+            {activeDescriptor.title}: {activeDescriptor.badgeText}
           </h1>
-          <p className="text-xs sm:text-sm text-indigo-100 mt-1 max-w-lg leading-relaxed">
-            Metodología Communicative Language Teaching (CLT) con ejercicios interactivos de comprensión auditiva, expresión oral y gramática real en contexto británico.
+          <p className="text-xs sm:text-sm text-white/90 mt-1 max-w-lg leading-relaxed">
+            {activeDescriptor.description}
           </p>
 
           {/* Progress Bar inside Banner */}
-          <div className="mt-5 bg-white/10 p-3.5 rounded-2xl backdrop-blur-md border border-white/10">
+          <div className="mt-5 bg-white/15 p-3.5 rounded-2xl backdrop-blur-md border border-white/15">
             <div className="flex items-center justify-between text-xs font-bold mb-1.5">
-              <span>Progreso del Nivel A2</span>
-              <span>{completedA2Count} de {totalLessons} lecciones ({progressPercent}%)</span>
+              <span>Progreso de {activeDescriptor.title}</span>
+              <span>{completedCount} de {totalLessons} lecciones ({progressPercent}%)</span>
             </div>
-            <div className="w-full h-3 bg-black/20 rounded-full overflow-hidden">
+            <div className="w-full h-3 bg-black/25 rounded-full overflow-hidden">
               <motion.div
                 className="h-full bg-gradient-to-r from-amber-400 to-emerald-400 rounded-full"
                 initial={{ width: 0 }}
@@ -69,7 +118,7 @@ export default function CurriculumModule() {
 
       {/* Units List */}
       <div className="space-y-6">
-        {CURRICULUM_A2.map((unit: Unit) => {
+        {activeDescriptor.units.map((unit: Unit) => {
           const unitCompletedCount = unit.lessons.filter((l) => levelProgress.completedLessons.includes(l.id)).length
           const unitExamPassed = levelProgress.passedExams.includes(unit.exam.id)
 
@@ -212,6 +261,7 @@ export default function CurriculumModule() {
 
       {/* Final Level Certification Card */}
       <motion.div
+        key={`exam-${selectedLevel}`}
         initial={{ opacity: 0, scale: 0.98 }}
         animate={{ opacity: 1, scale: 1 }}
         className="rounded-3xl p-6 sm:p-8 bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 text-white shadow-2xl relative overflow-hidden text-center space-y-4"
@@ -222,33 +272,33 @@ export default function CurriculumModule() {
 
         <div>
           <span className="px-3 py-1 rounded-full bg-black/20 text-xs font-black uppercase tracking-wider inline-block mb-1">
-            Evaluación Periódica Final
+            Evaluación Periódica • {activeDescriptor.title}
           </span>
           <h2 className="text-2xl sm:text-3xl font-black">
-            Examen Integral de Certificación A2
+            {activeDescriptor.finalExam.title}
           </h2>
           <p className="text-xs sm:text-sm text-amber-100 max-w-md mx-auto mt-1">
-            Valida tus conocimientos completos de nivel A2 con el examen de Oxford para desbloquear el Nivel B1.
+            {activeDescriptor.finalExam.description}
           </p>
         </div>
 
         {hasPassedFinal ? (
           <div className="bg-white/20 backdrop-blur-md p-4 rounded-2xl max-w-sm mx-auto border border-white/20">
             <p className="text-xs font-bold text-white uppercase flex items-center justify-center gap-1.5">
-              <Award size={16} /> ¡Certificado A2 Obtenido con Éxito!
+              <Award size={16} /> ¡Certificado {selectedLevel} Obtenido!
             </p>
             <p className="text-[11px] text-amber-100 mt-1">
-              Felicidades, has completado y certificado este nivel.
+              Felicidades, has demostrado competencia acreditada por Oxford en este nivel.
             </p>
           </div>
         ) : null}
 
         <button
-          onClick={() => setActiveExam(FINAL_A2_EXAM)}
+          onClick={() => setActiveExam(activeDescriptor.finalExam)}
           className="px-8 py-4 rounded-2xl bg-white text-slate-900 font-extrabold text-sm shadow-xl hover:bg-amber-50 transition-all active:scale-98 inline-flex items-center gap-2"
         >
           <Award size={18} className="text-amber-600" />
-          <span>{hasPassedFinal ? 'Volver a presentar examen' : 'Presentar Examen de Certificación A2'}</span>
+          <span>{hasPassedFinal ? `Repetir Examen de ${selectedLevel}` : `Presentar Examen de Certificación ${selectedLevel}`}</span>
         </button>
       </motion.div>
 
@@ -257,9 +307,7 @@ export default function CurriculumModule() {
         <LessonPlayer
           lesson={activeLesson}
           onClose={() => setActiveLesson(null)}
-          onComplete={() => {
-            // Modal shows completion internally
-          }}
+          onComplete={() => {}}
         />
       )}
 
@@ -267,12 +315,9 @@ export default function CurriculumModule() {
         <ExamModal
           exam={activeExam}
           onClose={() => setActiveExam(null)}
-          onComplete={() => {
-            // Modal shows result internally
-          }}
+          onComplete={() => {}}
         />
       )}
     </div>
   )
 }
-
