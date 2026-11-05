@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { GraduationCap, CheckCircle2, Play, Award, ChevronRight, Trophy, Sparkles, BookOpen } from 'lucide-react'
+import { GraduationCap, CheckCircle2, Play, Award, ChevronRight, Trophy } from 'lucide-react'
 import { clsx } from 'clsx'
 import { ALL_LEVELS_DATA, type Lesson, type Exam, type Unit, type CEFRLevel } from '@/data/curriculumA2'
 import { useAppStore } from '@/store/useAppStore'
