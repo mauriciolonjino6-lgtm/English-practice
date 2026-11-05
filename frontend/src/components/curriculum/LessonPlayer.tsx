@@ -206,11 +206,11 @@ export default function LessonPlayer({ lesson, onClose, onComplete }: Props) {
               currentExercise.type === 'sentence-order' && 'bg-purple-100 dark:bg-purple-950/60 text-purple-700 dark:text-purple-300',
               currentExercise.type === 'multiple-choice' && 'bg-indigo-100 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300'
             )}>
-              {currentExercise.type === 'listening' && '🎧 Comprensión Auditiva'}
-              {currentExercise.type === 'speaking' && '🗣️ Expresión Oral'}
-              {currentExercise.type === 'fill-blank' && '✏️ Completar Espacio'}
-              {currentExercise.type === 'sentence-order' && '🧩 Ordenar la Oración'}
-              {currentExercise.type === 'multiple-choice' && '🎯 Opción Múltiple'}
+              {currentExercise.type === 'listening' && 'Comprensión Auditiva'}
+              {currentExercise.type === 'speaking' && 'Expresión Oral'}
+              {currentExercise.type === 'fill-blank' && 'Completar Espacio'}
+              {currentExercise.type === 'sentence-order' && 'Ordenar la Oración'}
+              {currentExercise.type === 'multiple-choice' && 'Opción Múltiple'}
             </span>
 
             {currentExercise.hint && (
@@ -386,7 +386,7 @@ export default function LessonPlayer({ lesson, onClose, onComplete }: Props) {
           {/* Hint Card */}
           {currentExercise.hint && !hasChecked && (
             <p className="text-xs text-slate-500 dark:text-slate-400 italic bg-amber-500/10 p-2.5 rounded-xl border border-amber-500/20">
-              💡 <strong>Pista del profesor:</strong> {currentExercise.hint}
+              <strong>Pista del profesor:</strong> {currentExercise.hint}
             </p>
           )}
 

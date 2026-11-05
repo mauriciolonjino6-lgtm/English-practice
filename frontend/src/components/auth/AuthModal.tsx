@@ -10,13 +10,15 @@ const LEVELS = [
   { id: 'A2', name: 'A2 · Básico', desc: 'Frases y preguntas cotidianas' },
   { id: 'B1', name: 'B1 · Intermedio', desc: 'Conversaciones fluidas de viajes y trabajo' },
   { id: 'B2', name: 'B2 · Avanzado', desc: 'Debates, modismos y temas complejos' },
+  { id: 'C1', name: 'C1 · Dominio Eficaz', desc: 'Inversión sintáctica, oraciones hendidas y diplomacia' },
+  { id: 'C2', name: 'C2 · Maestría Oxford', desc: 'Retórica de élite, atenuación y precisión nativa' },
 ]
 
 const GOALS = [
-  '💬 Conversación Diaria',
-  '✈️ Viajes & Aeropuertos',
-  '💼 Trabajo & Entrevistas',
-  '🎓 Estudio & Certificaciones',
+  'Conversación Diaria',
+  'Viajes y Aeropuertos',
+  'Trabajo y Entrevistas',
+  'Estudio y Certificaciones',
 ]
 
 export default function AuthModal() {
@@ -24,7 +26,7 @@ export default function AuthModal() {
   const [name, setName] = useState(user?.name ?? '')
   const [email, setEmail] = useState(user?.email ?? '')
   const [level, setLevel] = useState(user?.level ?? 'A1')
-  const [goal, setGoal] = useState(user?.goal ?? '💬 Conversación Diaria')
+  const [goal, setGoal] = useState(user?.goal ?? 'Conversación Diaria')
   const [loading, setLoading] = useState(false)
 
   if (!isAuthModalOpen) return null

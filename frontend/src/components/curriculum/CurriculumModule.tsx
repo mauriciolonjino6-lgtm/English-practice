@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { GraduationCap, CheckCircle2, Play, Award, ChevronRight, Trophy } from 'lucide-react'
+import { GraduationCap, CheckCircle2, Play, Award, ChevronRight, Trophy, Headphones, Mic, PenTool } from 'lucide-react'
 import { clsx } from 'clsx'
 import { ALL_LEVELS_DATA, type Lesson, type Exam, type Unit, type CEFRLevel } from '@/data/curriculumA2'
 import { useAppStore } from '@/store/useAppStore'
@@ -183,18 +183,18 @@ export default function CurriculumModule() {
                               {lesson.title}
                             </span>
                             {lesson.type === 'listening' && (
-                              <span className="px-1.5 py-0.5 rounded text-[10px] font-semibold bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300">
-                                🎧 Escuchar
+                              <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-semibold bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300">
+                                <Headphones className="w-2.5 h-2.5" /> Escuchar
                               </span>
                             )}
                             {lesson.type === 'speaking' && (
-                              <span className="px-1.5 py-0.5 rounded text-[10px] font-semibold bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300">
-                                🗣️ Hablar
+                              <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-semibold bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300">
+                                <Mic className="w-2.5 h-2.5" /> Hablar
                               </span>
                             )}
                             {lesson.type === 'grammar' && (
-                              <span className="px-1.5 py-0.5 rounded text-[10px] font-semibold bg-purple-100 dark:bg-purple-900/40 text-purple-700 dark:text-purple-300">
-                                ✏️ Gramática
+                              <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-semibold bg-purple-100 dark:bg-purple-900/40 text-purple-700 dark:text-purple-300">
+                                <PenTool className="w-2.5 h-2.5" /> Gramática
                               </span>
                             )}
                           </div>

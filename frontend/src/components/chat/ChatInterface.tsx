@@ -246,7 +246,7 @@ export default function ChatInterface() {
     setShowAttachMenu(false)
 
     // User message in chat
-    const userDisplayContent = textToSend || (currentAttachment ? '📷 [Foto/Documento adjunto]' : '')
+    const userDisplayContent = textToSend || (currentAttachment ? '[Foto/Documento adjunto]' : '')
     try {
       addMessage(makeMsg('user', userDisplayContent, {
         imageUrl: currentAttachment?.previewUrl,
@@ -315,7 +315,7 @@ export default function ChatInterface() {
     if (!blob) return
 
     const loadingId = uuidv4()
-    addMessage(makeMsg('user', '🎙️ [Nota de voz enviada...]'))
+    addMessage(makeMsg('user', '[Nota de voz]'))
     addMessage({ id: loadingId, role: 'assistant', content: '', timestamp: new Date().toISOString(), isLoading: true })
     setIsTyping(true)
 
