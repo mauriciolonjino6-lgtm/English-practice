@@ -166,8 +166,9 @@ export async function processChat(
 
       const chat = model.startChat({ history: geminiHistory })
 
+      const timeoutMs = imageData ? 20000 : 10000
       const timeoutPromise = new Promise<never>((_, reject) =>
-        setTimeout(() => reject(new Error(`AI generation timed out on model ${modelName}`)), 8500)
+        setTimeout(() => reject(new Error(`AI generation timed out on model ${modelName}`)), timeoutMs)
       )
 
       let sendPayload: any = userInput || "Hello Professor Davies."

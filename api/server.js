@@ -91464,8 +91464,9 @@ ${text}`;
         }
       });
       const chat = model.startChat({ history: geminiHistory });
+      const timeoutMs = imageData ? 2e4 : 1e4;
       const timeoutPromise = new Promise(
-        (_3, reject2) => setTimeout(() => reject2(new Error(`AI generation timed out on model ${modelName}`)), 8500)
+        (_3, reject2) => setTimeout(() => reject2(new Error(`AI generation timed out on model ${modelName}`)), timeoutMs)
       );
       let sendPayload = userInput || "Hello Professor Davies.";
       if (imageData && imageData.data) {
