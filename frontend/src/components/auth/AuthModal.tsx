@@ -23,10 +23,10 @@ const GOALS = [
 
 export default function AuthModal() {
   const { isAuthModalOpen, setAuthModalOpen, user, setUser, logout } = useAppStore()
-  const [name, setName] = useState(user?.name ?? '')
-  const [email, setEmail] = useState(user?.email ?? '')
-  const [level, setLevel] = useState(user?.level ?? 'A1')
-  const [goal, setGoal] = useState(user?.goal ?? 'Conversación Diaria')
+  const [name, setName] = useState(user?.name || 'Mauricio')
+  const [email, setEmail] = useState(user?.email || 'mauricio@fluent.ai')
+  const [level, setLevel] = useState(user?.level || 'A1')
+  const [goal, setGoal] = useState(user?.goal || 'Conversación Diaria')
   const [loading, setLoading] = useState(false)
 
   if (!isAuthModalOpen) return null

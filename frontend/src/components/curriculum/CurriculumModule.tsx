@@ -7,15 +7,15 @@ import { useAppStore } from '@/store/useAppStore'
 import LessonPlayer from './LessonPlayer'
 import ExamModal from './ExamModal'
 
-const LEVELS_LIST: CEFRLevel[] = ['A2', 'B1', 'B2', 'C1', 'C2']
+const LEVELS_LIST: CEFRLevel[] = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2']
 
 export default function CurriculumModule() {
-  const { levelProgress, setCurrentLevel } = useAppStore()
-  const [selectedLevel, setSelectedLevel] = useState<CEFRLevel>(levelProgress.currentLevel || 'A2')
+  const { levelProgress, setCurrentLevel, user } = useAppStore()
+  const [selectedLevel, setSelectedLevel] = useState<CEFRLevel>(levelProgress.currentLevel || 'A1')
   const [activeLesson, setActiveLesson] = useState<Lesson | null>(null)
   const [activeExam, setActiveExam] = useState<Exam | null>(null)
 
-  const activeDescriptor = ALL_LEVELS_DATA[selectedLevel] || ALL_LEVELS_DATA['A2']
+  const activeDescriptor = ALL_LEVELS_DATA[selectedLevel] || ALL_LEVELS_DATA['A1']
 
   // Progress for the currently viewed level
   const allCurrentLessons = activeDescriptor.units.flatMap((u) => u.lessons)
@@ -26,7 +26,32 @@ export default function CurriculumModule() {
 
   return (
     <div className="h-full overflow-y-auto scrollbar-hide p-4 sm:p-6 pb-24 max-w-3xl mx-auto space-y-6">
-      {/* Level Selector Tabs (A2 -> C2) */}
+      {/* User Status Bar */}
+      <div className="flex items-center justify-between bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 rounded-2xl p-3 px-4 shadow-sm">
+        <div className="flex items-center gap-2.5">
+          <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-brand-600 to-indigo-600 text-white flex items-center justify-center font-bold text-xs shadow-sm">
+            {user?.name?.charAt(0).toUpperCase() || 'M'}
+          </div>
+          <div>
+            <span className="text-xs font-bold text-slate-900 dark:text-white block leading-tight">
+              {user?.name || 'Mauricio'}
+            </span>
+            <span className="text-[10px] text-slate-500 dark:text-slate-400">
+              Active Level: {levelProgress.currentLevel || user?.level || 'A1'}
+            </span>
+          </div>
+        </div>
+        <div className="text-right">
+          <span className="text-xs font-extrabold text-amber-500 block">
+            {user?.xp || 50} XP
+          </span>
+          <span className="text-[10px] text-emerald-600 dark:text-emerald-400 font-semibold">
+            Progress Auto-Saved
+          </span>
+        </div>
+      </div>
+
+      {/* Level Selector Tabs (A1 -> C2) */}
       <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-hide">
         {LEVELS_LIST.map((lvl) => {
           const isSelected = selectedLevel === lvl

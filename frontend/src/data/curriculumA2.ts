@@ -1,5 +1,5 @@
 export type ExerciseType = 'listening' | 'speaking' | 'fill-blank' | 'multiple-choice' | 'sentence-order'
-export type CEFRLevel = 'A2' | 'B1' | 'B2' | 'C1' | 'C2'
+export type CEFRLevel = 'A1' | 'A2' | 'B1' | 'B2' | 'C1' | 'C2'
 
 export interface ExerciseItem {
   id: string
@@ -44,6 +44,654 @@ export interface Unit {
   lessons: Lesson[]
   exam: Exam
 }
+
+
+// ============================================================================
+// NIVEL A1: PRINCIPIANTE (CEFR A1)
+// ============================================================================
+export const CURRICULUM_A1: Unit[] = [
+  {
+    id: 'a1-unit-1',
+    level: 'A1',
+    unitNumber: 1,
+    title: 'Unit 1: Introductions, Alphabet & The Verb To Be',
+    topic: 'Personal Info, Alphabet Spelling and Am/Is/Are',
+    description: 'Learn to greet others, introduce yourself, spell names and master the foundational verb to be with British tutor Emma.',
+    lessons: [
+      {
+        id: 'a1-u1-l1',
+        unitId: 'a1-unit-1',
+        unitTitle: 'Unit 1',
+        title: 'Listening & Speaking: Meeting British Tutor Emma',
+        description: 'Learn foundational greetings and practice introducing yourself in natural British English.',
+        durationMinutes: 5,
+        type: 'listening',
+        exercises: [
+          {
+            id: 'a1-u1-l1-e1',
+            type: 'listening',
+            instruction: 'Listen to tutor Emma\'s introduction and select her city of origin:',
+            prompt: 'Hello! My name is Emma. I am an English teacher, and I am from Oxford in the United Kingdom. Pleased to meet you!',
+            audioText: 'Hello! My name is Emma. I am an English teacher, and I am from Oxford in the United Kingdom. Pleased to meet you!',
+            options: ['Oxford', 'New York', 'Sydney', 'Dublin'],
+            correctAnswer: 'Oxford',
+            hint: 'Listen carefully for the city mentioned after "from".',
+            explanation: 'Emma clearly says: "I am from Oxford in the United Kingdom."'
+          },
+          {
+            id: 'a1-u1-l1-e2',
+            type: 'fill-blank',
+            instruction: 'Complete the sentence with the correct form of the verb "to be":',
+            prompt: 'Hello, my name _____ (be) Mauricio and I am an English student.',
+            options: ['is', 'am', 'are', 'be'],
+            correctAnswer: 'is',
+            explanation: '"My name" is singular (third person: it), so the correct verb is "is".'
+          },
+          {
+            id: 'a1-u1-l1-e3',
+            type: 'speaking',
+            instruction: 'Read aloud with clear, friendly British pronunciation:',
+            prompt: 'Hello Emma, pleased to meet you. I am ready to learn English.',
+            audioText: 'Hello Emma, pleased to meet you. I am ready to learn English.',
+            correctAnswer: 'Hello Emma, pleased to meet you. I am ready to learn English.',
+            hint: 'Pronounce "pleased" smoothly in one syllable ending in a /d/ sound.',
+            explanation: '"Pleased to meet you" is the standard British polite greeting when meeting someone for the first time.'
+          },
+          {
+            id: 'a1-u1-l1-e4',
+            type: 'sentence-order',
+            instruction: 'Arrange the words to form a polite British introduction:',
+            prompt: 'to / Pleased / you / meet / Emma',
+            options: ['Pleased', 'to', 'meet', 'you', 'Emma'],
+            correctAnswer: 'Pleased to meet you Emma',
+            explanation: 'The standard greeting phrase is "Pleased to meet you, Emma."'
+          }
+        ]
+      },
+      {
+        id: 'a1-u1-l2',
+        unitId: 'a1-unit-1',
+        unitTitle: 'Unit 1',
+        title: 'Vocabulary & Spelling: The British Alphabet & Numbers',
+        description: 'Master letters, numbers 1-100, age, and telephone numbers.',
+        durationMinutes: 5,
+        type: 'mixed',
+        exercises: [
+          {
+            id: 'a1-u1-l2-e1',
+            type: 'listening',
+            instruction: 'Listen to the spelling and select the correct British city:',
+            prompt: 'The train is arriving at O - X - F - O - R - D.',
+            audioText: 'The train is arriving at O - X - F - O - R - D.',
+            options: ['Oxford', 'London', 'Bristol', 'Cambridge'],
+            correctAnswer: 'Oxford',
+            explanation: 'O - X - F - O - R - D spells Oxford.'
+          },
+          {
+            id: 'a1-u1-l2-e2',
+            type: 'multiple-choice',
+            instruction: 'How do you correctly state your age in English?',
+            prompt: 'Choose the grammatically accurate sentence:',
+            options: [
+              'I am twenty-five years old.',
+              'I have twenty-five years.',
+              'I am having twenty-five years.',
+              'I have twenty-five years old.'
+            ],
+            correctAnswer: 'I am twenty-five years old.',
+            explanation: 'In English, age is expressed with the verb "to be" (I am / He is), never with "have".'
+          },
+          {
+            id: 'a1-u1-l2-e3',
+            type: 'fill-blank',
+            instruction: 'Complete with the correct number word:',
+            prompt: 'Seven plus five equals _____ (12).',
+            options: ['twelve', 'twenty', 'eleven', 'two'],
+            correctAnswer: 'twelve',
+            explanation: '7 + 5 = 12 (twelve).'
+          },
+          {
+            id: 'a1-u1-l2-e4',
+            type: 'speaking',
+            instruction: 'Pronounce the numbers clearly:',
+            prompt: 'One, two, three, four, five, six, seven, eight, nine, ten.',
+            audioText: 'One, two, three, four, five, six, seven, eight, nine, ten.',
+            correctAnswer: 'One, two, three, four, five, six, seven, eight, nine, ten.',
+            explanation: 'Focus on clear vowel sounds and the unvoiced "th" in "three".'
+          }
+        ]
+      },
+      {
+        id: 'a1-u1-l3',
+        unitId: 'a1-unit-1',
+        unitTitle: 'Unit 1',
+        title: 'Active Grammar: Verb To Be (Am / Is / Are)',
+        description: 'Learn affirmatives, negatives, and question inversion with personal pronouns.',
+        durationMinutes: 6,
+        type: 'grammar',
+        exercises: [
+          {
+            id: 'a1-u1-l3-e1',
+            type: 'fill-blank',
+            instruction: 'Select the correct form of the verb to be for the pronoun "they":',
+            prompt: 'They _____ (be) students at the university library.',
+            options: ['are', 'is', 'am', 'be'],
+            correctAnswer: 'are',
+            explanation: 'Plural pronouns (we, you, they) take "are".'
+          },
+          {
+            id: 'a1-u1-l3-e2',
+            type: 'multiple-choice',
+            instruction: 'Which of these sentences is correctly negated?',
+            prompt: 'Choose the accurate negative sentence:',
+            options: [
+              'She is not at home today.',
+              'She not is at home today.',
+              'She doesn\'t is at home today.',
+              'She aren\'t at home today.'
+            ],
+            correctAnswer: 'She is not at home today.',
+            explanation: 'Negative of "is" is "is not" or the contraction "isn\'t".'
+          },
+          {
+            id: 'a1-u1-l3-e3',
+            type: 'sentence-order',
+            instruction: 'Arrange the words to form a question with verb to be:',
+            prompt: 'from / Are / England / you / ?',
+            options: ['Are', 'you', 'from', 'England', '?'],
+            correctAnswer: 'Are you from England ?',
+            explanation: 'Questions with "to be" invert the verb and subject: Verb (Are) + Subject (you) + Complement (from England?).'
+          },
+          {
+            id: 'a1-u1-l3-e4',
+            type: 'fill-blank',
+            instruction: 'Complete with the short answer:',
+            prompt: 'Is he your English teacher? — Yes, he _____.',
+            options: ['is', 'are', 'does', 'has'],
+            correctAnswer: 'is',
+            explanation: 'Short affirmative answer: "Yes, he is."'
+          }
+        ]
+      }
+    ],
+    exam: {
+      id: 'exam-a1-unit-1',
+      unitId: 'a1-unit-1',
+      level: 'A1',
+      title: 'Unit 1 Progress Assessment: Introductions & Verb To Be',
+      description: 'Evaluate your command of basic introductions, alphabet, and the verb to be.',
+      passingScore: 70,
+      exercises: [
+        {
+          id: 'exam-a1-u1-e1',
+          type: 'listening',
+          instruction: 'Listen to the introduction and determine where the speaker is from:',
+          prompt: 'Hello! I am David. I am a photographer, and I am from Manchester.',
+          audioText: 'Hello! I am David. I am a photographer, and I am from Manchester.',
+          options: ['Manchester', 'Oxford', 'London', 'Liverpool'],
+          correctAnswer: 'Manchester',
+          explanation: 'The speaker states: "I am from Manchester."'
+        },
+        {
+          id: 'exam-a1-u1-e2',
+          type: 'fill-blank',
+          instruction: 'Complete the sentence with the correct form of the verb to be:',
+          prompt: 'We _____ (be) happy to study at the language academy.',
+          options: ['are', 'is', 'am', 'be'],
+          correctAnswer: 'are',
+          explanation: 'The pronoun "we" requires "are".'
+        },
+        {
+          id: 'exam-a1-u1-e3',
+          type: 'sentence-order',
+          instruction: 'Arrange the words to form a correct question:',
+          prompt: 'your / name / What / is / ?',
+          options: ['What', 'is', 'your', 'name', '?'],
+          correctAnswer: 'What is your name ?',
+          explanation: 'Information question structure: Question word (What) + Verb (is) + Subject (your name?).'
+        }
+      ]
+    }
+  },
+  {
+    id: 'a1-unit-2',
+    level: 'A1',
+    unitNumber: 2,
+    title: 'Unit 2: Daily Objects, Articles & Ordering at a London Café',
+    topic: 'Singular/Plural Nouns, Articles (A/An/The) and Demonstratives',
+    description: 'Learn to name everyday items, use articles correctly and order food and drinks with polite British etiquette.',
+    lessons: [
+      {
+        id: 'a1-u2-l1',
+        unitId: 'a1-unit-2',
+        unitTitle: 'Unit 2',
+        title: 'Listening & Speaking: Ordering at Soho Coffee',
+        description: 'Practice ordering your morning beverage and pastry with polite British formulas.',
+        durationMinutes: 5,
+        type: 'speaking',
+        exercises: [
+          {
+            id: 'a1-u2-l1-e1',
+            type: 'listening',
+            instruction: 'Listen to the order and identify what the customer ordered:',
+            prompt: 'Good morning! Welcome to Soho Coffee. What can I get started for you today? — Could I have a white coffee and a warm croissant, please?',
+            audioText: 'Good morning! Welcome to Soho Coffee. What can I get started for you today? Could I have a white coffee and a warm croissant, please?',
+            options: ['A white coffee and a croissant', 'A black tea and a muffin', 'A hot chocolate and a scone', 'An iced latte and a sandwich'],
+            correctAnswer: 'A white coffee and a croissant',
+            explanation: 'The customer orders "a white coffee and a warm croissant, please".'
+          },
+          {
+            id: 'a1-u2-l1-e2',
+            type: 'speaking',
+            instruction: 'Practice ordering politely with British manners:',
+            prompt: 'Could I have a cup of English tea, please?',
+            audioText: 'Could I have a cup of English tea, please?',
+            correctAnswer: 'Could I have a cup of English tea, please?',
+            hint: 'Use a gentle rising intonation on "please".',
+            explanation: '"Could I have..., please?" is the standard British formula for ordering food and drinks.'
+          },
+          {
+            id: 'a1-u2-l1-e3',
+            type: 'fill-blank',
+            instruction: 'Complete the price inquiry:',
+            prompt: 'Excuse me, _____ much is this slice of cake?',
+            options: ['How', 'What', 'Where', 'Who'],
+            correctAnswer: 'How',
+            explanation: '"How much is..." is the standard question to ask for price.'
+          },
+          {
+            id: 'a1-u2-l1-e4',
+            type: 'sentence-order',
+            instruction: 'Arrange the words to order politely:',
+            prompt: 'have / please / I / tea / Could / a / ?',
+            options: ['Could', 'I', 'have', 'a', 'tea', 'please', '?'],
+            correctAnswer: 'Could I have a tea please ?',
+            explanation: 'Polite request order: Could + I + have + a tea + please?'
+          }
+        ]
+      },
+      {
+        id: 'a1-u2-l2',
+        unitId: 'a1-unit-2',
+        unitTitle: 'Unit 2',
+        title: 'Vocabulary & Grammar: Demonstratives (This, That, These, Those)',
+        description: 'Distinguish nearby vs far items and regular and irregular plurals.',
+        durationMinutes: 5,
+        type: 'mixed',
+        exercises: [
+          {
+            id: 'a1-u2-l2-e1',
+            type: 'multiple-choice',
+            instruction: 'Select the correct demonstrative for an object near the speaker:',
+            prompt: '_____ is my new English notebook right here in my hand.',
+            options: ['This', 'That', 'These', 'Those'],
+            correctAnswer: 'This',
+            explanation: '"This" is singular and refers to an object close to the speaker.'
+          },
+          {
+            id: 'a1-u2-l2-e2',
+            type: 'fill-blank',
+            instruction: 'Select the correct plural demonstrative for objects further away:',
+            prompt: 'Look over there! _____ red double-decker buses are magnificent.',
+            options: ['Those', 'These', 'This', 'That'],
+            correctAnswer: 'Those',
+            explanation: '"Those" is plural and refers to items further away ("over there").'
+          },
+          {
+            id: 'a1-u2-l2-e3',
+            type: 'multiple-choice',
+            instruction: 'Which of these is the correct irregular plural of "person"?',
+            prompt: 'There are five _____ waiting in the queue.',
+            options: ['people', 'persons', 'peoples', 'persones'],
+            correctAnswer: 'people',
+            explanation: 'The plural of "person" in standard English is "people".'
+          },
+          {
+            id: 'a1-u2-l2-e4',
+            type: 'fill-blank',
+            instruction: 'Complete with regular plural spelling:',
+            prompt: 'I have two _____ (watch) on my desk.',
+            options: ['watches', 'watchs', 'watchies', 'watch'],
+            correctAnswer: 'watches',
+            explanation: 'Nouns ending in "ch", "sh", "s", or "x" add "-es" in plural: watch -> watches.'
+          }
+        ]
+      },
+      {
+        id: 'a1-u2-l3',
+        unitId: 'a1-unit-2',
+        unitTitle: 'Unit 2',
+        title: 'Active Grammar: Articles A, An and The',
+        description: 'Understand consonant vs vowel sounds and definite vs indefinite articles.',
+        durationMinutes: 6,
+        type: 'grammar',
+        exercises: [
+          {
+            id: 'a1-u2-l3-e1',
+            type: 'fill-blank',
+            instruction: 'Choose "a" or "an" based on the phonetic sound:',
+            prompt: 'Emma has _____ apple and _____ sandwich for lunch.',
+            options: ['an / a', 'a / an', 'a / a', 'an / an'],
+            correctAnswer: 'an / a',
+            explanation: '"An" is used before vowel sounds (an apple); "a" before consonant sounds (a sandwich).'
+          },
+          {
+            id: 'a1-u2-l3-e2',
+            type: 'multiple-choice',
+            instruction: 'Pay attention to the initial vowel sound of "university":',
+            prompt: 'Oxford is _____ world-famous university.',
+            options: ['a', 'an', 'the', 'no article'],
+            correctAnswer: 'a',
+            explanation: '"University" begins with the consonant sound /j/ ("yoo-niversity"), so we use "a", not "an".'
+          },
+          {
+            id: 'a1-u2-l3-e3',
+            type: 'sentence-order',
+            instruction: 'Arrange the words with the definite article:',
+            prompt: 'The / on / is / table / the / book',
+            options: ['The', 'book', 'is', 'on', 'the', 'table'],
+            correctAnswer: 'The book is on the table',
+            explanation: 'Syntax: The book (subject) + is (verb) + on the table (prepositional phrase).'
+          },
+          {
+            id: 'a1-u2-l3-e4',
+            type: 'fill-blank',
+            instruction: 'Choose the correct article for the specific museum:',
+            prompt: 'We are visiting _____ British Museum this afternoon.',
+            options: ['the', 'a', 'an', 'some'],
+            correctAnswer: 'the',
+            explanation: 'Specific unique institutions use the definite article "the".'
+          }
+        ]
+      }
+    ],
+    exam: {
+      id: 'exam-a1-unit-2',
+      unitId: 'a1-unit-2',
+      level: 'A1',
+      title: 'Unit 2 Progress Assessment: Objects, Articles & Ordering',
+      description: 'Evaluate your ability to order food and drinks, use articles and demonstratives.',
+      passingScore: 70,
+      exercises: [
+        {
+          id: 'exam-a1-u2-e1',
+          type: 'listening',
+          instruction: 'Listen to the bill total and select the correct price:',
+          prompt: 'That will be three pounds and fifty pence, please.',
+          audioText: 'That will be three pounds and fifty pence, please.',
+          options: ['£3.50', '£3.15', '£5.30', '£13.50'],
+          correctAnswer: '£3.50',
+          explanation: '"Three pounds and fifty pence" corresponds to £3.50.'
+        },
+        {
+          id: 'exam-a1-u2-e2',
+          type: 'fill-blank',
+          instruction: 'Complete with "a" or "an":',
+          prompt: 'Would you like _____ cup of coffee or _____ glass of orange juice?',
+          options: ['a / a', 'an / a', 'a / an', 'an / an'],
+          correctAnswer: 'a / a',
+          explanation: 'Both "cup" and "glass" begin with consonant sounds.'
+        },
+        {
+          id: 'exam-a1-u2-e3',
+          type: 'sentence-order',
+          instruction: 'Arrange the words to ask for the bill politely:',
+          prompt: 'bill / Could / the / we / please / have / ?',
+          options: ['Could', 'we', 'have', 'the', 'bill', 'please', '?'],
+          correctAnswer: 'Could we have the bill please ?',
+          explanation: 'Standard British formula to ask for the bill in restaurants or cafés.'
+        }
+      ]
+    }
+  },
+  {
+    id: 'a1-unit-3',
+    level: 'A1',
+    unitNumber: 3,
+    title: 'Unit 3: Daily Habits, Present Simple & "Wh-" Questions',
+    topic: 'Present Simple (I/You/We/They vs He/She/It) and Routine Verbs',
+    description: 'Learn to speak about everyday routines, hobbies, and master asking questions with Do and Does.',
+    lessons: [
+      {
+        id: 'a1-u3-l1',
+        unitId: 'a1-unit-3',
+        unitTitle: 'Unit 3',
+        title: 'Listening & Reading: Emma\'s Oxford Daily Routine',
+        description: 'Understand timetable descriptions and adverbs of frequency.',
+        durationMinutes: 5,
+        type: 'listening',
+        exercises: [
+          {
+            id: 'a1-u3-l1-e1',
+            type: 'listening',
+            instruction: 'Listen to Emma\'s routine and identify when she teaches her morning class:',
+            prompt: 'Every weekday, I wake up at half past six. I always drink a cup of tea, and then I teach my morning class at nine o\'clock.',
+            audioText: 'Every weekday, I wake up at half past six. I always drink a cup of tea, and then I teach my morning class at nine o\'clock.',
+            options: ['At nine o\'clock', 'At half past six', 'At seven o\'clock', 'At eleven o\'clock'],
+            correctAnswer: 'At nine o\'clock',
+            explanation: 'Emma says: "I teach my morning class at nine o\'clock."'
+          },
+          {
+            id: 'a1-u3-l1-e2',
+            type: 'fill-blank',
+            instruction: 'Complete with the adverb of frequency:',
+            prompt: 'I _____ (100% frequency) have tea in the afternoon; it is my favourite habit.',
+            options: ['always', 'never', 'sometimes', 'rarely'],
+            correctAnswer: 'always',
+            explanation: '"Always" represents 100% regularity.'
+          },
+          {
+            id: 'a1-u3-l1-e3',
+            type: 'speaking',
+            instruction: 'Pronounce the routine sentence with natural cadence:',
+            prompt: 'I live in a peaceful town and I study English every single day.',
+            audioText: 'I live in a peaceful town and I study English every single day.',
+            correctAnswer: 'I live in a peaceful town and I study English every single day.',
+            explanation: 'Ensure smooth linking between "live in" and "study English".'
+          },
+          {
+            id: 'a1-u3-l1-e4',
+            type: 'sentence-order',
+            instruction: 'Arrange the sentence with correct adverb of frequency placement:',
+            prompt: 'drinks / never / She / coffee / at / night',
+            options: ['She', 'never', 'drinks', 'coffee', 'at', 'night'],
+            correctAnswer: 'She never drinks coffee at night',
+            explanation: 'Adverbs of frequency go between the subject and main verb: Subject (She) + Adverb (never) + Verb (drinks).'
+          }
+        ]
+      },
+      {
+        id: 'a1-u3-l2',
+        unitId: 'a1-unit-3',
+        unitTitle: 'Unit 3',
+        title: 'Active Grammar: Present Simple Third Person (-s, -es)',
+        description: 'Master third-person singular agreements and negative statements with doesn\'t.',
+        durationMinutes: 6,
+        type: 'grammar',
+        exercises: [
+          {
+            id: 'a1-u3-l2-e1',
+            type: 'fill-blank',
+            instruction: 'Add third-person singular "-s" to the verb "work":',
+            prompt: 'My brother _____ (work) in a hospital in London.',
+            options: ['works', 'work', 'workes', 'working'],
+            correctAnswer: 'works',
+            explanation: 'Third person singular (he/she/it) adds "-s": work -> works.'
+          },
+          {
+            id: 'a1-u3-l2-e2',
+            type: 'multiple-choice',
+            instruction: 'Which sentence correctly negates with auxiliary "doesn\'t"?',
+            prompt: 'Select the accurate negative sentence:',
+            options: [
+              'He doesn\'t live in Manchester.',
+              'He not live in Manchester.',
+              'He doesn\'t lives in Manchester.',
+              'He isn\'t live in Manchester.'
+            ],
+            correctAnswer: 'He doesn\'t live in Manchester.',
+            explanation: 'Auxiliary "doesn\'t" is followed by the base infinitive form of the verb without "-s" (live).'
+          },
+          {
+            id: 'a1-u3-l2-e3',
+            type: 'fill-blank',
+            instruction: 'Complete the question with the correct auxiliary:',
+            prompt: '_____ you speak English with tutor Emma?',
+            options: ['Do', 'Does', 'Are', 'Is'],
+            correctAnswer: 'Do',
+            explanation: 'Questions with pronoun "you" in Present Simple require auxiliary "Do".'
+          },
+          {
+            id: 'a1-u3-l2-e4',
+            type: 'sentence-order',
+            instruction: 'Arrange the third-person question:',
+            prompt: 'live / Does / in / London / she / ?',
+            options: ['Does', 'she', 'live', 'in', 'London', '?'],
+            correctAnswer: 'Does she live in London ?',
+            explanation: 'Structure: Auxiliary (Does) + Subject (she) + Verb (live) + Complement (in London?).'
+          }
+        ]
+      },
+      {
+        id: 'a1-u3-l3',
+        unitId: 'a1-unit-3',
+        unitTitle: 'Unit 3',
+        title: 'Speaking & Questions: "Wh-" Information Questions',
+        description: 'Ask What, Where, When, Why, Who and How with correct auxiliary word order.',
+        durationMinutes: 6,
+        type: 'speaking',
+        exercises: [
+          {
+            id: 'a1-u3-l3-e1',
+            type: 'multiple-choice',
+            instruction: 'Select the correct question word for asking about a location:',
+            prompt: '_____ do you live? — I live near the river in Oxford.',
+            options: ['Where', 'When', 'Who', 'Why'],
+            correctAnswer: 'Where',
+            explanation: '"Where" asks about place or location.'
+          },
+          {
+            id: 'a1-u3-l3-e2',
+            type: 'fill-blank',
+            instruction: 'Select the correct question word for asking about time:',
+            prompt: '_____ does the lesson begin? — At ten in the morning.',
+            options: ['When', 'Where', 'Who', 'Which'],
+            correctAnswer: 'When',
+            explanation: '"When" asks about time.'
+          },
+          {
+            id: 'a1-u3-l3-e3',
+            type: 'speaking',
+            instruction: 'Ask the question clearly with British falling intonation:',
+            prompt: 'What is your favourite thing about studying English?',
+            audioText: 'What is your favourite thing about studying English?',
+            correctAnswer: 'What is your favourite thing about studying English?',
+            explanation: 'Wh- questions naturally finish with a falling intonation.'
+          },
+          {
+            id: 'a1-u3-l3-e4',
+            type: 'sentence-order',
+            instruction: 'Arrange the words to form a complete information question:',
+            prompt: 'from / Where / you / are / ?',
+            options: ['Where', 'are', 'you', 'from', '?'],
+            correctAnswer: 'Where are you from ?',
+            explanation: 'Standard syntax: Question word (Where) + Verb (are) + Subject (you) + Preposition (from?).'
+          }
+        ]
+      }
+    ],
+    exam: {
+      id: 'exam-a1-unit-3',
+      unitId: 'a1-unit-3',
+      level: 'A1',
+      title: 'Unit 3 Progress Assessment: Routines & Questions',
+      description: 'Evaluate your ability to describe routines, conjugate third person and ask questions.',
+      passingScore: 70,
+      exercises: [
+        {
+          id: 'exam-a1-u3-e1',
+          type: 'listening',
+          instruction: 'Listen to the routine and choose how the speaker travels to work:',
+          prompt: 'I live in a small village outside Oxford. Every morning, I take the train to work.',
+          audioText: 'I live in a small village outside Oxford. Every morning, I take the train to work.',
+          options: ['By train', 'By bus', 'By bicycle', 'By car'],
+          correctAnswer: 'By train',
+          explanation: 'The speaker states: "Every morning, I take the train to work."'
+        },
+        {
+          id: 'exam-a1-u3-e2',
+          type: 'fill-blank',
+          instruction: 'Complete with third person present simple:',
+          prompt: 'My sister _____ (teach) history at the secondary school.',
+          options: ['teaches', 'teach', 'teachies', 'is teach'],
+          correctAnswer: 'teaches',
+          explanation: 'Verbs ending in "ch" take "-es" in third person singular: teach -> teaches.'
+        },
+        {
+          id: 'exam-a1-u3-e3',
+          type: 'sentence-order',
+          instruction: 'Arrange the question words:',
+          prompt: 'do / What / at / weekends / you / do / ?',
+          options: ['What', 'do', 'you', 'do', 'at', 'weekends', '?'],
+          correctAnswer: 'What do you do at weekends ?',
+          explanation: 'Syntax: Question word (What) + Auxiliary (do) + Subject (you) + Verb (do) + Time phrase (at weekends?).'
+        }
+      ]
+    }
+  }
+];
+
+export const FINAL_A1_EXAM: Exam = {
+  id: 'final-exam-a1',
+  level: 'A1',
+  title: 'Oxford A1 Beginner Official Certification Assessment',
+  description: 'Comprehensive examination evaluating foundational A1 competencies: greetings, verb to be, café ordering, daily routines, and question syntax. Passing unlocks Level A2.',
+  passingScore: 70,
+  exercises: [
+    {
+      id: 'final-a1-1',
+      type: 'listening',
+      instruction: 'Listen to tutor Emma\'s introductory message and select the primary purpose of the academy:',
+      prompt: 'Welcome to our English academy! My name is Emma, your British tutor. Here, we help you speak natural English with confidence from day one, whether you are ordering coffee in London or discussing ideas in Oxford.',
+      audioText: 'Welcome to our English academy! My name is Emma, your British tutor. Here, we help you speak natural English with confidence from day one, whether you are ordering coffee in London or discussing ideas in Oxford.',
+      options: [
+        'To help students speak natural English with confidence from day one.',
+        'To sell antique guidebooks about the city of London.',
+        'To prepare students exclusively for written translation examinations.',
+        'To teach French and German history in Oxford.'
+      ],
+      correctAnswer: 'To help students speak natural English with confidence from day one.',
+      explanation: 'Emma states: "Here, we help you speak natural English with confidence from day one."'
+    },
+    {
+      id: 'final-a1-2',
+      type: 'fill-blank',
+      instruction: 'Complete the sentence with the accurate article and verb to be:',
+      prompt: 'Mauricio _____ (be) _____ English student.',
+      options: ['is / an', 'are / a', 'is / a', 'am / an'],
+      correctAnswer: 'is / an',
+      explanation: 'Mauricio (singular) requires "is", and "English" starts with a vowel sound, requiring "an".'
+    },
+    {
+      id: 'final-a1-3',
+      type: 'speaking',
+      instruction: 'Introduce yourself aloud clearly and confidently in English:',
+      prompt: 'Hello Emma, my name is Mauricio. I am an enthusiastic student and I practice English every day.',
+      audioText: 'Hello Emma, my name is Mauricio. I am an enthusiastic student and I practice English every day.',
+      correctAnswer: 'Hello Emma, my name is Mauricio. I am an enthusiastic student and I practice English every day.',
+      explanation: 'Clear introductory sentence demonstrating verb to be and present simple.'
+    },
+    {
+      id: 'final-a1-4',
+      type: 'sentence-order',
+      instruction: 'Arrange the words to form a polite British request at a restaurant:',
+      prompt: 'the / have / menu / please / Could / we / ?',
+      options: ['Could', 'we', 'have', 'the', 'menu', 'please', '?'],
+      correctAnswer: 'Could we have the menu please ?',
+      explanation: 'Polite British formula: Could + we + have + the menu + please?'
+    }
+  ]
+};
 
 // ============================================================================
 // NIVEL A2: PRE-INTERMEDIO (CEFR A2)
@@ -1490,6 +2138,17 @@ export interface LevelDescriptor {
 }
 
 export const ALL_LEVELS_DATA: Record<CEFRLevel, LevelDescriptor> = {
+  'A1': {
+    level: 'A1',
+    title: 'Level A1',
+    subtitle: 'Beginner (CEFR A1)',
+    description: 'Foundational greetings, alphabet, numbers, verb to be, daily objects, café ordering, and present simple routines.',
+    accentColor: 'from-sky-500 to-blue-600',
+    badgeText: 'Absolute Foundations',
+    units: CURRICULUM_A1,
+    finalExam: FINAL_A1_EXAM,
+  },
+
   'A2': {
     level: 'A2',
     title: 'Level A2',

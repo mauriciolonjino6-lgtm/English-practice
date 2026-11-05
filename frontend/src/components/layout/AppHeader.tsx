@@ -20,8 +20,8 @@ export default function AppHeader() {
     <header className="h-14 px-4 border-b border-slate-200 dark:border-white/[0.08] flex items-center justify-between shrink-0 bg-white/90 dark:bg-slate-900/90 rounded-none backdrop-blur-xl z-20">
       {/* Brand */}
       <div className="flex items-center gap-2.5">
-        <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-brand-600 to-indigo-600 flex items-center justify-center text-sm shadow-md shadow-brand-500/20">
-          🇬🇧
+        <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-brand-600 to-indigo-600 flex items-center justify-center text-xs font-black text-white shadow-md shadow-brand-500/20 tracking-wider">
+          GB
         </div>
         <div>
           <span className="font-extrabold text-base tracking-tight text-gradient">

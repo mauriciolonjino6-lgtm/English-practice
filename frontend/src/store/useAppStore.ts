@@ -40,7 +40,7 @@ const safeStorage = {
 }
 
 export type ScenarioType = 'free-talk' | 'cafe' | 'airport' | 'interview' | 'directions' | 'tech'
-export type CEFRLevel = 'A2' | 'B1' | 'B2' | 'C1' | 'C2'
+export type CEFRLevel = 'A1' | 'A2' | 'B1' | 'B2' | 'C1' | 'C2'
 
 export interface LevelProgressState {
   currentLevel: CEFRLevel
@@ -51,8 +51,18 @@ export interface LevelProgressState {
   lastExamDate?: string
 }
 
+export const DEFAULT_USER: UserProfile = {
+  id: 'user_mauricio_oxford',
+  name: 'Mauricio',
+  email: 'mauricio@fluent.ai',
+  level: 'A1',
+  goal: 'Conversación Diaria & Certificación Oxford',
+  xp: 50,
+  streak: 1,
+}
+
 const initialLevelProgress: LevelProgressState = {
-  currentLevel: 'A2',
+  currentLevel: 'A1',
   completedLessons: [],
   lessonScores: {},
   passedExams: [],
@@ -67,7 +77,7 @@ const loadInitialLevelProgress = (): LevelProgressState => {
         const parsed = JSON.parse(backup)
         if (parsed && Array.isArray(parsed.completedLessons)) {
           return {
-            currentLevel: parsed.currentLevel || 'A2',
+            currentLevel: parsed.currentLevel || 'A1',
             completedLessons: parsed.completedLessons || [],
             lessonScores: parsed.lessonScores || {},
             passedExams: parsed.passedExams || [],
@@ -172,8 +182,8 @@ export const useAppStore = create<AppState>()(
   persist(
     (set, get) => ({
       theme:             'dark',
-      user:              null,
-      userId:            uuidv4(),
+      user:              DEFAULT_USER,
+      userId:            DEFAULT_USER.id,
       sessions:          [initialSession],
       activeSessionId:   initialSession.id,
       messages:          initialSession.messages,
@@ -234,6 +244,7 @@ export const useAppStore = create<AppState>()(
             : currentPassed
 
           const NEXT_LEVEL_MAP: Record<string, CEFRLevel> = {
+            'final-exam-a1': 'A2',
             'final-exam-a2': 'B1',
             'final-exam-b1': 'B2',
             'final-exam-b2': 'C1',
@@ -466,6 +477,9 @@ export const useAppStore = create<AppState>()(
       storage: createJSONStorage(() => safeStorage),
       onRehydrateStorage: () => (state) => {
         if (state) {
+          if (!state.user) {
+            state.user = DEFAULT_USER
+          }
           const backup = loadInitialLevelProgress()
           if (!state.levelProgress || (!state.levelProgress.completedLessons?.length && backup.completedLessons?.length)) {
             state.levelProgress = backup

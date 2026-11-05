@@ -78,7 +78,7 @@ export default function Dashboard() {
         {/* Stats row */}
         <motion.div variants={item} className="grid grid-cols-3 gap-3">
           <StreakCard  streak={progress?.streak ?? 1} />
-          <ProgressCard level={levelProgress.currentLevel || user?.level || progress?.level || 'A2'} xp={user?.xp ?? progress?.xp ?? 20} />
+          <ProgressCard level={levelProgress.currentLevel || user?.level || progress?.level || 'A1'} xp={user?.xp ?? progress?.xp ?? 50} />
           <VocabCard   count={progress?.totalWords ?? 0} />
         </motion.div>
 
@@ -91,7 +91,7 @@ export default function Dashboard() {
             <div className="flex items-center justify-between mb-2">
               <span className="px-3 py-1 rounded-full bg-white/20 text-[10px] font-black uppercase tracking-wider flex items-center gap-1.5 backdrop-blur-md">
                 <GraduationCap size={13} />
-                Ruta Pedagógica • Nivel {levelProgress.currentLevel}
+                Ruta Pedagógica • Nivel {levelProgress.currentLevel || 'A1'}
               </span>
               <span className="text-xs font-bold text-amber-300">
                 {levelProgress.completedLessons.length} lecciones completadas
@@ -99,7 +99,7 @@ export default function Dashboard() {
             </div>
 
             <h2 className="text-xl font-black mt-1">
-              Continuar Aprendiendo ({levelProgress.currentLevel})
+              Continuar Aprendiendo ({levelProgress.currentLevel || 'A1'})
             </h2>
             <p className="text-xs text-indigo-100 mt-0.5 line-clamp-1">
               Ejercicios dinámicos de escucha, pronunciación, gramática y exámenes periódicos.
