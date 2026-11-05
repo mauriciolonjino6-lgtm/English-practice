@@ -108,7 +108,7 @@ export default function LessonPlayer({ lesson, onClose, onComplete }: Props) {
     if (currentIndex + 1 < lesson.exercises.length) {
       setCurrentIndex((prev) => prev + 1)
     } else {
-      const finalScore = Math.round(((correctCount + (isCorrect ? 1 : 0)) / lesson.exercises.length) * 100)
+      const finalScore = Math.round((correctCount / lesson.exercises.length) * 100)
       completeLesson(lesson.id, finalScore)
       setIsFinished(true)
       onComplete(finalScore)
@@ -129,7 +129,7 @@ export default function LessonPlayer({ lesson, onClose, onComplete }: Props) {
           </div>
 
           <span className="inline-block px-3 py-1 rounded-full bg-brand-50 dark:bg-brand-950/60 text-brand-600 dark:text-brand-300 text-xs font-bold uppercase tracking-wider mb-2">
-            ¡Lección Completada!
+            Lesson Completed!
           </span>
 
           <h2 className="text-2xl font-black text-slate-900 dark:text-white mb-2">
@@ -137,16 +137,16 @@ export default function LessonPlayer({ lesson, onClose, onComplete }: Props) {
           </h2>
 
           <p className="text-sm text-slate-600 dark:text-slate-300 mb-6">
-            Has ganado <strong className="text-amber-500 font-extrabold">+25 XP</strong> y reforzado tus habilidades comunicativas británicas con el profesor Davies.
+            You earned <strong className="text-amber-500 font-extrabold">+25 XP</strong> and practiced authentic British English with tutor Emma.
           </p>
 
           <div className="grid grid-cols-2 gap-3 mb-6 bg-slate-50 dark:bg-slate-900/60 p-4 rounded-2xl border border-slate-200 dark:border-white/5">
             <div>
-              <p className="text-xs text-slate-500 dark:text-slate-400 font-semibold uppercase">Puntuación</p>
+              <p className="text-xs text-slate-500 dark:text-slate-400 font-semibold uppercase">Score</p>
               <p className="text-2xl font-black text-brand-600 dark:text-brand-400">{finalScore}%</p>
             </div>
             <div>
-              <p className="text-xs text-slate-500 dark:text-slate-400 font-semibold uppercase">Aciertos</p>
+              <p className="text-xs text-slate-500 dark:text-slate-400 font-semibold uppercase">Accuracy</p>
               <p className="text-2xl font-black text-emerald-500">{correctCount} / {lesson.exercises.length}</p>
             </div>
           </div>
@@ -155,7 +155,7 @@ export default function LessonPlayer({ lesson, onClose, onComplete }: Props) {
             onClick={onClose}
             className="w-full py-3.5 rounded-2xl bg-gradient-to-r from-brand-600 to-indigo-600 text-white font-bold hover:shadow-lg hover:shadow-brand-500/25 transition-all active:scale-98"
           >
-            Continuar en la Ruta A2
+            Continue Curriculum
           </button>
         </motion.div>
       </div>
@@ -206,16 +206,16 @@ export default function LessonPlayer({ lesson, onClose, onComplete }: Props) {
               currentExercise.type === 'sentence-order' && 'bg-purple-100 dark:bg-purple-950/60 text-purple-700 dark:text-purple-300',
               currentExercise.type === 'multiple-choice' && 'bg-indigo-100 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300'
             )}>
-              {currentExercise.type === 'listening' && 'Comprensión Auditiva'}
-              {currentExercise.type === 'speaking' && 'Expresión Oral'}
-              {currentExercise.type === 'fill-blank' && 'Completar Espacio'}
-              {currentExercise.type === 'sentence-order' && 'Ordenar la Oración'}
-              {currentExercise.type === 'multiple-choice' && 'Opción Múltiple'}
+              {currentExercise.type === 'listening' && 'Listening Comprehension'}
+              {currentExercise.type === 'speaking' && 'Speaking Practice'}
+              {currentExercise.type === 'fill-blank' && 'Fill in the Blank'}
+              {currentExercise.type === 'sentence-order' && 'Sentence Ordering'}
+              {currentExercise.type === 'multiple-choice' && 'Multiple Choice'}
             </span>
 
             {currentExercise.hint && (
               <span className="text-xs text-slate-500 dark:text-slate-400 flex items-center gap-1">
-                <Lightbulb size={13} className="text-amber-400" /> Pista disponible
+                <Lightbulb size={13} className="text-amber-400" /> Hint available
               </span>
             )}
           </div>
@@ -229,14 +229,14 @@ export default function LessonPlayer({ lesson, onClose, onComplete }: Props) {
           {currentExercise.type === 'listening' && (
             <div className="bg-slate-50 dark:bg-slate-800/80 p-4 rounded-2xl border border-slate-200 dark:border-white/5 flex items-center justify-between gap-4">
               <div className="flex-1">
-                <p className="text-xs text-slate-500 dark:text-slate-400 font-semibold uppercase mb-1">Audio del Profesor Davies</p>
-                <p className="text-sm text-slate-800 dark:text-slate-200 italic">"Haz clic en el botón para escuchar la pronunciación británica..."</p>
+                <p className="text-xs text-slate-500 dark:text-slate-400 font-semibold uppercase mb-1">British Tutor Emma (Oxford Audio)</p>
+                <p className="text-sm text-slate-800 dark:text-slate-200 italic">"Click the speaker button to hear authentic British RP pronunciation..."</p>
               </div>
               <button
                 type="button"
                 onClick={() => speak(currentExercise.audioText || currentExercise.prompt)}
                 className="w-12 h-12 rounded-2xl bg-brand-600 text-white flex items-center justify-center hover:bg-brand-500 transition-colors shadow-md active:scale-95 shrink-0"
-                title="Escuchar audio"
+                title="Listen to audio"
               >
                 <Volume2 size={22} />
               </button>
@@ -280,14 +280,14 @@ export default function LessonPlayer({ lesson, onClose, onComplete }: Props) {
           {currentExercise.type === 'speaking' && (
             <div className="space-y-4">
               <div className="flex items-center justify-between bg-slate-50 dark:bg-slate-800/50 p-3 rounded-2xl border border-slate-200 dark:border-white/5">
-                <span className="text-xs font-semibold text-slate-600 dark:text-slate-300">Escuchar modelo nativo:</span>
+                <span className="text-xs font-semibold text-slate-600 dark:text-slate-300">Listen to native model:</span>
                 <button
                   type="button"
                   onClick={() => speak(currentExercise.audioText || currentExercise.correctAnswer)}
                   className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-brand-100 dark:bg-brand-950/60 text-brand-700 dark:text-brand-300 text-xs font-bold hover:bg-brand-200 transition-colors"
                 >
                   <Volume2 size={16} />
-                  <span>Escuchar</span>
+                  <span>Listen</span>
                 </button>
               </div>
 
@@ -306,12 +306,12 @@ export default function LessonPlayer({ lesson, onClose, onComplete }: Props) {
                   {isListeningSpeech ? <MicOff size={28} /> : <Mic size={28} />}
                 </button>
                 <p className="text-xs text-slate-500 dark:text-slate-400">
-                  {isListeningSpeech ? 'Escuchando tu voz...' : 'Toca el micrófono y pronuncia la frase en voz alta'}
+                  {isListeningSpeech ? 'Listening to your voice...' : 'Tap the microphone and read the sentence aloud in English'}
                 </p>
 
                 {spokenText && (
                   <div className="mt-2 p-2.5 rounded-xl bg-brand-50 dark:bg-brand-950/40 border border-brand-200 dark:border-brand-800/40 text-xs text-slate-800 dark:text-slate-200 w-full text-center">
-                    <strong>Dijiste:</strong> "{spokenText}"
+                    <strong>You said:</strong> "{spokenText}"
                   </div>
                 )}
 
@@ -321,7 +321,7 @@ export default function LessonPlayer({ lesson, onClose, onComplete }: Props) {
                     onClick={() => setSpokenText(currentExercise.correctAnswer)}
                     className="text-xs text-brand-500 underline mt-1"
                   >
-                    Simular pronunciación correcta
+                    Simulate correct pronunciation
                   </button>
                 )}
               </div>
@@ -334,7 +334,7 @@ export default function LessonPlayer({ lesson, onClose, onComplete }: Props) {
               {/* Selected Words Tray */}
               <div className="min-h-[56px] p-3 rounded-2xl border-2 border-dashed border-brand-300 dark:border-brand-700 bg-brand-50/50 dark:bg-brand-950/20 flex flex-wrap gap-2 items-center">
                 {selectedWords.length === 0 ? (
-                  <span className="text-xs text-slate-400 italic">Toca las palabras abajo en el orden correcto...</span>
+                  <span className="text-xs text-slate-400 italic">Tap the words below in the correct order...</span>
                 ) : (
                   selectedWords.map((word, idx) => (
                     <button
@@ -377,7 +377,7 @@ export default function LessonPlayer({ lesson, onClose, onComplete }: Props) {
                   onClick={() => setSelectedWords([])}
                   className="text-xs text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 flex items-center gap-1"
                 >
-                  <RotateCcw size={13} /> Reiniciar palabras
+                  <RotateCcw size={13} /> Reset words
                 </button>
               )}
             </div>
@@ -386,7 +386,7 @@ export default function LessonPlayer({ lesson, onClose, onComplete }: Props) {
           {/* Hint Card */}
           {currentExercise.hint && !hasChecked && (
             <p className="text-xs text-slate-500 dark:text-slate-400 italic bg-amber-500/10 p-2.5 rounded-xl border border-amber-500/20">
-              <strong>Pista del profesor:</strong> {currentExercise.hint}
+              <strong>Tutor's Tip:</strong> {currentExercise.hint}
             </p>
           )}
 
@@ -407,24 +407,24 @@ export default function LessonPlayer({ lesson, onClose, onComplete }: Props) {
                   {isCorrect ? (
                     <>
                       <CheckCircle2 size={18} className="text-emerald-600 dark:text-emerald-400" />
-                      <span>¡Brillante! Respuesta correcta</span>
+                      <span>Spot on! Excellent answer</span>
                     </>
                   ) : (
                     <>
                       <XCircle size={18} className="text-rose-600 dark:text-rose-400" />
-                      <span>Respuesta incorrecta</span>
+                      <span>Incorrect answer</span>
                     </>
                   )}
                 </div>
 
                 {!isCorrect && (
                   <p className="text-xs mb-1">
-                    <strong>Respuesta correcta:</strong> "{currentExercise.correctAnswer}"
+                    <strong>Correct answer:</strong> "{currentExercise.correctAnswer}"
                   </p>
                 )}
 
                 <p className="text-xs opacity-90 mt-1 leading-relaxed">
-                  <strong>Explicación:</strong> {currentExercise.explanation}
+                  <strong>Explanation:</strong> {currentExercise.explanation}
                 </p>
               </motion.div>
             )}
@@ -439,7 +439,7 @@ export default function LessonPlayer({ lesson, onClose, onComplete }: Props) {
           onClick={onClose}
           className="px-4 py-2.5 rounded-xl text-xs font-semibold text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
         >
-          Abandonar lección
+          Exit lesson
         </button>
 
         {!hasChecked ? (
@@ -462,7 +462,7 @@ export default function LessonPlayer({ lesson, onClose, onComplete }: Props) {
             onClick={handleNext}
             className="px-6 py-3 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-bold text-sm shadow-md hover:opacity-95 transition-all active:scale-95 flex items-center gap-2"
           >
-            <span>Continuar</span>
+            <span>Continue</span>
             <ChevronRight size={16} />
           </button>
         )}

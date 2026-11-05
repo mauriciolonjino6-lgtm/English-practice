@@ -84,7 +84,7 @@ export default function CurriculumModule() {
             </span>
             <div className="flex items-center gap-1 text-amber-300 font-extrabold text-xs">
               <Trophy size={14} />
-              <span>{hasPassedFinal ? 'Nivel Certificado' : 'En Curso'}</span>
+              <span>{hasPassedFinal ? 'Certified Level' : 'In Progress'}</span>
             </div>
           </div>
 
@@ -98,8 +98,8 @@ export default function CurriculumModule() {
           {/* Progress Bar inside Banner */}
           <div className="mt-5 bg-white/15 p-3.5 rounded-2xl backdrop-blur-md border border-white/15">
             <div className="flex items-center justify-between text-xs font-bold mb-1.5">
-              <span>Progreso de {activeDescriptor.title}</span>
-              <span>{completedCount} de {totalLessons} lecciones ({progressPercent}%)</span>
+              <span>{activeDescriptor.title} Progress</span>
+              <span>{completedCount} of {totalLessons} lessons ({progressPercent}%)</span>
             </div>
             <div className="w-full h-3 bg-black/25 rounded-full overflow-hidden">
               <motion.div
@@ -133,7 +133,7 @@ export default function CurriculumModule() {
               <div className="flex items-start justify-between gap-3">
                 <div>
                   <span className="text-[11px] font-black uppercase tracking-wider text-brand-600 dark:text-brand-400">
-                    Unidad {unit.unitNumber} • {unit.topic}
+                    Unit {unit.unitNumber} • {unit.topic}
                   </span>
                   <h2 className="text-lg sm:text-xl font-black text-slate-900 dark:text-white mt-0.5">
                     {unit.title}
@@ -184,17 +184,17 @@ export default function CurriculumModule() {
                             </span>
                             {lesson.type === 'listening' && (
                               <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-semibold bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300">
-                                <Headphones className="w-2.5 h-2.5" /> Escuchar
+                                <Headphones className="w-2.5 h-2.5" /> Listening
                               </span>
                             )}
                             {lesson.type === 'speaking' && (
                               <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-semibold bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300">
-                                <Mic className="w-2.5 h-2.5" /> Hablar
+                                <Mic className="w-2.5 h-2.5" /> Speaking
                               </span>
                             )}
                             {lesson.type === 'grammar' && (
                               <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-semibold bg-purple-100 dark:bg-purple-900/40 text-purple-700 dark:text-purple-300">
-                                <PenTool className="w-2.5 h-2.5" /> Gramática
+                                <PenTool className="w-2.5 h-2.5" /> Grammar
                               </span>
                             )}
                           </div>
@@ -244,7 +244,7 @@ export default function CurriculumModule() {
                         )}
                       </div>
                       <p className="text-[11px] text-slate-600 dark:text-slate-300">
-                        {unit.exam.description} (Puntaje mínimo: {unit.exam.passingScore}%)
+                        {unit.exam.description} (Pass mark: {unit.exam.passingScore}%)
                       </p>
                     </div>
                   </div>
@@ -288,7 +288,7 @@ export default function CurriculumModule() {
               <Award size={16} /> ¡Certificado {selectedLevel} Obtenido!
             </p>
             <p className="text-[11px] text-amber-100 mt-1">
-              Felicidades, has demostrado competencia acreditada por Oxford en este nivel.
+              Congratulations! You have demonstrated verified Oxford proficiency at this level.
             </p>
           </div>
         ) : null}
@@ -298,7 +298,7 @@ export default function CurriculumModule() {
           className="px-8 py-4 rounded-2xl bg-white text-slate-900 font-extrabold text-sm shadow-xl hover:bg-amber-50 transition-all active:scale-98 inline-flex items-center gap-2"
         >
           <Award size={18} className="text-amber-600" />
-          <span>{hasPassedFinal ? `Repetir Examen de ${selectedLevel}` : `Presentar Examen de Certificación ${selectedLevel}`}</span>
+          <span>{hasPassedFinal ? `Retake ${selectedLevel} Certification Exam` : `Take ${selectedLevel} Certification Exam`}</span>
         </button>
       </motion.div>
 

@@ -59,6 +59,28 @@ const initialLevelProgress: LevelProgressState = {
   examScores: {},
 }
 
+const loadInitialLevelProgress = (): LevelProgressState => {
+  if (typeof window !== 'undefined') {
+    try {
+      const backup = localStorage.getItem('fluent_level_progress_backup')
+      if (backup) {
+        const parsed = JSON.parse(backup)
+        if (parsed && Array.isArray(parsed.completedLessons)) {
+          return {
+            currentLevel: parsed.currentLevel || 'A2',
+            completedLessons: parsed.completedLessons || [],
+            lessonScores: parsed.lessonScores || {},
+            passedExams: parsed.passedExams || [],
+            examScores: parsed.examScores || {},
+            lastExamDate: parsed.lastExamDate,
+          }
+        }
+      }
+    } catch {}
+  }
+  return initialLevelProgress
+}
+
 const uuidv4 = () =>
   typeof crypto !== 'undefined' && crypto.randomUUID
     ? crypto.randomUUID()
@@ -163,36 +185,53 @@ export const useAppStore = create<AppState>()(
       reviewedToday:     0,
       activeTab:         'dashboard',
       isAuthModalOpen:   false,
-      levelProgress:     initialLevelProgress,
+      levelProgress:     loadInitialLevelProgress(),
 
       completeLesson: (lessonId: string, score: number) => {
         set((s) => {
-          const completed = s.levelProgress.completedLessons.includes(lessonId)
-            ? s.levelProgress.completedLessons
-            : [...s.levelProgress.completedLessons, lessonId]
+          const currentList = s.levelProgress?.completedLessons || []
+          const completed = currentList.includes(lessonId)
+            ? currentList
+            : [...currentList, lessonId]
           const updatedScores = {
-            ...s.levelProgress.lessonScores,
-            [lessonId]: Math.max(score, s.levelProgress.lessonScores[lessonId] || 0),
+            ...(s.levelProgress?.lessonScores || {}),
+            [lessonId]: Math.max(score, s.levelProgress?.lessonScores?.[lessonId] || 0),
           }
           const currentXp = s.user?.xp || s.progress?.xp || 20
           const newXp = currentXp + 25
+
+          const newProgress: LevelProgressState = {
+            ...(s.levelProgress || initialLevelProgress),
+            completedLessons: completed,
+            lessonScores: updatedScores,
+          }
+
+          try {
+            localStorage.setItem('fluent_level_progress_backup', JSON.stringify(newProgress))
+          } catch {}
+
+          const updatedUser = s.user
+            ? { ...s.user, xp: newXp }
+            : { id: s.userId, name: 'Learner', level: newProgress.currentLevel, xp: newXp, streak: 1, lastSeen: new Date().toISOString() }
+
+          const updatedProgress = s.progress
+            ? { ...s.progress, xp: newXp, level: newProgress.currentLevel }
+            : { userId: s.userId, streak: 1, totalMessages: 0, totalWords: 0, cardsReviewedToday: 0, cardsDueToday: 0, level: newProgress.currentLevel, xp: newXp }
+
           return {
-            levelProgress: {
-              ...s.levelProgress,
-              completedLessons: completed,
-              lessonScores: updatedScores,
-            },
-            user: s.user ? { ...s.user, xp: newXp } : null,
-            progress: s.progress ? { ...s.progress, xp: newXp } : null,
+            levelProgress: newProgress,
+            user: updatedUser,
+            progress: updatedProgress,
           }
         })
       },
 
       recordExamResult: (examId: string, score: number, passed: boolean) => {
         set((s) => {
-          const passedList = passed && !s.levelProgress.passedExams.includes(examId)
-            ? [...s.levelProgress.passedExams, examId]
-            : s.levelProgress.passedExams
+          const currentPassed = s.levelProgress?.passedExams || []
+          const passedList = passed && !currentPassed.includes(examId)
+            ? [...currentPassed, examId]
+            : currentPassed
 
           const NEXT_LEVEL_MAP: Record<string, CEFRLevel> = {
             'final-exam-a2': 'B1',
@@ -201,22 +240,37 @@ export const useAppStore = create<AppState>()(
             'final-exam-c1': 'C2',
             'final-exam-c2': 'C2',
           }
-          const nextLevel = passed && NEXT_LEVEL_MAP[examId] ? NEXT_LEVEL_MAP[examId] : s.levelProgress.currentLevel
+          const nextLevel = passed && NEXT_LEVEL_MAP[examId] ? NEXT_LEVEL_MAP[examId] : (s.levelProgress?.currentLevel || 'A2')
           const currentXp = s.user?.xp || s.progress?.xp || 20
           const newXp = passed ? currentXp + 100 : currentXp + 30
-          return {
-            levelProgress: {
-              ...s.levelProgress,
-              passedExams: passedList,
-              examScores: {
-                ...s.levelProgress.examScores,
-                [examId]: Math.max(score, s.levelProgress.examScores[examId] || 0),
-              },
-              currentLevel: nextLevel,
-              lastExamDate: new Date().toISOString(),
+
+          const newProgress: LevelProgressState = {
+            ...(s.levelProgress || initialLevelProgress),
+            passedExams: passedList,
+            examScores: {
+              ...(s.levelProgress?.examScores || {}),
+              [examId]: Math.max(score, s.levelProgress?.examScores?.[examId] || 0),
             },
-            user: s.user ? { ...s.user, xp: newXp, level: nextLevel } : null,
-            progress: s.progress ? { ...s.progress, xp: newXp, level: nextLevel } : null,
+            currentLevel: nextLevel,
+            lastExamDate: new Date().toISOString(),
+          }
+
+          try {
+            localStorage.setItem('fluent_level_progress_backup', JSON.stringify(newProgress))
+          } catch {}
+
+          const updatedUser = s.user
+            ? { ...s.user, xp: newXp, level: nextLevel }
+            : { id: s.userId, name: 'Learner', level: nextLevel, xp: newXp, streak: 1, lastSeen: new Date().toISOString() }
+
+          const updatedProgress = s.progress
+            ? { ...s.progress, xp: newXp, level: nextLevel }
+            : { userId: s.userId, streak: 1, totalMessages: 0, totalWords: 0, cardsReviewedToday: 0, cardsDueToday: 0, level: nextLevel, xp: newXp }
+
+          return {
+            levelProgress: newProgress,
+            user: updatedUser,
+            progress: updatedProgress,
           }
         })
       },
@@ -411,13 +465,32 @@ export const useAppStore = create<AppState>()(
       name: 'fluent-ai-v4-storage',
       storage: createJSONStorage(() => safeStorage),
       onRehydrateStorage: () => (state) => {
-        if (state && state.sessions && state.sessions.length > 0) {
-          const active = state.sessions.find((s) => s.id === state.activeSessionId) || state.sessions[0]
-          if (active) {
-            state.activeSessionId = active.id
-            state.sessionId = active.id
-            state.messages = active.messages || []
-            state.activeScenario = active.scenario || 'free-talk'
+        if (state) {
+          const backup = loadInitialLevelProgress()
+          if (!state.levelProgress || (!state.levelProgress.completedLessons?.length && backup.completedLessons?.length)) {
+            state.levelProgress = backup
+          } else {
+            state.levelProgress = {
+              currentLevel: state.levelProgress.currentLevel || backup.currentLevel || 'A2',
+              completedLessons: Array.from(new Set([...(state.levelProgress.completedLessons || []), ...(backup.completedLessons || [])])),
+              lessonScores: { ...(backup.lessonScores || {}), ...(state.levelProgress.lessonScores || {}) },
+              passedExams: Array.from(new Set([...(state.levelProgress.passedExams || []), ...(backup.passedExams || [])])),
+              examScores: { ...(backup.examScores || {}), ...(state.levelProgress.examScores || {}) },
+              lastExamDate: state.levelProgress.lastExamDate || backup.lastExamDate,
+            }
+          }
+          try {
+            localStorage.setItem('fluent_level_progress_backup', JSON.stringify(state.levelProgress))
+          } catch {}
+
+          if (state.sessions && state.sessions.length > 0) {
+            const active = state.sessions.find((s) => s.id === state.activeSessionId) || state.sessions[0]
+            if (active) {
+              state.activeSessionId = active.id
+              state.sessionId = active.id
+              state.messages = active.messages || []
+              state.activeScenario = active.scenario || 'free-talk'
+            }
           }
         }
       },
@@ -432,6 +505,7 @@ export const useAppStore = create<AppState>()(
         activeScenario:   s.activeScenario,
         reviewedToday:    s.reviewedToday,
         levelProgress:    s.levelProgress,
+        progress:         s.progress,
       }),
     }
   )

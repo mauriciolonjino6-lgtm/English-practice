@@ -120,15 +120,15 @@ export default function ExamModal({ exam, onClose, onComplete }: Props) {
               </div>
 
               <span className="inline-block px-3 py-1 rounded-full bg-rose-100 dark:bg-rose-950/60 text-rose-700 dark:text-rose-300 text-xs font-bold uppercase tracking-wider mb-2">
-                Necesitas un poco más de práctica
+                Further practice recommended
               </span>
 
               <h2 className="text-2xl font-black text-slate-900 dark:text-white mb-2">
-                {score}% Obtenido
+                {score}% Achieved
               </h2>
 
               <p className="text-sm text-slate-600 dark:text-slate-300 mb-6">
-                Para certificar esta unidad se requiere al menos un <strong>{exam.passingScore}%</strong>. Te sugerimos repasar las lecciones interactivas antes de volver a presentar el examen.
+                A minimum score of <strong>{exam.passingScore}%</strong> is required to pass. We recommend reviewing the course lessons before retaking the assessment.
               </p>
             </>
           )}
@@ -138,7 +138,7 @@ export default function ExamModal({ exam, onClose, onComplete }: Props) {
               onClick={onClose}
               className="flex-1 py-3.5 rounded-2xl bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-800 dark:text-white font-bold transition-all text-sm"
             >
-              Cerrar
+              Close
             </button>
             {!passed && (
               <button
@@ -152,7 +152,7 @@ export default function ExamModal({ exam, onClose, onComplete }: Props) {
                 className="flex-1 py-3.5 rounded-2xl bg-brand-600 hover:bg-brand-500 text-white font-bold transition-all text-sm shadow-md flex items-center justify-center gap-1.5"
               >
                 <RotateCcw size={16} />
-                <span>Reintentar</span>
+                <span>Retry</span>
               </button>
             )}
           </div>
@@ -170,7 +170,7 @@ export default function ExamModal({ exam, onClose, onComplete }: Props) {
         <button
           onClick={onClose}
           className="p-2 rounded-xl bg-white/10 text-white hover:bg-white/20 transition-colors"
-          title="Salir del examen"
+          title="Exit assessment"
         >
           <X size={20} />
         </button>
@@ -181,7 +181,7 @@ export default function ExamModal({ exam, onClose, onComplete }: Props) {
               <Award size={14} />
               {exam.title}
             </span>
-            <span>{currentIndex + 1} de {exam.exercises.length}</span>
+            <span>{currentIndex + 1} of {exam.exercises.length}</span>
           </div>
           <div className="w-full h-2.5 bg-white/10 rounded-full overflow-hidden">
             <div
@@ -198,9 +198,9 @@ export default function ExamModal({ exam, onClose, onComplete }: Props) {
           <div className="flex items-center justify-between">
             <span className="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-amber-100 dark:bg-amber-950/60 text-amber-700 dark:text-amber-300 flex items-center gap-1.5">
               <GraduationCap size={14} />
-              Pregunta de Examen #{currentIndex + 1}
+              Question #{currentIndex + 1}
             </span>
-            <span className="text-xs text-slate-400">Puntaje mínimo: {exam.passingScore}%</span>
+            <span className="text-xs text-slate-400">Passing mark: {exam.passingScore}%</span>
           </div>
 
           <h3 className="text-lg sm:text-xl font-bold text-slate-900 dark:text-white leading-snug">
@@ -217,7 +217,7 @@ export default function ExamModal({ exam, onClose, onComplete }: Props) {
                 type="button"
                 onClick={() => speak(currentExercise.audioText!)}
                 className="w-10 h-10 rounded-xl bg-brand-600 text-white flex items-center justify-center shrink-0 hover:bg-brand-500 transition-colors shadow-sm"
-                title="Escuchar audio"
+                title="Listen to audio"
               >
                 <Volume2 size={18} />
               </button>

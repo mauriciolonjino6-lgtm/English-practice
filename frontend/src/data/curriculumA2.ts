@@ -69,18 +69,18 @@ export const CURRICULUM_A2: Unit[] = [
           {
             id: 'a2-u1-l1-e1',
             type: 'listening',
-            instruction: 'Escucha el relato del profesor y selecciona qué acción realizó en primer lugar:',
+            instruction: 'Listen to the tutor\'s story and select which action was taken first:',
             prompt: 'Yesterday morning, I woke up at seven, put the kettle on for a cuppa, and read the morning post before heading to the university.',
             audioText: 'Yesterday morning, I woke up at seven, put the kettle on for a cuppa, and read the morning post before heading to the university.',
-            options: ['Tomó un taxi a la universidad', 'Puso la tetera a hervir para un té', 'Fue a comprar el periódico', 'Se quedó dormido'],
-            correctAnswer: 'Puso la tetera a hervir para un té',
+            options: ['Took a taxi to university', 'Put the kettle on for a cuppa', 'Went to buy the newspaper', 'Overslept in bed'],
+            correctAnswer: 'Put the kettle on for a cuppa',
             hint: 'Presta atención a la frase británica "put the kettle on for a cuppa".',
             explanation: 'En el Reino Unido, "put the kettle on for a cuppa" significa poner a hervir agua en la tetera para preparar una taza de té.'
           },
           {
             id: 'a2-u1-l1-e2',
             type: 'listening',
-            instruction: 'Escucha con atención y completa la palabra que falta en la expresión británica:',
+            instruction: 'Listen carefully and complete the missing word in the British idiom:',
             prompt: 'While I was walking to college, it suddenly started to _____ cats and dogs!',
             audioText: 'While I was walking to college, it suddenly started to rain cats and dogs!',
             options: ['rain', 'pour', 'snow', 'wind'],
@@ -91,7 +91,7 @@ export const CURRICULUM_A2: Unit[] = [
           {
             id: 'a2-u1-l1-e3',
             type: 'multiple-choice',
-            instruction: 'Identifica la forma irregular correcta en pasado simple para el verbo "buy":',
+            instruction: 'Identify the correct irregular past simple form of the verb "buy":',
             prompt: 'Last Saturday, my brother _____ a vintage bicycle at the Oxford market.',
             options: ['bought', 'buyed', 'was buy', 'buying'],
             correctAnswer: 'bought',
@@ -100,7 +100,7 @@ export const CURRICULUM_A2: Unit[] = [
           {
             id: 'a2-u1-l1-e4',
             type: 'fill-blank',
-            instruction: 'Completa la frase con la forma negativa correcta en pasado simple:',
+            instruction: 'Complete the sentence with the correct negative form in the Past Simple:',
             prompt: 'I _____ (not have) breakfast this morning because I was in a rush.',
             options: ["didn't have", "didn't had", "not had", "wasn't have"],
             correctAnswer: "didn't have",
@@ -120,7 +120,7 @@ export const CURRICULUM_A2: Unit[] = [
           {
             id: 'a2-u1-l2-e1',
             type: 'speaking',
-            instruction: 'Escucha y pronuncia la siguiente frase con sonido /t/ en "worked":',
+            instruction: 'Listen and pronounce this sentence with the crisp /t/ sound in "worked":',
             prompt: 'I worked in the laboratory all day yesterday.',
             audioText: 'I worked in the laboratory all day yesterday.',
             correctAnswer: 'I worked in the laboratory all day yesterday.',
@@ -130,7 +130,7 @@ export const CURRICULUM_A2: Unit[] = [
           {
             id: 'a2-u1-l2-e2',
             type: 'speaking',
-            instruction: 'Escucha y pronuncia esta frase con sonido /ɪd/ en "decided":',
+            instruction: 'Listen and pronounce this sentence with the /ɪd/ ending in "decided":',
             prompt: 'We decided to visit London last weekend.',
             audioText: 'We decided to visit London last weekend.',
             correctAnswer: 'We decided to visit London last weekend.',
@@ -140,7 +140,7 @@ export const CURRICULUM_A2: Unit[] = [
           {
             id: 'a2-u1-l2-e3',
             type: 'sentence-order',
-            instruction: 'Ordena las palabras para estructurar la oración afirmativa en pasado:',
+            instruction: 'Arrange the words to form a correct affirmative sentence in the past tense:',
             prompt: 'yesterday / sushi / I / ate / for dinner',
             options: ['I', 'ate', 'sushi', 'for dinner', 'yesterday'],
             correctAnswer: 'I ate sushi for dinner yesterday',
@@ -149,7 +149,7 @@ export const CURRICULUM_A2: Unit[] = [
           {
             id: 'a2-u1-l2-e4',
             type: 'speaking',
-            instruction: 'Pronuncia con claridad la siguiente oración en pasado simple:',
+            instruction: 'Pronounce this past simple sentence clearly with natural British intonation:',
             prompt: 'She lived in Manchester for five years.',
             audioText: 'She lived in Manchester for five years.',
             correctAnswer: 'She lived in Manchester for five years.',
@@ -169,7 +169,7 @@ export const CURRICULUM_A2: Unit[] = [
           {
             id: 'a2-u1-l3-e1',
             type: 'fill-blank',
-            instruction: 'Selecciona la forma correcta para completar la acción en progreso interrumpida:',
+            instruction: 'Select the correct form to express the continuous action that was interrupted:',
             prompt: 'I _____ (cook) dinner when my friend rang the doorbell.',
             options: ['was cooking', 'cooked', 'were cooking', 'am cooking'],
             correctAnswer: 'was cooking',
@@ -179,7 +179,7 @@ export const CURRICULUM_A2: Unit[] = [
           {
             id: 'a2-u1-l3-e2',
             type: 'fill-blank',
-            instruction: 'Completa con el conector temporal adecuado:',
+            instruction: 'Complete the sentence with the appropriate time conjunction:',
             prompt: '_____ we were having a cup of tea, it began to snow outside.',
             options: ['While', 'During', 'Because', 'So'],
             correctAnswer: 'While',
@@ -189,7 +189,7 @@ export const CURRICULUM_A2: Unit[] = [
           {
             id: 'a2-u1-l3-e3',
             type: 'multiple-choice',
-            instruction: '¿Cuál de estas preguntas está formulada de manera correcta?',
+            instruction: 'Which of these questions is grammatically correct?',
             prompt: 'Elige la opción con gramática precisa:',
             options: [
               'What were you doing at eight o\'clock last night?',
@@ -203,7 +203,7 @@ export const CURRICULUM_A2: Unit[] = [
           {
             id: 'a2-u1-l3-e4',
             type: 'sentence-order',
-            instruction: 'Ordena la frase para describir dos acciones simultáneas en pasado continuo:',
+            instruction: 'Arrange the words to describe two simultaneous actions in the past continuous:',
             prompt: 'reading / was / while / he / was / I / studying',
             options: ['I', 'was', 'studying', 'while', 'he', 'was', 'reading'],
             correctAnswer: 'I was studying while he was reading',
@@ -282,8 +282,8 @@ export const CURRICULUM_A2: Unit[] = [
             instruction: 'Escucha el anuncio de megafonía y selecciona el andén de salida:',
             prompt: 'The train to Oxford will depart from platform four in ten minutes. Please mind the gap between the train and the platform.',
             audioText: 'The train to Oxford will depart from platform four in ten minutes. Please mind the gap between the train and the platform.',
-            options: ['Andén 4', 'Andén 14', 'Andén 2', 'Andén 10'],
-            correctAnswer: 'Andén 4',
+            options: ['Platform 4', 'Platform 14', 'Platform 2', 'Platform 10'],
+            correctAnswer: 'Platform 4',
             explanation: '"Platform four" corresponde al andén 4. "Mind the gap" es la célebre advertencia británica de seguridad.'
           },
           {
@@ -444,12 +444,12 @@ export const CURRICULUM_A2: Unit[] = [
             prompt: 'Have you ever tried traditional English fish and chips with malt vinegar?',
             audioText: 'Have you ever tried traditional English fish and chips with malt vinegar?',
             options: [
-              '¿Alguna vez has probado el tradicional pescado frito inglés con vinagre de malta?',
-              '¿Comprarás pescado y patatas fritas mañana?',
-              '¿Dónde cocinaste pescado la semana pasada?',
-              '¿Te agrada el vinagre de vino tinto?'
+              'Have you ever tried traditional English fish and chips with malt vinegar?',
+              'Will you buy fish and chips tomorrow?',
+              'Where did you cook fish last week?',
+              'Do you like red wine vinegar?'
             ],
-            correctAnswer: '¿Alguna vez has probado el tradicional pescado frito inglés con vinagre de malta?',
+            correctAnswer: 'Have you ever tried traditional English fish and chips with malt vinegar?',
             explanation: '"Have you ever tried...?" es la estructura canónica para indagar si alguien ha tenido una experiencia en algún momento de su vida.'
           },
           {
@@ -659,16 +659,16 @@ export const FINAL_A2_EXAM: Exam = {
     {
       id: 'final-a2-1',
       type: 'listening',
-      instruction: 'Escucha la narración personal del profesor Davies y elige la conclusión correcta:',
+      instruction: 'Listen to tutor Emma\'s personal story and select the correct conclusion:',
       prompt: 'When I first came to Oxford twenty years ago, I didn\'t know anyone. I spent my first afternoon sitting in a quiet teashop by the river, writing in my journal. It was raining gently, as it often does in England. That quiet afternoon made me fall in love with this historic city.',
       audioText: 'When I first came to Oxford twenty years ago, I didn\'t know anyone. I spent my first afternoon sitting in a quiet teashop by the river, writing in my journal. It was raining gently, as it often does in England. That quiet afternoon made me fall in love with this historic city.',
       options: [
-        'Se enamoró de Oxford mientras tomaba el té junto al río en una tarde lluviosa.',
-        'Se perdió en el metro de Londres y no pudo llegar a la universidad.',
-        'Decidió regresar a su país al día siguiente porque no conocía a nadie.',
-        'Fue a comprar libros antiguos en el mercado de Camden.'
+        'He fell in love with Oxford while having tea by the river on a rainy afternoon.',
+        'He got lost on the London Underground and never arrived at university.',
+        'He decided to return home the following day because he knew no one.',
+        'He went to buy antique books at Camden Market.'
       ],
-      correctAnswer: 'Se enamoró de Oxford mientras tomaba el té junto al río en una tarde lluviosa.',
+      correctAnswer: 'He fell in love with Oxford while having tea by the river on a rainy afternoon.',
       explanation: 'El profesor describe cómo su primera tarde en una casa de té junto al río le hizo enamorarse de Oxford.'
     },
     {
@@ -850,8 +850,8 @@ export const CURRICULUM_B1: Unit[] = [
             instruction: 'Escucha el dato histórico de Oxford y responde qué avance científico se probó con éxito:',
             prompt: 'Penicillin was successfully tested in Oxford by Howard Florey and Ernst Chain in nineteen forty.',
             audioText: 'Penicillin was successfully tested in Oxford by Howard Florey and Ernst Chain in nineteen forty.',
-            options: ['La penicilina', 'La imprenta', 'La máquina de vapor', 'El teléfono'],
-            correctAnswer: 'La penicilina',
+            options: ['Penicillin', 'The printing press', 'The steam engine', 'The telephone'],
+            correctAnswer: 'Penicillin',
             explanation: 'El audio menciona que "Penicillin was successfully tested in Oxford".'
           }
         ]
@@ -921,12 +921,12 @@ export const FINAL_B1_EXAM: Exam = {
       prompt: 'If more commuters travelled by public transit rather than driving personal vehicles, urban traffic congestion would be remarkably reduced, and air quality in London would improve substantially.',
       audioText: 'If more commuters travelled by public transit rather than driving personal vehicles, urban traffic congestion would be remarkably reduced, and air quality in London would improve substantially.',
       options: [
-        'Viajar en transporte público reduciría notablemente la congestión y mejoraría el aire.',
-        'Los coches particulares son indispensables para la economía urbana.',
-        'El transporte público debe cerrarse durante los fines de semana.',
-        'Los habitantes de Londres rechazan el uso de trenes.'
+        'Traveling by public transport significantly reduces congestion and cleans urban air.',
+        'Private cars are indispensable to the urban economy.',
+        'Public transport should close during weekends.',
+        'London residents reject using commuter trains.'
       ],
-      correctAnswer: 'Viajar en transporte público reduciría notablemente la congestión y mejoraría el aire.',
+      correctAnswer: 'Traveling by public transport significantly reduces congestion and cleans urban air.',
       explanation: 'El profesor sostiene que el transporte público reduce la congestión y eleva la calidad del aire.'
     },
     {
@@ -974,7 +974,7 @@ export const CURRICULUM_B2: Unit[] = [
           {
             id: 'b2-u1-l1-e1',
             type: 'fill-blank',
-            instruction: 'Completa la hipótesis en pasado:',
+            instruction: 'Complete the past hypothetical condition (Third Conditional):',
             prompt: 'If we _____ (leave) home earlier, we wouldn\'t have missed our flight from Heathrow.',
             options: ['had left', 'have left', 'would leave', 'left'],
             correctAnswer: 'had left',
@@ -983,7 +983,7 @@ export const CURRICULUM_B2: Unit[] = [
           {
             id: 'b2-u1-l1-e2',
             type: 'speaking',
-            instruction: 'Pronuncia con las contracciones británicas habituales ("would\'ve"):',
+            instruction: 'Pronounce with natural British contractions ("would\'ve"):',
             prompt: 'I would have phoned you if I had known you were staying in Oxford.',
             audioText: 'I would have phoned you if I had known you were staying in Oxford.',
             correctAnswer: 'I would have phoned you if I had known you were staying in Oxford.',
@@ -1104,12 +1104,12 @@ export const FINAL_B2_EXAM: Exam = {
       prompt: 'While remote working offers undeniable scheduling flexibility, we must not overlook the institutional cohesion and spontaneous creativity that face-to-face collaboration uniquely fosters.',
       audioText: 'While remote working offers undeniable scheduling flexibility, we must not overlook the institutional cohesion and spontaneous creativity that face-to-face collaboration uniquely fosters.',
       options: [
-        'La colaboración presencial fomenta la cohesión y la creatividad espontánea de forma irremplazable.',
-        'El trabajo remoto debe erradicarse en su totalidad.',
-        'Las oficinas tradicionales son obsoletas e ineficientes.',
-        'La creatividad individual surge únicamente en aislamiento.'
+        'In-person collaboration fosters team cohesion and spontaneous creativity in an irreplaceable manner.',
+        'Remote work must be eradicated entirely.',
+        'Traditional offices are entirely obsolete and inefficient.',
+        'Individual creativity only flourishes in total isolation.'
       ],
-      correctAnswer: 'La colaboración presencial fomenta la cohesión y la creatividad espontánea de forma irremplazable.',
+      correctAnswer: 'In-person collaboration fosters team cohesion and spontaneous creativity in an irreplaceable manner.',
       explanation: 'El ponente argumenta que la colaboración presencial aporta cohesión y creatividad espontánea insustituibles.'
     },
     {
@@ -1272,12 +1272,12 @@ export const FINAL_C1_EXAM: Exam = {
       prompt: 'Not only does multilingualism enhance cognitive flexibility across the human lifespan, but it also fortifies neural pathways against degenerative cognitive decline.',
       audioText: 'Not only does multilingualism enhance cognitive flexibility across the human lifespan, but it also fortifies neural pathways against degenerative cognitive decline.',
       options: [
-        'El multilingüismo potencia la flexibilidad cognitiva y protege las vías neuronales frente al deterioro.',
-        'El aprendizaje de idiomas es perjudicial para la concentración a largo plazo.',
-        'Solo los infantes pueden adquirir bilingüismo neurocognitivo.',
-        'El inglés es el único idioma con beneficios neuronales comprobados.'
+        'Multilingualism boosts cognitive flexibility and shields neural pathways from age-related decline.',
+        'Language acquisition damages long-term concentration.',
+        'Only infants can develop neurocognitive bilingualism.',
+        'English is the sole language with proven cognitive benefits.'
       ],
-      correctAnswer: 'El multilingüismo potencia la flexibilidad cognitiva y protege las vías neuronales frente al deterioro.',
+      correctAnswer: 'Multilingualism boosts cognitive flexibility and shields neural pathways from age-related decline.',
       explanation: 'La estructura correlativa "Not only... but it also..." enfatiza ambos beneficios cognitivos simultáneamente.'
     },
     {
@@ -1386,18 +1386,18 @@ export const CURRICULUM_C2: Unit[] = [
             prompt: 'It was rather a sticky wicket, but we soldiered on and managed to pull it off.',
             audioText: 'It was rather a sticky wicket, but we soldiered on and managed to pull it off.',
             options: [
-              'Era una situación sumamente difícil y delicada, pero perseveramos y logramos el objetivo.',
-              'Había un problema físico con la puerta del jardín de críquet.',
-              'Decidimos capitular ante el primer contratiempo meteorológico.',
-              'El clima era caluroso y húmedo.'
+              'It was a remarkably difficult and delicate situation, yet we persevered and achieved the goal.',
+              'There was a physical defect with the cricket pavilion gate.',
+              'We chose to capitulate at the first sign of poor weather.',
+              'The weather was exceptionally humid.'
             ],
-            correctAnswer: 'Era una situación sumamente difícil y delicada, pero perseveramos y logramos el objetivo.',
+            correctAnswer: 'It was a remarkably difficult and delicate situation, yet we persevered and achieved the goal.',
             explanation: '"On a sticky wicket" es un modismo británico histórico proveniente del críquet para denotar una circunstancia ardua y espinosa.'
           },
           {
             id: 'c2-u2-l1-e2',
             type: 'speaking',
-            instruction: 'Pronuncia esta sentencia con la templanza y flema británica característica:',
+            instruction: 'Pronounce this sentence with characteristic British composure and dry wit:',
             prompt: 'I wouldn\'t say it was an unmitigated triumph, to put it mildly.',
             audioText: 'I wouldn\'t say it was an unmitigated triumph, to put it mildly.',
             correctAnswer: 'I wouldn\'t say it was an unmitigated triumph, to put it mildly.',
@@ -1419,12 +1419,12 @@ export const CURRICULUM_C2: Unit[] = [
           instruction: '¿Qué denota cuando un interlocutor británico califica una propuesta con cortesía diciendo "That is a very courageous proposal"?',
           prompt: 'Decodifica el eufemismo institucional británico:',
           options: [
-            'Considera que la propuesta es insensata, sumamente arriesgada o temeraria.',
-            'Admira tu valentía y la financiará de inmediato.',
-            'Insinúa que requieres entrenamiento militar.',
-            'Sugiere presentarla sin cambios a votación pública.'
+            'She considers the proposal utterly foolish, reckless, or ill-advised.',
+            'She admires your daring spirit and will fund it immediately.',
+            'She insinuates that you require military training.',
+            'She suggests putting it to an immediate public vote.'
           ],
-          correctAnswer: 'Considera que la propuesta es insensata, sumamente arriesgada o temeraria.',
+          correctAnswer: 'She considers the proposal utterly foolish, reckless, or ill-advised.',
           explanation: 'En el humor institucional británico (consagrado en Yes Minister), calificar un plan como "courageous" es la fórmula más cortés para advertir que conducirá al desastre.'
         }
       ]
@@ -1446,12 +1446,12 @@ export const FINAL_C2_EXAM: Exam = {
       prompt: 'Language is by no means a static repository of symbols, but rather a dynamic, living organism that mirrors the evolving consciousness of humanity itself. To master it is not merely to acquire vocabulary, but to inhabit another way of perceiving existence.',
       audioText: 'Language is by no means a static repository of symbols, but rather a dynamic, living organism that mirrors the evolving consciousness of humanity itself. To master it is not merely to acquire vocabulary, but to inhabit another way of perceiving existence.',
       options: [
-        'Dominar un idioma no es solo memorizar palabras, sino habitar una nueva forma de percibir la existencia.',
-        'Los diccionarios deben permanecer inmutables a lo largo de los siglos.',
-        'Los símbolos estáticos son superiores a la conciencia viva.',
-        'El aprendizaje de idiomas debe limitarse a la gramática instrumental.'
+        'Mastering a language is not mere vocabulary memorization, but inhabiting a new way of perceiving human existence.',
+        'Dictionaries must remain entirely unchanged across the centuries.',
+        'Static symbols are superior to living consciousness.',
+        'Language learning should be strictly limited to utilitarian grammar.'
       ],
-      correctAnswer: 'Dominar un idioma no es solo memorizar palabras, sino habitar una nueva forma de percibir la existencia.',
+      correctAnswer: 'Mastering a language is not mere vocabulary memorization, but inhabiting a new way of perceiving human existence.',
       explanation: 'La disertación culmina afirmando que el verdadero dominio lingüístico transforma la percepción misma de la realidad.'
     },
     {
@@ -1492,51 +1492,51 @@ export interface LevelDescriptor {
 export const ALL_LEVELS_DATA: Record<CEFRLevel, LevelDescriptor> = {
   'A2': {
     level: 'A2',
-    title: 'Nivel A2',
-    subtitle: 'Pre-Intermedio (Plataforma)',
-    description: 'Rutinas, anécdotas en pasado simple/continuo, pedir direcciones, viajar por el Reino Unido y planes futuros.',
+    title: 'Level A2',
+    subtitle: 'Pre-Intermediate (CEFR A2)',
+    description: 'Daily routines, past simple and continuous anecdotes, asking for directions, UK travel, and future intentions.',
     accentColor: 'from-blue-600 to-indigo-600',
-    badgeText: 'Fundamentos Funcionales',
+    badgeText: 'Functional Foundations',
     units: CURRICULUM_A2,
     finalExam: FINAL_A2_EXAM,
   },
   'B1': {
     level: 'B1',
-    title: 'Nivel B1',
-    subtitle: 'Intermedio (Umbral)',
-    description: 'Condicionales 1 y 2, voz pasiva, estilo indirecto, expresar puntos de vista y desenvolverse con independencia.',
+    title: 'Level B1',
+    subtitle: 'Intermediate (CEFR B1)',
+    description: 'Conditionals 1 & 2, passive voice, reported speech, expressing viewpoints, and independent travel.',
     accentColor: 'from-emerald-600 to-teal-700',
-    badgeText: 'Independencia Comunicativa',
+    badgeText: 'Communicative Independence',
     units: CURRICULUM_B1,
     finalExam: FINAL_B1_EXAM,
   },
   'B2': {
     level: 'B2',
-    title: 'Nivel B2',
-    subtitle: 'Intermedio Alto (Avanzado Profesional)',
-    description: '3er condicional, condicionales mixtos, modales de deducción pasada, debates y negociación profesional.',
+    title: 'Level B2',
+    subtitle: 'Upper-Intermediate (CEFR B2)',
+    description: 'Third & mixed conditionals, past modals of deduction, debate argumentation, and professional discussions.',
     accentColor: 'from-amber-600 to-orange-700',
-    badgeText: 'Fluidez y Espontaneidad',
+    badgeText: 'Fluency & Spontaneity',
     units: CURRICULUM_B2,
     finalExam: FINAL_B2_EXAM,
   },
   'C1': {
     level: 'C1',
-    title: 'Nivel C1',
-    subtitle: 'Avanzado Operacional Efectivo',
-    description: 'Inversión gramatical enfática, oraciones hendidas, diplomacia y cortesía indirecta británica en alto nivel.',
+    title: 'Level C1',
+    subtitle: 'Effective Operational Proficiency (CEFR C1)',
+    description: 'Emphatic grammatical inversion, cleft sentences, advanced diplomatic tact, and indirect British courtesy.',
     accentColor: 'from-purple-600 to-violet-800',
-    badgeText: 'Competencia Operativa Plena',
+    badgeText: 'Operational Proficiency',
     units: CURRICULUM_C1,
     finalExam: FINAL_C1_EXAM,
   },
   'C2': {
     level: 'C2',
-    title: 'Nivel C2',
-    subtitle: 'Maestría y Proficiencia Máxima',
-    description: 'Retórica de Oxford, estilo literario y académico, ironía nativa y decodificación de la sutil flema británica.',
+    title: 'Level C2',
+    subtitle: 'Mastery & Native Oxford Proficiency (CEFR C2)',
+    description: 'Oxford academic rhetoric, absolute participle clauses, dry British irony, and master understatement.',
     accentColor: 'from-rose-600 via-pink-700 to-purple-900',
-    badgeText: 'Maestría Nativa Superior',
+    badgeText: 'Oxford Rhetorical Mastery',
     units: CURRICULUM_C2,
     finalExam: FINAL_C2_EXAM,
   },
