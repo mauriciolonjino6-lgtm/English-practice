@@ -124,8 +124,8 @@ export async function processChat(
   }
 
   const modelCandidates = [
-    'gemini-3.1-flash-lite',
     'gemini-3.6-flash',
+    'gemini-flash-latest',
   ]
 
   // Clean history for Gemini: MUST start with 'user' and alternate roles
@@ -157,13 +157,13 @@ export async function processChat(
         generationConfig: {
           responseMimeType: 'application/json',
           temperature:      0.7,
-          maxOutputTokens:  700,
+          maxOutputTokens:  600,
         },
       })
 
       const chat = model.startChat({ history: geminiHistory })
 
-      const timeoutMs = imageData ? 35000 : 15000
+      const timeoutMs = 9500
       const timeoutPromise = new Promise<never>((_, reject) =>
         setTimeout(() => reject(new Error(`AI generation timed out on model ${modelName}`)), timeoutMs)
       )

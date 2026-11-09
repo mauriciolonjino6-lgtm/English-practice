@@ -57,7 +57,7 @@ export const DEFAULT_USER: UserProfile = {
   name: 'Mauricio',
   email: 'mauricio@fluent.ai',
   level: 'A1',
-  goal: 'Conversación Diaria & Certificación Oxford',
+  goal: 'Daily Fluency & Oxford Certification',
   xp: 50,
   streak: 1,
 }
@@ -103,7 +103,7 @@ function createInitialSession(scenario: ScenarioType = 'free-talk'): ChatSession
   const id = uuidv4()
   return {
     id,
-    title: 'Nueva Conversación',
+    title: 'New Conversation',
     scenario,
     messages: [
       {

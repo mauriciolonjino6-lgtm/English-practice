@@ -91430,8 +91430,8 @@ async function processChat(userInput, history, scenario = "free-talk", _studentL
     };
   }
   const modelCandidates = [
-    "gemini-3.1-flash-lite",
-    "gemini-3.6-flash"
+    "gemini-3.6-flash",
+    "gemini-flash-latest"
   ];
   const geminiHistory = [];
   for (const m of history.slice(-10)) {
@@ -91457,11 +91457,11 @@ ${text}`;
         generationConfig: {
           responseMimeType: "application/json",
           temperature: 0.7,
-          maxOutputTokens: 700
+          maxOutputTokens: 600
         }
       });
       const chat = model.startChat({ history: geminiHistory });
-      const timeoutMs = imageData ? 35e3 : 15e3;
+      const timeoutMs = 9500;
       const timeoutPromise = new Promise(
         (_3, reject2) => setTimeout(() => reject2(new Error(`AI generation timed out on model ${modelName}`)), timeoutMs)
       );

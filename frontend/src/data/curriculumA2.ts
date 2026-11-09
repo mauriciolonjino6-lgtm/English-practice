@@ -76,7 +76,7 @@ export const CURRICULUM_A1: Unit[] = [
             options: ['Oxford', 'New York', 'Sydney', 'Dublin'],
             correctAnswer: 'Oxford',
             hint: 'Listen carefully for the city mentioned after "from".',
-            explanation: 'Emma clearly says: "I am from Oxford in the United Kingdom."'
+            explanation: 'Emma clearly says: "I am from Oxford in the United Kingdom."',
           },
           {
             id: 'a1-u1-l1-e2',
@@ -85,7 +85,7 @@ export const CURRICULUM_A1: Unit[] = [
             prompt: 'Hello, my name _____ (be) Mauricio and I am an English student.',
             options: ['is', 'am', 'are', 'be'],
             correctAnswer: 'is',
-            explanation: '"My name" is singular (third person: it), so the correct verb is "is".'
+            explanation: '"My name" is singular (third person: it), so the correct verb is "is".',
           },
           {
             id: 'a1-u1-l1-e3',
@@ -95,7 +95,7 @@ export const CURRICULUM_A1: Unit[] = [
             audioText: 'Hello Emma, pleased to meet you. I am ready to learn English.',
             correctAnswer: 'Hello Emma, pleased to meet you. I am ready to learn English.',
             hint: 'Pronounce "pleased" smoothly in one syllable ending in a /d/ sound.',
-            explanation: '"Pleased to meet you" is the standard British polite greeting when meeting someone for the first time.'
+            explanation: '"Pleased to meet you" is the standard British polite greeting when meeting someone for the first time.',
           },
           {
             id: 'a1-u1-l1-e4',
@@ -104,7 +104,7 @@ export const CURRICULUM_A1: Unit[] = [
             prompt: 'to / Pleased / you / meet / Emma',
             options: ['Pleased', 'to', 'meet', 'you', 'Emma'],
             correctAnswer: 'Pleased to meet you Emma',
-            explanation: 'The standard greeting phrase is "Pleased to meet you, Emma."'
+            explanation: 'The standard greeting phrase is "Pleased to meet you, Emma."',
           }
         ]
       },
@@ -125,7 +125,7 @@ export const CURRICULUM_A1: Unit[] = [
             audioText: 'The train is arriving at O - X - F - O - R - D.',
             options: ['Oxford', 'London', 'Bristol', 'Cambridge'],
             correctAnswer: 'Oxford',
-            explanation: 'O - X - F - O - R - D spells Oxford.'
+            explanation: 'O - X - F - O - R - D spells Oxford.',
           },
           {
             id: 'a1-u1-l2-e2',
@@ -139,7 +139,7 @@ export const CURRICULUM_A1: Unit[] = [
               'I have twenty-five years old.'
             ],
             correctAnswer: 'I am twenty-five years old.',
-            explanation: 'In English, age is expressed with the verb "to be" (I am / He is), never with "have".'
+            explanation: 'In English, age is expressed with the verb "to be" (I am / He is), never with "have".',
           },
           {
             id: 'a1-u1-l2-e3',
@@ -148,7 +148,7 @@ export const CURRICULUM_A1: Unit[] = [
             prompt: 'Seven plus five equals _____ (12).',
             options: ['twelve', 'twenty', 'eleven', 'two'],
             correctAnswer: 'twelve',
-            explanation: '7 + 5 = 12 (twelve).'
+            explanation: '7 + 5 = 12 (twelve).',
           },
           {
             id: 'a1-u1-l2-e4',
@@ -157,7 +157,7 @@ export const CURRICULUM_A1: Unit[] = [
             prompt: 'One, two, three, four, five, six, seven, eight, nine, ten.',
             audioText: 'One, two, three, four, five, six, seven, eight, nine, ten.',
             correctAnswer: 'One, two, three, four, five, six, seven, eight, nine, ten.',
-            explanation: 'Focus on clear vowel sounds and the unvoiced "th" in "three".'
+            explanation: 'Focus on clear vowel sounds and the unvoiced "th" in "three".',
           }
         ]
       },
@@ -177,7 +177,7 @@ export const CURRICULUM_A1: Unit[] = [
             prompt: 'They _____ (be) students at the university library.',
             options: ['are', 'is', 'am', 'be'],
             correctAnswer: 'are',
-            explanation: 'Plural pronouns (we, you, they) take "are".'
+            explanation: 'Plural pronouns (we, you, they) take "are".',
           },
           {
             id: 'a1-u1-l3-e2',
@@ -191,7 +191,7 @@ export const CURRICULUM_A1: Unit[] = [
               'She aren\'t at home today.'
             ],
             correctAnswer: 'She is not at home today.',
-            explanation: 'Negative of "is" is "is not" or the contraction "isn\'t".'
+            explanation: 'Negative of "is" is "is not" or the contraction "isn\'t".',
           },
           {
             id: 'a1-u1-l3-e3',
@@ -200,7 +200,7 @@ export const CURRICULUM_A1: Unit[] = [
             prompt: 'from / Are / England / you / ?',
             options: ['Are', 'you', 'from', 'England', '?'],
             correctAnswer: 'Are you from England ?',
-            explanation: 'Questions with "to be" invert the verb and subject: Verb (Are) + Subject (you) + Complement (from England?).'
+            explanation: 'Questions with "to be" invert the verb and subject: Verb (Are) + Subject (you) + Complement (from England?).',
           },
           {
             id: 'a1-u1-l3-e4',
@@ -209,7 +209,7 @@ export const CURRICULUM_A1: Unit[] = [
             prompt: 'Is he your English teacher? — Yes, he _____.',
             options: ['is', 'are', 'does', 'has'],
             correctAnswer: 'is',
-            explanation: 'Short affirmative answer: "Yes, he is."'
+            explanation: 'Short affirmative answer: "Yes, he is."',
           }
         ]
       }
@@ -230,7 +230,7 @@ export const CURRICULUM_A1: Unit[] = [
           audioText: 'Hello! I am David. I am a photographer, and I am from Manchester.',
           options: ['Manchester', 'Oxford', 'London', 'Liverpool'],
           correctAnswer: 'Manchester',
-          explanation: 'The speaker states: "I am from Manchester."'
+          explanation: 'The speaker states: "I am from Manchester."',
         },
         {
           id: 'exam-a1-u1-e2',
@@ -239,7 +239,7 @@ export const CURRICULUM_A1: Unit[] = [
           prompt: 'We _____ (be) happy to study at the language academy.',
           options: ['are', 'is', 'am', 'be'],
           correctAnswer: 'are',
-          explanation: 'The pronoun "we" requires "are".'
+          explanation: 'The pronoun "we" requires "are".',
         },
         {
           id: 'exam-a1-u1-e3',
@@ -248,7 +248,7 @@ export const CURRICULUM_A1: Unit[] = [
           prompt: 'your / name / What / is / ?',
           options: ['What', 'is', 'your', 'name', '?'],
           correctAnswer: 'What is your name ?',
-          explanation: 'Information question structure: Question word (What) + Verb (is) + Subject (your name?).'
+          explanation: 'Information question structure: Question word (What) + Verb (is) + Subject (your name?).',
         }
       ]
     }
@@ -257,7 +257,7 @@ export const CURRICULUM_A1: Unit[] = [
     id: 'a1-unit-2',
     level: 'A1',
     unitNumber: 2,
-    title: 'Unit 2: Daily Objects, Articles & Ordering at a London Café',
+    title: 'Unit 2: Daily Objects, Articles & Ordering at a London Cafe',
     topic: 'Singular/Plural Nouns, Articles (A/An/The) and Demonstratives',
     description: 'Learn to name everyday items, use articles correctly and order food and drinks with polite British etiquette.',
     lessons: [
@@ -278,7 +278,7 @@ export const CURRICULUM_A1: Unit[] = [
             audioText: 'Good morning! Welcome to Soho Coffee. What can I get started for you today? Could I have a white coffee and a warm croissant, please?',
             options: ['A white coffee and a croissant', 'A black tea and a muffin', 'A hot chocolate and a scone', 'An iced latte and a sandwich'],
             correctAnswer: 'A white coffee and a croissant',
-            explanation: 'The customer orders "a white coffee and a warm croissant, please".'
+            explanation: 'The customer orders "a white coffee and a warm croissant, please".',
           },
           {
             id: 'a1-u2-l1-e2',
@@ -288,7 +288,7 @@ export const CURRICULUM_A1: Unit[] = [
             audioText: 'Could I have a cup of English tea, please?',
             correctAnswer: 'Could I have a cup of English tea, please?',
             hint: 'Use a gentle rising intonation on "please".',
-            explanation: '"Could I have..., please?" is the standard British formula for ordering food and drinks.'
+            explanation: '"Could I have..., please?" is the standard British formula for ordering food and drinks.',
           },
           {
             id: 'a1-u2-l1-e3',
@@ -297,7 +297,7 @@ export const CURRICULUM_A1: Unit[] = [
             prompt: 'Excuse me, _____ much is this slice of cake?',
             options: ['How', 'What', 'Where', 'Who'],
             correctAnswer: 'How',
-            explanation: '"How much is..." is the standard question to ask for price.'
+            explanation: '"How much is..." is the standard question to ask for price.',
           },
           {
             id: 'a1-u2-l1-e4',
@@ -306,7 +306,7 @@ export const CURRICULUM_A1: Unit[] = [
             prompt: 'have / please / I / tea / Could / a / ?',
             options: ['Could', 'I', 'have', 'a', 'tea', 'please', '?'],
             correctAnswer: 'Could I have a tea please ?',
-            explanation: 'Polite request order: Could + I + have + a tea + please?'
+            explanation: 'Polite request order: Could + I + have + a tea + please?',
           }
         ]
       },
@@ -326,7 +326,7 @@ export const CURRICULUM_A1: Unit[] = [
             prompt: '_____ is my new English notebook right here in my hand.',
             options: ['This', 'That', 'These', 'Those'],
             correctAnswer: 'This',
-            explanation: '"This" is singular and refers to an object close to the speaker.'
+            explanation: '"This" is singular and refers to an object close to the speaker.',
           },
           {
             id: 'a1-u2-l2-e2',
@@ -335,7 +335,7 @@ export const CURRICULUM_A1: Unit[] = [
             prompt: 'Look over there! _____ red double-decker buses are magnificent.',
             options: ['Those', 'These', 'This', 'That'],
             correctAnswer: 'Those',
-            explanation: '"Those" is plural and refers to items further away ("over there").'
+            explanation: '"Those" is plural and refers to items further away ("over there").',
           },
           {
             id: 'a1-u2-l2-e3',
@@ -344,7 +344,7 @@ export const CURRICULUM_A1: Unit[] = [
             prompt: 'There are five _____ waiting in the queue.',
             options: ['people', 'persons', 'peoples', 'persones'],
             correctAnswer: 'people',
-            explanation: 'The plural of "person" in standard English is "people".'
+            explanation: 'The plural of "person" in standard English is "people".',
           },
           {
             id: 'a1-u2-l2-e4',
@@ -353,7 +353,7 @@ export const CURRICULUM_A1: Unit[] = [
             prompt: 'I have two _____ (watch) on my desk.',
             options: ['watches', 'watchs', 'watchies', 'watch'],
             correctAnswer: 'watches',
-            explanation: 'Nouns ending in "ch", "sh", "s", or "x" add "-es" in plural: watch -> watches.'
+            explanation: 'Nouns ending in "ch", "sh", "s", or "x" add "-es" in plural: watch -> watches.',
           }
         ]
       },
@@ -373,7 +373,7 @@ export const CURRICULUM_A1: Unit[] = [
             prompt: 'Emma has _____ apple and _____ sandwich for lunch.',
             options: ['an / a', 'a / an', 'a / a', 'an / an'],
             correctAnswer: 'an / a',
-            explanation: '"An" is used before vowel sounds (an apple); "a" before consonant sounds (a sandwich).'
+            explanation: '"An" is used before vowel sounds (an apple); "a" before consonant sounds (a sandwich).',
           },
           {
             id: 'a1-u2-l3-e2',
@@ -382,7 +382,7 @@ export const CURRICULUM_A1: Unit[] = [
             prompt: 'Oxford is _____ world-famous university.',
             options: ['a', 'an', 'the', 'no article'],
             correctAnswer: 'a',
-            explanation: '"University" begins with the consonant sound /j/ ("yoo-niversity"), so we use "a", not "an".'
+            explanation: '"University" begins with the consonant sound /j/ ("yoo-niversity"), so we use "a", not "an".',
           },
           {
             id: 'a1-u2-l3-e3',
@@ -391,7 +391,7 @@ export const CURRICULUM_A1: Unit[] = [
             prompt: 'The / on / is / table / the / book',
             options: ['The', 'book', 'is', 'on', 'the', 'table'],
             correctAnswer: 'The book is on the table',
-            explanation: 'Syntax: The book (subject) + is (verb) + on the table (prepositional phrase).'
+            explanation: 'Syntax: The book (subject) + is (verb) + on the table (prepositional phrase).',
           },
           {
             id: 'a1-u2-l3-e4',
@@ -400,7 +400,7 @@ export const CURRICULUM_A1: Unit[] = [
             prompt: 'We are visiting _____ British Museum this afternoon.',
             options: ['the', 'a', 'an', 'some'],
             correctAnswer: 'the',
-            explanation: 'Specific unique institutions use the definite article "the".'
+            explanation: 'Specific unique institutions use the definite article "the".',
           }
         ]
       }
@@ -421,7 +421,7 @@ export const CURRICULUM_A1: Unit[] = [
           audioText: 'That will be three pounds and fifty pence, please.',
           options: ['£3.50', '£3.15', '£5.30', '£13.50'],
           correctAnswer: '£3.50',
-          explanation: '"Three pounds and fifty pence" corresponds to £3.50.'
+          explanation: '"Three pounds and fifty pence" corresponds to £3.50.',
         },
         {
           id: 'exam-a1-u2-e2',
@@ -430,7 +430,7 @@ export const CURRICULUM_A1: Unit[] = [
           prompt: 'Would you like _____ cup of coffee or _____ glass of orange juice?',
           options: ['a / a', 'an / a', 'a / an', 'an / an'],
           correctAnswer: 'a / a',
-          explanation: 'Both "cup" and "glass" begin with consonant sounds.'
+          explanation: 'Both "cup" and "glass" begin with consonant sounds.',
         },
         {
           id: 'exam-a1-u2-e3',
@@ -439,7 +439,7 @@ export const CURRICULUM_A1: Unit[] = [
           prompt: 'bill / Could / the / we / please / have / ?',
           options: ['Could', 'we', 'have', 'the', 'bill', 'please', '?'],
           correctAnswer: 'Could we have the bill please ?',
-          explanation: 'Standard British formula to ask for the bill in restaurants or cafés.'
+          explanation: 'Standard British formula to ask for the bill in restaurants or cafes.',
         }
       ]
     }
@@ -469,7 +469,7 @@ export const CURRICULUM_A1: Unit[] = [
             audioText: 'Every weekday, I wake up at half past six. I always drink a cup of tea, and then I teach my morning class at nine o\'clock.',
             options: ['At nine o\'clock', 'At half past six', 'At seven o\'clock', 'At eleven o\'clock'],
             correctAnswer: 'At nine o\'clock',
-            explanation: 'Emma says: "I teach my morning class at nine o\'clock."'
+            explanation: 'Emma says: "I teach my morning class at nine o\'clock."',
           },
           {
             id: 'a1-u3-l1-e2',
@@ -478,7 +478,7 @@ export const CURRICULUM_A1: Unit[] = [
             prompt: 'I _____ (100% frequency) have tea in the afternoon; it is my favourite habit.',
             options: ['always', 'never', 'sometimes', 'rarely'],
             correctAnswer: 'always',
-            explanation: '"Always" represents 100% regularity.'
+            explanation: '"Always" represents 100% regularity.',
           },
           {
             id: 'a1-u3-l1-e3',
@@ -487,7 +487,7 @@ export const CURRICULUM_A1: Unit[] = [
             prompt: 'I live in a peaceful town and I study English every single day.',
             audioText: 'I live in a peaceful town and I study English every single day.',
             correctAnswer: 'I live in a peaceful town and I study English every single day.',
-            explanation: 'Ensure smooth linking between "live in" and "study English".'
+            explanation: 'Ensure smooth linking between "live in" and "study English".',
           },
           {
             id: 'a1-u3-l1-e4',
@@ -496,7 +496,7 @@ export const CURRICULUM_A1: Unit[] = [
             prompt: 'drinks / never / She / coffee / at / night',
             options: ['She', 'never', 'drinks', 'coffee', 'at', 'night'],
             correctAnswer: 'She never drinks coffee at night',
-            explanation: 'Adverbs of frequency go between the subject and main verb: Subject (She) + Adverb (never) + Verb (drinks).'
+            explanation: 'Adverbs of frequency go between the subject and main verb: Subject (She) + Adverb (never) + Verb (drinks).',
           }
         ]
       },
@@ -516,7 +516,7 @@ export const CURRICULUM_A1: Unit[] = [
             prompt: 'My brother _____ (work) in a hospital in London.',
             options: ['works', 'work', 'workes', 'working'],
             correctAnswer: 'works',
-            explanation: 'Third person singular (he/she/it) adds "-s": work -> works.'
+            explanation: 'Third person singular (he/she/it) adds "-s": work -> works.',
           },
           {
             id: 'a1-u3-l2-e2',
@@ -530,7 +530,7 @@ export const CURRICULUM_A1: Unit[] = [
               'He isn\'t live in Manchester.'
             ],
             correctAnswer: 'He doesn\'t live in Manchester.',
-            explanation: 'Auxiliary "doesn\'t" is followed by the base infinitive form of the verb without "-s" (live).'
+            explanation: 'Auxiliary "doesn\'t" is followed by the base infinitive form of the verb without "-s" (live).',
           },
           {
             id: 'a1-u3-l2-e3',
@@ -539,7 +539,7 @@ export const CURRICULUM_A1: Unit[] = [
             prompt: '_____ you speak English with tutor Emma?',
             options: ['Do', 'Does', 'Are', 'Is'],
             correctAnswer: 'Do',
-            explanation: 'Questions with pronoun "you" in Present Simple require auxiliary "Do".'
+            explanation: 'Questions with pronoun "you" in Present Simple require auxiliary "Do".',
           },
           {
             id: 'a1-u3-l2-e4',
@@ -548,7 +548,7 @@ export const CURRICULUM_A1: Unit[] = [
             prompt: 'live / Does / in / London / she / ?',
             options: ['Does', 'she', 'live', 'in', 'London', '?'],
             correctAnswer: 'Does she live in London ?',
-            explanation: 'Structure: Auxiliary (Does) + Subject (she) + Verb (live) + Complement (in London?).'
+            explanation: 'Structure: Auxiliary (Does) + Subject (she) + Verb (live) + Complement (in London?).',
           }
         ]
       },
@@ -568,7 +568,7 @@ export const CURRICULUM_A1: Unit[] = [
             prompt: '_____ do you live? — I live near the river in Oxford.',
             options: ['Where', 'When', 'Who', 'Why'],
             correctAnswer: 'Where',
-            explanation: '"Where" asks about place or location.'
+            explanation: '"Where" asks about place or location.',
           },
           {
             id: 'a1-u3-l3-e2',
@@ -577,7 +577,7 @@ export const CURRICULUM_A1: Unit[] = [
             prompt: '_____ does the lesson begin? — At ten in the morning.',
             options: ['When', 'Where', 'Who', 'Which'],
             correctAnswer: 'When',
-            explanation: '"When" asks about time.'
+            explanation: '"When" asks about time.',
           },
           {
             id: 'a1-u3-l3-e3',
@@ -586,7 +586,7 @@ export const CURRICULUM_A1: Unit[] = [
             prompt: 'What is your favourite thing about studying English?',
             audioText: 'What is your favourite thing about studying English?',
             correctAnswer: 'What is your favourite thing about studying English?',
-            explanation: 'Wh- questions naturally finish with a falling intonation.'
+            explanation: 'Wh- questions naturally finish with a falling intonation.',
           },
           {
             id: 'a1-u3-l3-e4',
@@ -595,7 +595,7 @@ export const CURRICULUM_A1: Unit[] = [
             prompt: 'from / Where / you / are / ?',
             options: ['Where', 'are', 'you', 'from', '?'],
             correctAnswer: 'Where are you from ?',
-            explanation: 'Standard syntax: Question word (Where) + Verb (are) + Subject (you) + Preposition (from?).'
+            explanation: 'Standard syntax: Question word (Where) + Verb (are) + Subject (you) + Preposition (from?).',
           }
         ]
       }
@@ -616,7 +616,7 @@ export const CURRICULUM_A1: Unit[] = [
           audioText: 'I live in a small village outside Oxford. Every morning, I take the train to work.',
           options: ['By train', 'By bus', 'By bicycle', 'By car'],
           correctAnswer: 'By train',
-          explanation: 'The speaker states: "Every morning, I take the train to work."'
+          explanation: 'The speaker states: "Every morning, I take the train to work."',
         },
         {
           id: 'exam-a1-u3-e2',
@@ -625,7 +625,7 @@ export const CURRICULUM_A1: Unit[] = [
           prompt: 'My sister _____ (teach) history at the secondary school.',
           options: ['teaches', 'teach', 'teachies', 'is teach'],
           correctAnswer: 'teaches',
-          explanation: 'Verbs ending in "ch" take "-es" in third person singular: teach -> teaches.'
+          explanation: 'Verbs ending in "ch" take "-es" in third person singular: teach -> teaches.',
         },
         {
           id: 'exam-a1-u3-e3',
@@ -634,7 +634,7 @@ export const CURRICULUM_A1: Unit[] = [
           prompt: 'do / What / at / weekends / you / do / ?',
           options: ['What', 'do', 'you', 'do', 'at', 'weekends', '?'],
           correctAnswer: 'What do you do at weekends ?',
-          explanation: 'Syntax: Question word (What) + Auxiliary (do) + Subject (you) + Verb (do) + Time phrase (at weekends?).'
+          explanation: 'Syntax: Question word (What) + Auxiliary (do) + Subject (you) + Verb (do) + Time phrase (at weekends?).',
         }
       ]
     }
@@ -645,7 +645,7 @@ export const FINAL_A1_EXAM: Exam = {
   id: 'final-exam-a1',
   level: 'A1',
   title: 'Oxford A1 Beginner Official Certification Assessment',
-  description: 'Comprehensive examination evaluating foundational A1 competencies: greetings, verb to be, café ordering, daily routines, and question syntax. Passing unlocks Level A2.',
+  description: 'Comprehensive examination evaluating foundational A1 competencies: greetings, verb to be, cafe ordering, daily routines, and question syntax. Passing unlocks Level A2.',
   passingScore: 70,
   exercises: [
     {
@@ -661,7 +661,7 @@ export const FINAL_A1_EXAM: Exam = {
         'To teach French and German history in Oxford.'
       ],
       correctAnswer: 'To help students speak natural English with confidence from day one.',
-      explanation: 'Emma states: "Here, we help you speak natural English with confidence from day one."'
+      explanation: 'Emma states: "Here, we help you speak natural English with confidence from day one."',
     },
     {
       id: 'final-a1-2',
@@ -670,7 +670,7 @@ export const FINAL_A1_EXAM: Exam = {
       prompt: 'Mauricio _____ (be) _____ English student.',
       options: ['is / an', 'are / a', 'is / a', 'am / an'],
       correctAnswer: 'is / an',
-      explanation: 'Mauricio (singular) requires "is", and "English" starts with a vowel sound, requiring "an".'
+      explanation: 'Mauricio (singular) requires "is", and "English" starts with a vowel sound, requiring "an".',
     },
     {
       id: 'final-a1-3',
@@ -679,7 +679,7 @@ export const FINAL_A1_EXAM: Exam = {
       prompt: 'Hello Emma, my name is Mauricio. I am an enthusiastic student and I practice English every day.',
       audioText: 'Hello Emma, my name is Mauricio. I am an enthusiastic student and I practice English every day.',
       correctAnswer: 'Hello Emma, my name is Mauricio. I am an enthusiastic student and I practice English every day.',
-      explanation: 'Clear introductory sentence demonstrating verb to be and present simple.'
+      explanation: 'Clear introductory sentence demonstrating verb to be and present simple.',
     },
     {
       id: 'final-a1-4',
@@ -688,7 +688,7 @@ export const FINAL_A1_EXAM: Exam = {
       prompt: 'the / have / menu / please / Could / we / ?',
       options: ['Could', 'we', 'have', 'the', 'menu', 'please', '?'],
       correctAnswer: 'Could we have the menu please ?',
-      explanation: 'Polite British formula: Could + we + have + the menu + please?'
+      explanation: 'Polite British formula: Could + we + have + the menu + please?',
     }
   ]
 };
@@ -701,16 +701,16 @@ export const CURRICULUM_A2: Unit[] = [
     id: 'a2-unit-1',
     level: 'A2',
     unitNumber: 1,
-    title: 'Rutinas, Hábitos y Pasado Real',
+    title: 'Daily Routines, Habits & True Past',
     topic: 'Past Simple, Past Continuous and Daily Life',
-    description: 'Aprende a relatar lo que hiciste ayer, tus hábitos diarios y acciones interrumpidas usando inglés británico natural.',
+    description: 'Learn to recount what you did yesterday, talk about daily habits, and describe interrupted actions using natural British English.',
     lessons: [
       {
         id: 'a2-u1-l1',
         unitId: 'a2-unit-1',
         unitTitle: 'Unidad 1',
-        title: 'Comprensión Auditiva: Una mañana típica en Oxford',
-        description: 'Entrena tu comprensión auditiva con frases cotidianas de rutina y pasado en acento británico.',
+        title: 'Listening Comprehension: A Typical Morning in Oxford',
+        description: 'Train your listening comprehension with everyday routine and past tense sentences in a natural British accent.',
         durationMinutes: 6,
         type: 'listening',
         exercises: [
@@ -722,8 +722,8 @@ export const CURRICULUM_A2: Unit[] = [
             audioText: 'Yesterday morning, I woke up at seven, put the kettle on for a cuppa, and read the morning post before heading to the university.',
             options: ['Took a taxi to university', 'Put the kettle on for a cuppa', 'Went to buy the newspaper', 'Overslept in bed'],
             correctAnswer: 'Put the kettle on for a cuppa',
-            hint: 'Presta atención a la frase británica "put the kettle on for a cuppa".',
-            explanation: 'En el Reino Unido, "put the kettle on for a cuppa" significa poner a hervir agua en la tetera para preparar una taza de té.'
+            hint: 'Pay close attention to the British idiom "put the kettle on for a cuppa".',
+            explanation: 'In the United Kingdom, "put the kettle on for a cuppa" means to boil water in the kettle to brew a cup of tea.',
           },
           {
             id: 'a2-u1-l1-e2',
@@ -733,8 +733,8 @@ export const CURRICULUM_A2: Unit[] = [
             audioText: 'While I was walking to college, it suddenly started to rain cats and dogs!',
             options: ['rain', 'pour', 'snow', 'wind'],
             correctAnswer: 'rain',
-            hint: 'Es la clásica expresión británica "rain cats and dogs" (llover a cántaros).',
-            explanation: '"Rain cats and dogs" es un modismo común para indicar que llueve con gran intensidad.'
+            hint: 'This is the classic British idiom "rain cats and dogs", meaning heavy rainfall.',
+            explanation: '"Rain cats and dogs" is a common British idiom meaning it is raining heavily.',
           },
           {
             id: 'a2-u1-l1-e3',
@@ -743,7 +743,7 @@ export const CURRICULUM_A2: Unit[] = [
             prompt: 'Last Saturday, my brother _____ a vintage bicycle at the Oxford market.',
             options: ['bought', 'buyed', 'was buy', 'buying'],
             correctAnswer: 'bought',
-            explanation: 'El verbo "buy" es irregular en pasado: buy -> bought. La forma "buyed" no existe en la gramática inglesa.'
+            explanation: 'The verb "buy" is irregular in the past: buy -> bought. The form "buyed" does not exist in English grammar.',
           },
           {
             id: 'a2-u1-l1-e4',
@@ -752,7 +752,7 @@ export const CURRICULUM_A2: Unit[] = [
             prompt: 'I _____ (not have) breakfast this morning because I was in a rush.',
             options: ["didn't have", "didn't had", "not had", "wasn't have"],
             correctAnswer: "didn't have",
-            explanation: 'Para negar en pasado simple se utiliza el auxiliar "didn\'t" seguido del verbo en su forma base (have).'
+            explanation: 'To form negatives in the past simple, use the auxiliary "didn\'t" followed by the base form of the verb (have).',
           }
         ]
       },
@@ -760,8 +760,8 @@ export const CURRICULUM_A2: Unit[] = [
         id: 'a2-u1-l2',
         unitId: 'a2-unit-1',
         unitTitle: 'Unidad 1',
-        title: 'Pronunciación: Terminaciones -ed en Pasado Regular',
-        description: 'Domina los 3 sonidos fonéticos de la terminación -ed (/t/, /d/, /ɪd/) para articular con naturalidad.',
+        title: 'Pronunciation: -ed Endings in Regular Past Verbs',
+        description: 'Master the three phonetic sounds of regular -ed verb endings (/t/, /d/, and /ɪd/) for natural articulation.',
         durationMinutes: 6,
         type: 'speaking',
         exercises: [
@@ -773,7 +773,7 @@ export const CURRICULUM_A2: Unit[] = [
             audioText: 'I worked in the laboratory all day yesterday.',
             correctAnswer: 'I worked in the laboratory all day yesterday.',
             hint: 'La "k" es un sonido sordo, por lo que "-ed" suena como una "t" seca: "work-t".',
-            explanation: 'Cuando un verbo termina en sonido sordo como /k/, /p/ o /s/, la terminación -ed se pronuncia como /t/.'
+            explanation: 'When a verb base ends in a voiceless consonant sound such as /k/, /p/, or /s/, the -ed ending is pronounced as /t/.',
           },
           {
             id: 'a2-u1-l2-e2',
@@ -782,8 +782,8 @@ export const CURRICULUM_A2: Unit[] = [
             prompt: 'We decided to visit London last weekend.',
             audioText: 'We decided to visit London last weekend.',
             correctAnswer: 'We decided to visit London last weekend.',
-            hint: 'Los verbos terminados en sonido "d" o "t" añaden una sílaba completa extra: "de-ci-ded".',
-            explanation: 'Solo se añade una sílaba completa /ɪd/ cuando el verbo termina en sonido /t/ o /d/ (ejemplo: decided, started, wanted).'
+            hint: 'Verbs ending in a "d" or "t" sound add an extra syllable: "de-ci-ded".',
+            explanation: 'An extra syllable /ɪd/ is added only when the base verb ends in a /t/ or /d/ sound (e.g. decided, started, wanted).',
           },
           {
             id: 'a2-u1-l2-e3',
@@ -792,7 +792,7 @@ export const CURRICULUM_A2: Unit[] = [
             prompt: 'yesterday / sushi / I / ate / for dinner',
             options: ['I', 'ate', 'sushi', 'for dinner', 'yesterday'],
             correctAnswer: 'I ate sushi for dinner yesterday',
-            explanation: 'Estructura canónica en inglés: Sujeto (I) + Verbo en pasado (ate) + Objeto directo (sushi) + Complemento de tiempo.'
+            explanation: 'Standard English word order: Subject (I) + Past verb (ate) + Direct object (sushi) + Time adverbial (yesterday).',
           },
           {
             id: 'a2-u1-l2-e4',
@@ -801,7 +801,7 @@ export const CURRICULUM_A2: Unit[] = [
             prompt: 'She lived in Manchester for five years.',
             audioText: 'She lived in Manchester for five years.',
             correctAnswer: 'She lived in Manchester for five years.',
-            explanation: 'La terminación de "lived" se pronuncia con sonido sonoro /d/, sin agregar sílabas adicionales.'
+            explanation: 'The ending of "lived" is pronounced with a voiced /d/ sound, without adding an extra syllable.',
           }
         ]
       },
@@ -809,8 +809,8 @@ export const CURRICULUM_A2: Unit[] = [
         id: 'a2-u1-l3',
         unitId: 'a2-unit-1',
         unitTitle: 'Unidad 1',
-        title: 'Gramática Activa: Pasado Simple vs Pasado Continuo',
-        description: 'Aprende a contrastar una acción que estaba en desarrollo con otra que la interrumpió.',
+        title: 'Active Grammar: Past Simple vs Past Continuous',
+        description: 'Learn how to contrast an ongoing action in progress with a sudden event that interrupted it.',
         durationMinutes: 6,
         type: 'grammar',
         exercises: [
@@ -821,8 +821,8 @@ export const CURRICULUM_A2: Unit[] = [
             prompt: 'I _____ (cook) dinner when my friend rang the doorbell.',
             options: ['was cooking', 'cooked', 'were cooking', 'am cooking'],
             correctAnswer: 'was cooking',
-            hint: 'Usa "was/were + -ing" para la acción prolongada en progreso en el pasado.',
-            explanation: 'Se utiliza el Pasado Continuo (was cooking) para la acción que estaba sucediendo cuando ocurrió la acción puntual (rang).'
+            hint: 'Use "was/were + -ing" for the prolonged action in progress in the past.',
+            explanation: 'The Past Continuous (was cooking) is used for the continuous background event when the sudden single action occurred (rang).',
           },
           {
             id: 'a2-u1-l3-e2',
@@ -831,14 +831,14 @@ export const CURRICULUM_A2: Unit[] = [
             prompt: '_____ we were having a cup of tea, it began to snow outside.',
             options: ['While', 'During', 'Because', 'So'],
             correctAnswer: 'While',
-            hint: '"While" (mientras) se utiliza seguido de una cláusula con sujeto y verbo continuo.',
-            explanation: '"While" introduce cláusulas en pasado continuo (While we were having tea...).'
+            hint: '"While" is followed by a clause containing a subject and a continuous verb form.',
+            explanation: '"While" introduces continuous background clauses (e.g. While we were having tea...).',
           },
           {
             id: 'a2-u1-l3-e3',
             type: 'multiple-choice',
             instruction: 'Which of these questions is grammatically correct?',
-            prompt: 'Elige la opción con gramática precisa:',
+            prompt: 'Select the option with accurate grammar:',
             options: [
               'What were you doing at eight o\'clock last night?',
               'What was you doing at eight o\'clock last night?',
@@ -846,7 +846,7 @@ export const CURRICULUM_A2: Unit[] = [
               'What you were doing at eight o\'clock last night?'
             ],
             correctAnswer: 'What were you doing at eight o\'clock last night?',
-            explanation: 'Con el pronombre "you", el pasado del verbo to be en interrogación es siempre "were you doing".'
+            explanation: 'With the pronoun "you", the past question form is always "were you doing".',
           },
           {
             id: 'a2-u1-l3-e4',
@@ -855,7 +855,7 @@ export const CURRICULUM_A2: Unit[] = [
             prompt: 'reading / was / while / he / was / I / studying',
             options: ['I', 'was', 'studying', 'while', 'he', 'was', 'reading'],
             correctAnswer: 'I was studying while he was reading',
-            explanation: 'Cuando dos acciones ocurrían al mismo tiempo en el pasado, ambas se expresan en Pasado Continuo unidas por "while".'
+            explanation: 'When two actions were occurring simultaneously in the past, both use the Past Continuous connected by "while".',
           }
         ]
       }
@@ -863,46 +863,46 @@ export const CURRICULUM_A2: Unit[] = [
     exam: {
       id: 'exam-a2-u1',
       level: 'A2',
-      title: 'Examen de Evaluación: Unidad 1 (Pasado y Rutinas)',
-      description: 'Evaluación periódica sobre el uso de formas verbales en pasado simple, continuo y vocabulario de rutina.',
+      title: 'Unit 1 Progress Assessment: Past Tenses & Daily Routines',
+      description: 'Progress assessment evaluating regular/irregular past simple, past continuous, and daily routine vocabulary.',
       passingScore: 70,
       exercises: [
         {
           id: 'ex-a2-u1-1',
           type: 'listening',
-          instruction: 'Escucha la narración y determina a qué hora llegó el tren a la estación:',
+          instruction: 'Listen to the narration and determine what time the train arrived at the station:',
           prompt: 'I was waiting on platform three in Oxford. The train finally arrived at half past four.',
           audioText: 'I was waiting on platform three in Oxford. The train finally arrived at half past four.',
           options: ['4:30', '4:15', '5:30', '3:45'],
           correctAnswer: '4:30',
-          explanation: '"Half past four" en inglés británico equivale exactamente a las 4:30.'
+          explanation: '"Half past four" in British English corresponds precisely to 4:30.',
         },
         {
           id: 'ex-a2-u1-2',
           type: 'fill-blank',
-          instruction: 'Completa la oración con la conjugación negativa correspondiente:',
+          instruction: 'Complete the sentence with the correct negative past form:',
           prompt: 'We _____ (not go) to the cinema because we were exhausted.',
           options: ["didn't go", "didn't went", "weren't go", "not went"],
           correctAnswer: "didn't go",
-          explanation: 'La negación en pasado simple requiere "didn\'t" más el verbo en infinitivo sin to (go).'
+          explanation: 'Negative past simple statements require "didn\'t" plus the bare infinitive of the verb (go).',
         },
         {
           id: 'ex-a2-u1-3',
           type: 'speaking',
-          instruction: 'Pronuncia en voz alta la siguiente pregunta con entonación natural:',
+          instruction: 'Read the following question aloud with natural British intonation:',
           prompt: 'Where did you spend your summer holidays last year?',
           audioText: 'Where did you spend your summer holidays last year?',
           correctAnswer: 'Where did you spend your summer holidays last year?',
-          explanation: 'Las preguntas abiertas con Wh- en inglés suelen mantener una entonación descendente al final.'
+          explanation: 'Open Wh- questions in British English typically carry a falling intonation at the end.',
         },
         {
           id: 'ex-a2-u1-4',
           type: 'sentence-order',
-          instruction: 'Ordena los elementos para construir la oración compuesta en pasado:',
+          instruction: 'Arrange the words to assemble the compound past sentence:',
           prompt: 'she / when / was sleeping / the telephone / rang',
           options: ['She', 'was sleeping', 'when', 'the telephone', 'rang'],
           correctAnswer: 'She was sleeping when the telephone rang',
-          explanation: 'La acción en desarrollo (was sleeping) se interrumpe por la acción puntual en pasado simple (the telephone rang).'
+          explanation: 'The background continuous action (was sleeping) is interrupted by the past event (the telephone rang).',
         }
       ]
     }
@@ -911,46 +911,46 @@ export const CURRICULUM_A2: Unit[] = [
     id: 'a2-unit-2',
     level: 'A2',
     unitNumber: 2,
-    title: 'Viajes, Transporte y Planes Futuros',
+    title: 'Travel, Transport & Future Plans',
     topic: 'Be Going to, Will and Navigating British Cities',
-    description: 'Aprende a solicitar indicaciones con cortesía británica, utilizar el transporte público y expresar decisiones y planes a futuro.',
+    description: 'Learn to ask for directions with British politeness, navigate public transport, and express future intentions and decisions.',
     lessons: [
       {
         id: 'a2-u2-l1',
         unitId: 'a2-unit-2',
         unitTitle: 'Unidad 2',
-        title: 'Comprensión Auditiva: En la estación de trenes de Londres',
-        description: 'Reconoce avisos por megafonía, andenes y fórmulas para adquirir billetes de tren.',
+        title: 'Listening Comprehension: At London Railway Station',
+        description: 'Understand station announcements, platform instructions, and standard phrases for purchasing train tickets.',
         durationMinutes: 5,
         type: 'listening',
         exercises: [
           {
             id: 'a2-u2-l1-e1',
             type: 'listening',
-            instruction: 'Escucha el anuncio de megafonía y selecciona el andén de salida:',
+            instruction: 'Listen to the tannoy announcement and select the departure platform:',
             prompt: 'The train to Oxford will depart from platform four in ten minutes. Please mind the gap between the train and the platform.',
             audioText: 'The train to Oxford will depart from platform four in ten minutes. Please mind the gap between the train and the platform.',
             options: ['Platform 4', 'Platform 14', 'Platform 2', 'Platform 10'],
             correctAnswer: 'Platform 4',
-            explanation: '"Platform four" corresponde al andén 4. "Mind the gap" es la célebre advertencia británica de seguridad.'
+            explanation: '"Platform four" corresponds to Platform 4. "Mind the gap" is the famous British safety reminder.',
           },
           {
             id: 'a2-u2-l1-e2',
             type: 'multiple-choice',
-            instruction: '¿Cómo se solicita un billete de ida y vuelta en inglés británico estándar?',
-            prompt: 'En la taquilla de la estación, pides:',
+            instruction: 'How do you ask for a two-way ticket in standard British English?',
+            prompt: 'At the ticket counter, you request:',
             options: ['A return ticket to Oxford, please.', 'A round trip ticket, please.', 'A two-way ticket, please.', 'A back ticket, please.'],
             correctAnswer: 'A return ticket to Oxford, please.',
-            explanation: 'En el Reino Unido, el billete de ida y vuelta se denomina "a return ticket". En inglés americano se dice "round trip".'
+            explanation: 'In the United Kingdom, a two-way ticket is called "a return ticket". In American English, it is called a "round trip".',
           },
           {
             id: 'a2-u2-l1-e3',
             type: 'fill-blank',
-            instruction: 'Completa la pregunta para saber cuánto cuesta el trayecto:',
+            instruction: 'Complete the question to ask for the ticket price:',
             prompt: 'Excuse me, how _____ does a single ticket cost?',
             options: ['much', 'many', 'price', 'fare'],
             correctAnswer: 'much',
-            explanation: 'Para preguntar por precios o dinero incontable se utiliza "How much".'
+            explanation: 'Para preguntar por precios o dinero incontable se utiliza "How much".',
           }
         ]
       },
@@ -958,37 +958,37 @@ export const CURRICULUM_A2: Unit[] = [
         id: 'a2-u2-l2',
         unitId: 'a2-unit-2',
         unitTitle: 'Unidad 2',
-        title: 'Expresión Oral: Pedir Direcciones en la Calle con Cortesía',
-        description: 'Aplica las fórmulas de educación británica para orientarte en cualquier ciudad.',
+        title: 'Speaking Fluency: Asking for Directions Politely',
+        description: 'Apply standard British polite conventions to ask for directions and orient yourself in any city.',
         durationMinutes: 6,
         type: 'speaking',
         exercises: [
           {
             id: 'a2-u2-l2-e1',
             type: 'speaking',
-            instruction: 'Escucha y repite la fórmula educada para consultar una dirección:',
+            instruction: 'Listen and repeat the polite phrase for asking directions:',
             prompt: 'Excuse me, could you tell me the way to the British Museum?',
             audioText: 'Excuse me, could you tell me the way to the British Museum?',
             correctAnswer: 'Excuse me, could you tell me the way to the British Museum?',
-            explanation: 'Comenzar con "Excuse me" y emplear el modal "Could you..." conforma la norma habitual de cortesía británica.'
+            explanation: 'Starting with "Excuse me" and using "Could you..." reflects standard British politeness.',
           },
           {
             id: 'a2-u2-l2-e2',
             type: 'fill-blank',
-            instruction: 'Completa la indicación de dirección:',
+            instruction: 'Complete the directional phrase:',
             prompt: 'Go straight on, and take the second turning on the _____.',
             options: ['left', 'leave', 'lefting', 'depart'],
             correctAnswer: 'left',
-            explanation: '"Take the second turning on the left" significa "gira en la segunda calle a la izquierda".'
+            explanation: '"Take the second turning on the left" significa "gira en la segunda calle a la izquierda".',
           },
           {
             id: 'a2-u2-l2-e3',
             type: 'speaking',
-            instruction: 'Pronuncia la confirmación de llegada al destino:',
+            instruction: 'Pronounce the destination confirmation aloud:',
             prompt: 'It is just around the corner, opposite the post office.',
             audioText: 'It is just around the corner, opposite the post office.',
             correctAnswer: 'It is just around the corner, opposite the post office.',
-            explanation: '"Opposite" en inglés británico significa "justo enfrente de".'
+            explanation: '"Opposite" in British English means directly facing or across from.',
           }
         ]
       },
@@ -996,19 +996,19 @@ export const CURRICULUM_A2: Unit[] = [
         id: 'a2-u2-l3',
         unitId: 'a2-unit-2',
         unitTitle: 'Unidad 2',
-        title: 'Gramática Activa: Planes Previos (Going to) vs Decisiones Inmediatas (Will)',
-        description: 'Distingue con exactitud cuándo emplear "be going to" para planes estructurados y "will" para decisiones espontáneas.',
+        title: 'Active Grammar: Prior Plans (Going to) vs Immediate Decisions (Will)',
+        description: 'Clearly distinguish when to use "be going to" for structured intentions versus "will" for instant decisions.',
         durationMinutes: 6,
         type: 'grammar',
         exercises: [
           {
             id: 'a2-u2-l3-e1',
             type: 'fill-blank',
-            instruction: 'Selecciona la opción correcta para un plan decidido con antelación:',
+            instruction: 'Select the correct form for an intention decided prior to speaking:',
             prompt: 'Next weekend, I _____ (visit) my relatives in Cambridge.',
             options: ['am going to visit', 'will visiting', 'visit will', 'going to visit'],
             correctAnswer: 'am going to visit',
-            explanation: 'Para planes e intenciones adoptadas con anterioridad al momento de hablar se utiliza "be going to".'
+            explanation: 'Para planes e intenciones adoptadas con anterioridad al momento de hablar se utiliza "be going to".',
           },
           {
             id: 'a2-u2-l3-e2',
@@ -1017,16 +1017,16 @@ export const CURRICULUM_A2: Unit[] = [
             prompt: 'Someone is knocking at the door! — Don\'t worry, _____ it!',
             options: ["I\'ll answer", "I'm going to answer", "I answered", "I answering"],
             correctAnswer: "I\'ll answer",
-            explanation: 'Para decisiones espontáneas y ofrecimientos tomados en el instante presente se utiliza "will" (I\'ll).'
+            explanation: 'For spontaneous decisions and immediate offers made at the moment of speaking, use "will" (I\'ll).',
           },
           {
             id: 'a2-u2-l3-e3',
             type: 'fill-blank',
-            instruction: 'Completa con la predicción basada en evidencia visual visible:',
+            instruction: 'Complete the prediction based on immediate visual evidence:',
             prompt: 'Look at those dense dark clouds! It _____ (rain).',
             options: ['is going to rain', 'will raining', 'rains', 'was raining'],
             correctAnswer: 'is going to rain',
-            explanation: 'Cuando existe evidencia sensorial clara en el presente (las nubes negras), se utiliza "be going to".'
+            explanation: 'Cuando existe evidencia sensorial clara en el presente (las nubes negras), se utiliza "be going to".',
           }
         ]
       }
@@ -1034,18 +1034,18 @@ export const CURRICULUM_A2: Unit[] = [
     exam: {
       id: 'exam-a2-u2',
       level: 'A2',
-      title: 'Examen de Evaluación: Unidad 2 (Viajes y Futuro)',
-      description: 'Mide tu competencia para desenvolverte en transporte público, pedir indicaciones y planificar el futuro.',
+      title: 'Unit 2 Progress Assessment: Travel & Future Forms',
+      description: 'Evaluate your ability to navigate public transport, ask for directions, and express future plans.',
       passingScore: 70,
       exercises: [
         {
           id: 'ex-a2-u2-1',
           type: 'sentence-order',
-          instruction: 'Ordena la pregunta para localizar la estación de metro más cercana:',
+          instruction: 'Arrange the words to ask for the nearest Underground station:',
           prompt: 'is / where / station / nearest / the / tube / ?',
           options: ['Where', 'is', 'the', 'nearest', 'tube', 'station?'],
           correctAnswer: 'Where is the nearest tube station?',
-          explanation: '"Tube station" es el término británico que designa a las estaciones del metro subterráneo de Londres.'
+          explanation: '"Tube station" is the standard British term for the London Underground station.',
         },
         {
           id: 'ex-a2-u2-2',
@@ -1054,7 +1054,7 @@ export const CURRICULUM_A2: Unit[] = [
           prompt: 'Can I have a single ticket to London Victoria, please?',
           audioText: 'Can I have a single ticket to London Victoria, please?',
           correctAnswer: 'Can I have a single ticket to London Victoria, please?',
-          explanation: '"Single ticket" significa billete sencillo o únicamente de ida.'
+          explanation: '"Single ticket" in British English means a one-way fare.',
         },
         {
           id: 'ex-a2-u2-3',
@@ -1063,7 +1063,7 @@ export const CURRICULUM_A2: Unit[] = [
           prompt: 'We _____ (travel) to Edinburgh on Friday morning.',
           options: ['are going to travel', 'will travelling', 'travelled will', 'going to travel'],
           correctAnswer: 'are going to travel',
-          explanation: 'Se emplea "are going to travel" para una actividad planificada con antelación.'
+          explanation: '"Are going to travel" is used for an intention planned beforehand.',
         }
       ]
     }
@@ -1072,15 +1072,15 @@ export const CURRICULUM_A2: Unit[] = [
     id: 'a2-unit-3',
     level: 'A2',
     unitNumber: 3,
-    title: 'Experiencias de Vida y Presente Perfecto',
+    title: 'Life Experiences & The Present Perfect',
     topic: 'Present Perfect with Ever, Never, Just, Already and Yet',
-    description: 'Aprende a comunicar experiencias vividas, hechos recientes y cosas que todavía no has realizado.',
+    description: 'Learn to talk about life experiences, recent achievements, and ongoing situations without specific time stamps.',
     lessons: [
       {
         id: 'a2-u3-l1',
         unitId: 'a2-unit-3',
         unitTitle: 'Unidad 3',
-        title: 'Comprensión Auditiva: Experiencias con "Have you ever...?"',
+        title: 'Listening Comprehension: Experiences with "Have you ever...?"',
         description: 'Reconoce preguntas sobre vivencias personales y responde con fluidez.',
         durationMinutes: 5,
         type: 'listening',
@@ -1088,7 +1088,7 @@ export const CURRICULUM_A2: Unit[] = [
           {
             id: 'a2-u3-l1-e1',
             type: 'listening',
-            instruction: 'Escucha la pregunta del profesor y selecciona su significado en español:',
+            instruction: 'Listen to the tutor question and select the exact sentence you heard:',
             prompt: 'Have you ever tried traditional English fish and chips with malt vinegar?',
             audioText: 'Have you ever tried traditional English fish and chips with malt vinegar?',
             options: [
@@ -1098,16 +1098,16 @@ export const CURRICULUM_A2: Unit[] = [
               'Do you like red wine vinegar?'
             ],
             correctAnswer: 'Have you ever tried traditional English fish and chips with malt vinegar?',
-            explanation: '"Have you ever tried...?" es la estructura canónica para indagar si alguien ha tenido una experiencia en algún momento de su vida.'
+            explanation: '"Have you ever tried...?" is the standard structure to inquire if someone has had an experience in their lifetime.',
           },
           {
             id: 'a2-u3-l1-e2',
             type: 'multiple-choice',
-            instruction: '¿Cuál es la respuesta breve afirmativa correcta a la pregunta "Have you seen Big Ben?"',
+            instruction: 'What is the correct short affirmative answer to "Have you seen Big Ben?"',
             prompt: 'Responde de forma afirmativa y natural:',
             options: ['Yes, I have.', 'Yes, I did.', 'Yes, I seen.', 'Yes, I do.'],
             correctAnswer: 'Yes, I have.',
-            explanation: 'En respuestas breves, se replica con el mismo auxiliar con el que inició la pregunta: "Yes, I have" o "No, I haven\'t".'
+            explanation: 'In short answers, repeat the auxiliary from the question: "Yes, I have" or "No, I haven\'t".',
           }
         ]
       },
@@ -1115,7 +1115,7 @@ export const CURRICULUM_A2: Unit[] = [
         id: 'a2-u3-l2',
         unitId: 'a2-unit-3',
         unitTitle: 'Unidad 3',
-        title: 'Expresión Oral: Uso de Never y Just',
+        title: 'Speaking Fluency: Using Never and Just',
         description: 'Construye frases claras sobre experiencias no vividas o concluidas hace unos instantes.',
         durationMinutes: 6,
         type: 'speaking',
@@ -1123,20 +1123,20 @@ export const CURRICULUM_A2: Unit[] = [
           {
             id: 'a2-u3-l2-e1',
             type: 'speaking',
-            instruction: 'Pronuncia la siguiente afirmación de experiencia con buena dicción:',
+            instruction: 'Read the following statement aloud with clear pronunciation:',
             prompt: 'I have never travelled outside of my country.',
             audioText: 'I have never travelled outside of my country.',
             correctAnswer: 'I have never travelled outside of my country.',
-            explanation: 'El adverbio "never" se ubica entre el auxiliar "have" y el participio pasado "travelled".'
+            explanation: 'El adverbio "never" se ubica entre el auxiliar "have" y el participio pasado "travelled".',
           },
           {
             id: 'a2-u3-l2-e2',
             type: 'speaking',
-            instruction: 'Pronuncia la frase que denota una acción recién terminada:',
+            instruction: 'Read the sentence describing a newly completed action:',
             prompt: 'I have just finished my daily lesson.',
             audioText: 'I have just finished my daily lesson.',
             correctAnswer: 'I have just finished my daily lesson.',
-            explanation: '"Just" indica que la acción concluyó escasos segundos o minutos atrás (acabo de terminar).'
+            explanation: '"Just" indicates that an action was completed moments ago.',
           }
         ]
       },
@@ -1144,20 +1144,20 @@ export const CURRICULUM_A2: Unit[] = [
         id: 'a2-u3-l3',
         unitId: 'a2-unit-3',
         unitTitle: 'Unidad 3',
-        title: 'Gramática Activa: Presente Perfecto vs Pasado Simple',
-        description: 'Distingue cuándo usar Presente Perfecto (tiempo indefinido) y Pasado Simple (momento específico).',
+        title: 'Active Grammar: Present Perfect vs Past Simple',
+        description: 'Learn when to use the Present Perfect (unspecified time) versus the Past Simple (finished specific time).',
         durationMinutes: 6,
         type: 'grammar',
         exercises: [
           {
             id: 'a2-u3-l3-e1',
             type: 'fill-blank',
-            instruction: 'Selecciona la opción correcta al haber una referencia temporal explícita (yesterday):',
+            instruction: 'Select the correct tense when a specific past time reference (yesterday) is stated:',
             prompt: 'I _____ (lose) my keys yesterday afternoon.',
             options: ['lost', 'have lost', 'was losing', 'losed'],
             correctAnswer: 'lost',
-            hint: 'Si la oración especifica "yesterday", "in 2020" o "last week", el Pasado Simple es obligatorio.',
-            explanation: 'Al precisar el momento exacto (yesterday), la regla exige Pasado Simple (lost), no Presente Perfecto.'
+            hint: 'When a sentence specifies "yesterday", "in 2020", or "last week", the Past Simple is mandatory.',
+            explanation: 'Al precisar el momento exacto (yesterday), la regla exige Pasado Simple (lost), no Presente Perfecto.',
           },
           {
             id: 'a2-u3-l3-e2',
@@ -1166,7 +1166,7 @@ export const CURRICULUM_A2: Unit[] = [
             prompt: 'you / ever / have / to / been / London / ?',
             options: ['Have', 'you', 'ever', 'been', 'to', 'London?'],
             correctAnswer: 'Have you ever been to London?',
-            explanation: 'Estructura interrogativa de experiencia: Have + Sujeto (you) + ever + participio (been to) + lugar.'
+            explanation: 'Estructura interrogativa de experiencia: Have + Sujeto (you) + ever + participio (been to) + lugar.',
           }
         ]
       }
@@ -1174,7 +1174,7 @@ export const CURRICULUM_A2: Unit[] = [
     exam: {
       id: 'exam-a2-u3',
       level: 'A2',
-      title: 'Examen de Evaluación: Unidad 3 (Presente Perfecto y Experiencias)',
+      title: 'Unit 3 Progress Assessment: Present Perfect & Life Experiences',
       description: 'Valida tu conocimiento sobre participios verbales irregulares y tiempos perfectos.',
       passingScore: 70,
       exercises: [
@@ -1185,7 +1185,7 @@ export const CURRICULUM_A2: Unit[] = [
           prompt: 'Have you ever _____ that historical film about Oxford?',
           options: ['seen', 'saw', 'seed', 'seeing'],
           correctAnswer: 'seen',
-          explanation: 'Las tres formas del verbo son: see (infinitivo) - saw (pasado) - seen (participio pasado).'
+          explanation: 'Las tres formas del verbo son: see (infinitivo) - saw (pasado) - seen (participio pasado).',
         },
         {
           id: 'ex-a2-u3-2',
@@ -1194,7 +1194,7 @@ export const CURRICULUM_A2: Unit[] = [
           prompt: 'already / I / seen / have / documentary / that',
           options: ['I', 'have', 'already', 'seen', 'that', 'documentary'],
           correctAnswer: 'I have already seen that documentary',
-          explanation: '"Already" se coloca normalmente entre el auxiliar "have" y el participio "seen".'
+          explanation: '"Already" se coloca normalmente entre el auxiliar "have" y el participio "seen".',
         }
       ]
     }
@@ -1211,7 +1211,7 @@ export const CURRICULUM_A2: Unit[] = [
         id: 'a2-u4-l1',
         unitId: 'a2-unit-4',
         unitTitle: 'Unidad 4',
-        title: 'Comparativos y Superlativos Regulares e Irregulares',
+        title: 'Regular & Irregular Comparatives and Superlatives',
         description: 'Domina formas irregulares como better, worse, further y superlativos terminados en -est.',
         durationMinutes: 5,
         type: 'grammar',
@@ -1223,7 +1223,7 @@ export const CURRICULUM_A2: Unit[] = [
             prompt: 'Tea with milk is much _____ (good) than black coffee in my opinion.',
             options: ['better', 'more good', 'gooder', 'best'],
             correctAnswer: 'better',
-            explanation: 'El adjetivo "good" es irregular: good -> better -> the best.'
+            explanation: 'El adjetivo "good" es irregular: good -> better -> the best.',
           },
           {
             id: 'a2-u4-l1-e2',
@@ -1232,7 +1232,7 @@ export const CURRICULUM_A2: Unit[] = [
             prompt: 'Oxford Circus is one of the _____ (busy) tube stations in London.',
             options: ['busiest', 'most busy', 'busier', 'more busy'],
             correctAnswer: 'busiest',
-            explanation: 'Para adjetivos de dos sílabas terminados en "y", la "y" pasa a "i" y se agrega "-est": busy -> busiest.'
+            explanation: 'For two-syllable adjectives ending in "y", change "y" to "i" and add "-est": busy -> busiest.',
           }
         ]
       },
@@ -1240,29 +1240,29 @@ export const CURRICULUM_A2: Unit[] = [
         id: 'a2-u4-l2',
         unitId: 'a2-unit-4',
         unitTitle: 'Unidad 4',
-        title: 'Expresión Oral: Consejos Prácticos con Should',
-        description: 'Recomienda actividades y medidas con cortesía británica empleando el modal should.',
+        title: 'Speaking Fluency: Giving Practical Advice with Should',
+        description: 'Offer polite British suggestions and advice using the modal auxiliary verb should.',
         durationMinutes: 5,
         type: 'speaking',
         exercises: [
           {
             id: 'a2-u4-l2-e1',
             type: 'speaking',
-            instruction: 'Escucha y pronuncia esta recomendación tradicional británica:',
+            instruction: 'Listen and pronounce this classic British piece of advice:',
             prompt: 'You should always carry an umbrella when visiting England.',
             audioText: 'You should always carry an umbrella when visiting England.',
             correctAnswer: 'You should always carry an umbrella when visiting England.',
             hint: 'Recuerda que la letra L en "should" es completamente muda: se pronuncia /ʃʊd/.',
-            explanation: 'En los modales "should", "could" y "would", la consonante L no se pronuncia.'
+            explanation: 'En los modales "should", "could" y "would", la consonante L no se pronuncia.',
           },
           {
             id: 'a2-u4-l2-e2',
             type: 'multiple-choice',
-            instruction: 'Tu colega manifiesta encontrarse agotado. ¿Cuál es el consejo gramaticalmente exacto?',
+            instruction: 'Your colleague mentions feeling exhausted. What is the grammatically accurate advice?',
             prompt: 'Consejo con modal:',
             options: ['You should take a rest.', 'You should to take a rest.', 'You must to take a rest.', 'You should taking a rest.'],
             correctAnswer: 'You should take a rest.',
-            explanation: 'Los verbos modales se construyen con infinitivo simple sin "to": You should take a rest.'
+            explanation: 'Los verbos modales se construyen con infinitivo simple sin "to": You should take a rest.',
           }
         ]
       }
@@ -1270,7 +1270,7 @@ export const CURRICULUM_A2: Unit[] = [
     exam: {
       id: 'exam-a2-u4',
       level: 'A2',
-      title: 'Examen de Evaluación: Unidad 4 (Comparativos y Modales)',
+      title: 'Unit 4 Progress Assessment: Comparatives & Modals',
       description: 'Mide tu competencia para contrastar alternativas y aconsejar con propiedad.',
       passingScore: 70,
       exercises: [
@@ -1281,7 +1281,7 @@ export const CURRICULUM_A2: Unit[] = [
           prompt: 'Living in London is _____ (expensive) than living in smaller provincial towns.',
           options: ['more expensive', 'expensiver', 'most expensive', 'as expensive'],
           correctAnswer: 'more expensive',
-          explanation: 'Para adjetivos de tres o más sílabas se antepone "more": more expensive than.'
+          explanation: 'For adjectives of three or more syllables, place "more" before the adjective: more expensive than.',
         },
         {
           id: 'ex-a2-u4-2',
@@ -1290,7 +1290,7 @@ export const CURRICULUM_A2: Unit[] = [
           prompt: 'try / should / traditional / you / scones / the',
           options: ['You', 'should', 'try', 'the', 'traditional', 'scones'],
           correctAnswer: 'You should try the traditional scones',
-          explanation: 'Estructura: Sujeto (You) + modal (should) + verbo base (try) + complemento.'
+          explanation: 'Estructura: Sujeto (You) + modal (should) + verbo base (try) + complemento.',
         }
       ]
     }
@@ -1300,8 +1300,8 @@ export const CURRICULUM_A2: Unit[] = [
 export const FINAL_A2_EXAM: Exam = {
   id: 'final-exam-a2',
   level: 'A2',
-  title: 'Examen de Certificación Integral Nivel A2',
-  description: 'Evaluación oficial global que valida tus competencias de nivel A2 en Comprensión Auditiva, Expresión Oral, Gramática y Estructuras de Comunicación.',
+  title: 'Comprehensive A2 Elementary Certification Assessment',
+  description: 'Comprehensive evaluation certifying foundational A2 competencies across listening, speaking, past tenses, and functional British communication.',
   passingScore: 75,
   exercises: [
     {
@@ -1317,25 +1317,25 @@ export const FINAL_A2_EXAM: Exam = {
         'He went to buy antique books at Camden Market.'
       ],
       correctAnswer: 'He fell in love with Oxford while having tea by the river on a rainy afternoon.',
-      explanation: 'El profesor describe cómo su primera tarde en una casa de té junto al río le hizo enamorarse de Oxford.'
+      explanation: 'The tutor describes how an afternoon at an Oxford riverside teahouse captured his admiration.',
     },
     {
       id: 'final-a2-2',
       type: 'fill-blank',
-      instruction: 'Completa la frase con la combinación de pasado simple y continuo:',
+      instruction: 'Complete the sentence with the past simple and past continuous combination:',
       prompt: 'While they _____ (walk) in Hyde Park, they _____ (see) a royal carriage.',
       options: ['were walking / saw', 'walked / were seeing', 'are walking / saw', 'was walking / seen'],
       correctAnswer: 'were walking / saw',
-      explanation: 'Acción en progreso en pasado continuo (were walking) y acción puntual en pasado simple (saw).'
+      explanation: 'Ongoing background action in Past Continuous (were walking) with a single past event (saw).',
     },
     {
       id: 'final-a2-3',
       type: 'speaking',
-      instruction: 'Pronuncia en voz alta esta frase con ritmo y claridad británica:',
+      instruction: 'Read this sentence aloud with clear British rhythm and pronunciation:',
       prompt: 'I have lived in this city since two thousand and twenty.',
       audioText: 'I have lived in this city since two thousand and twenty.',
       correctAnswer: 'I have lived in this city since two thousand and twenty.',
-      explanation: 'Se utiliza "since" con años o momentos concretos (since 2020).'
+      explanation: 'Use "since" with specific starting points in time (e.g. since 2020).',
     },
     {
       id: 'final-a2-4',
@@ -1344,16 +1344,16 @@ export const FINAL_A2_EXAM: Exam = {
       prompt: 'mind / would / closing / the window / you / please / ?',
       options: ['Would', 'you', 'mind', 'closing', 'the window,', 'please?'],
       correctAnswer: 'Would you mind closing the window, please?',
-      explanation: '"Would you mind + verbo con -ing" es una de las fórmulas más educadas del idioma inglés.'
+      explanation: '"Would you mind + verb-ing" is one of the most polite and natural request structures in British English.',
     },
     {
       id: 'final-a2-5',
       type: 'multiple-choice',
-      instruction: 'Selecciona la forma correcta para indicar que nunca has visitado un país:',
+      instruction: 'Select the correct sentence to state that you have never visited a country:',
       prompt: 'I _____ to Japan, but I would love to go one day.',
       options: ["have never been", "never have went", "haven\'t never been", "was never being"],
       correctAnswer: 'have never been',
-      explanation: 'Se utiliza "have never been to" para expresar la ausencia de visitas a un lugar.'
+      explanation: 'Se utiliza "have never been to" para expresar la ausencia de visitas a un lugar.',
     }
   ]
 }
@@ -1366,45 +1366,45 @@ export const CURRICULUM_B1: Unit[] = [
     id: 'b1-unit-1',
     level: 'B1',
     unitNumber: 1,
-    title: 'Condicionales y Decisiones Hipotéticas',
+    title: 'Conditionals & Hypothetical Decisions',
     topic: 'First and Second Conditionals (If Clauses)',
-    description: 'Aprende a formular consecuencias reales en el futuro e hipótesis sobre situaciones imaginarias.',
+    description: 'Master first and second conditional structures to express probable future outcomes and hypothetical present situations.',
     lessons: [
       {
         id: 'b1-u1-l1',
         unitId: 'b1-unit-1',
         unitTitle: 'Unidad 1',
         title: 'Primer Condicional: Causa y Efecto en el Futuro',
-        description: 'Domina la estructura "If + Present Simple, will + base form" para predecir consecuencias lógicas.',
+        description: 'Master the "If + Present Simple, will + base form" structure to predict real and likely future outcomes.',
         durationMinutes: 6,
         type: 'grammar',
         exercises: [
           {
             id: 'b1-u1-l1-e1',
             type: 'fill-blank',
-            instruction: 'Completa la condición real:',
+            instruction: 'Complete the first conditional sentence:',
             prompt: 'If it _____ (rain) this afternoon, we _____ (stay) in the library.',
             options: ['rains / will stay', 'will rain / stay', 'rained / would stay', 'rains / stayed'],
             correctAnswer: 'rains / will stay',
-            explanation: 'Primer condicional: If + Presente Simple (rains), Will + Infinitivo (will stay).'
+            explanation: 'Primer condicional: If + Presente Simple (rains), Will + Infinitivo (will stay).',
           },
           {
             id: 'b1-u1-l1-e2',
             type: 'speaking',
-            instruction: 'Pronuncia esta advertencia cotidiana con entonación natural:',
+            instruction: 'Read this everyday caution aloud with natural intonation:',
             prompt: 'If you hurry up, you will catch the train on time.',
             audioText: 'If you hurry up, you will catch the train on time.',
             correctAnswer: 'If you hurry up, you will catch the train on time.',
-            explanation: 'Enfoca la entonación en las palabras de contenido: "hurry up" y "catch the train".'
+            explanation: 'Place nuclear stress on key content words: "hurry up" and "catch the train".',
           },
           {
             id: 'b1-u1-l1-e3',
             type: 'multiple-choice',
-            instruction: 'Identifica la cláusula con significado condicional equivalente a "if not":',
+            instruction: 'Identify the connective synonymous with "if not":',
             prompt: '_____ you study consistently, you will not pass the examination.',
             options: ['Unless', 'Provided', 'As long as', 'In case'],
             correctAnswer: 'Unless',
-            explanation: '"Unless" equivale semánticamente a "If you do not" (A menos que estudies...).'
+            explanation: '"Unless" is semantically equivalent to "if you do not" (Unless you study = If you do not study).',
           }
         ]
       },
@@ -1412,7 +1412,7 @@ export const CURRICULUM_B1: Unit[] = [
         id: 'b1-u1-l2',
         unitId: 'b1-unit-1',
         unitTitle: 'Unidad 1',
-        title: 'Segundo Condicional: Hipótesis Imaginarias y Consejos',
+        title: 'Second Conditional: Imaginary Hypotheses & Advice',
         description: 'Aprende a dar consejos y reflexionar sobre escenarios poco probables con "would".',
         durationMinutes: 6,
         type: 'speaking',
@@ -1420,20 +1420,20 @@ export const CURRICULUM_B1: Unit[] = [
           {
             id: 'b1-u1-l2-e1',
             type: 'sentence-order',
-            instruction: 'Ordena la frase clásica para brindar recomendaciones:',
+            instruction: 'Assemble the classic formula for giving advice:',
             prompt: 'were / I / if / you / , / would / accept / I / the position',
             options: ['If', 'I', 'were', 'you,', 'I', 'would', 'accept', 'the position'],
             correctAnswer: 'If I were you, I would accept the position',
-            explanation: '"If I were you" es la fórmula formal británica para aconsejar (Si yo fuera tú).'
+            explanation: '"If I were you" is the standard British formula for offering advice.',
           },
           {
             id: 'b1-u1-l2-e2',
             type: 'fill-blank',
-            instruction: 'Completa la hipótesis irreal en el presente:',
+            instruction: 'Complete the unreal present hypothesis:',
             prompt: 'If I _____ (have) more free time, I _____ (travel) all around Scotland.',
             options: ['had / would travel', 'have / will travel', 'had / will travel', 'would have / travelled'],
             correctAnswer: 'had / would travel',
-            explanation: 'Segundo condicional: If + Pasado Simple (had), Would + Infinitivo (would travel).'
+            explanation: 'Segundo condicional: If + Pasado Simple (had), Would + Infinitivo (would travel).',
           }
         ]
       }
@@ -1441,18 +1441,18 @@ export const CURRICULUM_B1: Unit[] = [
     exam: {
       id: 'exam-b1-u1',
       level: 'B1',
-      title: 'Examen de Evaluación: Unidad 1 (Condicionales B1)',
-      description: 'Evalúa tu precisión empleando estructuras condicionales reales e hipotéticas.',
+      title: 'Unit 1 Progress Assessment: Conditionals (B1)',
+      description: 'Assess your grammatical accuracy when using real and hypothetical conditional sentences.',
       passingScore: 70,
       exercises: [
         {
           id: 'ex-b1-1',
           type: 'fill-blank',
-          instruction: 'Selecciona la opción correcta en la pregunta hipotética:',
+          instruction: 'Select the correct option in this hypothetical question:',
           prompt: 'What _____ you do if you _____ a million pounds?',
           options: ['would / won', 'will / win', 'would / win', 'did / would win'],
           correctAnswer: 'would / won',
-          explanation: 'Estructura interrogativa en segundo condicional: What would you do if you won...?'
+          explanation: 'Estructura interrogativa en segundo condicional: What would you do if you won...?',
         },
         {
           id: 'ex-b1-2',
@@ -1461,7 +1461,7 @@ export const CURRICULUM_B1: Unit[] = [
           prompt: 'we / if / umbrella / take / an / rains / it / will',
           options: ['If', 'it', 'rains,', 'we', 'will', 'take', 'an', 'umbrella'],
           correctAnswer: 'If it rains, we will take an umbrella',
-          explanation: 'Primer condicional con cláusula de condición al inicio separada por coma.'
+          explanation: 'First conditional sentence with an initial condition clause separated by a comma.',
         }
       ]
     }
@@ -1470,15 +1470,15 @@ export const CURRICULUM_B1: Unit[] = [
     id: 'b1-unit-2',
     level: 'B1',
     unitNumber: 2,
-    title: 'Voz Pasiva y Estilo Indirecto',
+    title: 'Passive Voice & Reported Speech',
     topic: 'Passive Voice (Present and Past) and Reported Speech',
-    description: 'Aprende a describir procesos técnicos, hechos históricos y transmitir declaraciones de terceros.',
+    description: 'Learn to describe historical events, scientific discoveries, and report what others have stated.',
     lessons: [
       {
         id: 'b1-u2-l1',
         unitId: 'b1-unit-2',
         unitTitle: 'Unidad 2',
-        title: 'Voz Pasiva: Foco en la Acción y el Objeto',
+        title: 'Passive Voice: Focusing on Action and Object',
         description: 'Construye frases pasivas con "be + participio" cuando el autor es desconocido o irrelevante.',
         durationMinutes: 6,
         type: 'grammar',
@@ -1486,21 +1486,21 @@ export const CURRICULUM_B1: Unit[] = [
           {
             id: 'b1-u2-l1-e1',
             type: 'fill-blank',
-            instruction: 'Transforma la oración a voz pasiva en pasado:',
+            instruction: 'Transform this active past sentence into the passive voice:',
             prompt: 'The historic Bodleian Library _____ (build) in the seventeenth century.',
             options: ['was built', 'is built', 'built', 'were built'],
             correctAnswer: 'was built',
-            explanation: 'Voz pasiva en pasado simple singular: was + participio pasado (built).'
+            explanation: 'Voz pasiva en pasado simple singular: was + participio pasado (built).',
           },
           {
             id: 'b1-u2-l1-e2',
             type: 'listening',
-            instruction: 'Escucha el dato histórico de Oxford y responde qué avance científico se probó con éxito:',
+            instruction: 'Listen to the Oxford historical report and identify which scientific milestone took place:',
             prompt: 'Penicillin was successfully tested in Oxford by Howard Florey and Ernst Chain in nineteen forty.',
             audioText: 'Penicillin was successfully tested in Oxford by Howard Florey and Ernst Chain in nineteen forty.',
             options: ['Penicillin', 'The printing press', 'The steam engine', 'The telephone'],
             correctAnswer: 'Penicillin',
-            explanation: 'El audio menciona que "Penicillin was successfully tested in Oxford".'
+            explanation: 'El audio menciona que "Penicillin was successfully tested in Oxford".',
           }
         ]
       },
@@ -1520,7 +1520,7 @@ export const CURRICULUM_B1: Unit[] = [
             prompt: '"I am moving to London," she said. -> She said that she _____ to London.',
             options: ['was moving', 'is moving', 'moved', 'had moved'],
             correctAnswer: 'was moving',
-            explanation: 'En estilo indirecto, el presente continuo retrocede a pasado continuo: am moving -> was moving.'
+            explanation: 'En estilo indirecto, el presente continuo retrocede a pasado continuo: am moving -> was moving.',
           },
           {
             id: 'b1-u2-l2-e2',
@@ -1529,7 +1529,7 @@ export const CURRICULUM_B1: Unit[] = [
             prompt: 'He told me that he had already sent the email.',
             audioText: 'He told me that he had already sent the email.',
             correctAnswer: 'He told me that he had already sent the email.',
-            explanation: 'El Past Simple o Present Perfect retrocede a Past Perfect (had sent) en Reported Speech.'
+            explanation: 'El Past Simple o Present Perfect retrocede a Past Perfect (had sent) en Reported Speech.',
           }
         ]
       }
@@ -1537,8 +1537,8 @@ export const CURRICULUM_B1: Unit[] = [
     exam: {
       id: 'exam-b1-u2',
       level: 'B1',
-      title: 'Examen de Evaluación: Unidad 2 (Pasiva y Discurso B1)',
-      description: 'Comprueba tu dominio de la voz pasiva y la transformación a discurso indirecto.',
+      title: 'Unit 2 Progress Assessment: Passive Voice & Reported Speech (B1)',
+      description: 'Verify your proficiency with passive structures and reported speech backshifts.',
       passingScore: 70,
       exercises: [
         {
@@ -1548,7 +1548,7 @@ export const CURRICULUM_B1: Unit[] = [
           prompt: 'Millions of cups of tea _____ (consume) across the United Kingdom daily.',
           options: ['are consumed', 'is consumed', 'was consumed', 'consume'],
           correctAnswer: 'are consumed',
-          explanation: 'Sujeto en plural ("cups of tea") requiere la forma "are + consumed".'
+          explanation: 'Sujeto en plural ("cups of tea") requiere la forma "are + consumed".',
         }
       ]
     }
@@ -1579,7 +1579,7 @@ export const CURRICULUM_B1: Unit[] = [
             options: ['She had left the oven door open', 'She burned the pasta on the hob', 'Her neighbor rang the bell', 'The toaster malfunctioned'],
             correctAnswer: 'She had left the oven door open',
             hint: 'Listen for the reason starting with "because I had...".',
-            explanation: 'Emma says: "the smoke alarm suddenly went off because I had left the oven door open!"'
+            explanation: 'Emma says: "the smoke alarm suddenly went off because I had left the oven door open!"',
           },
           {
             id: 'b1-u3-l1-e2',
@@ -1589,7 +1589,7 @@ export const CURRICULUM_B1: Unit[] = [
             options: ['was chopping / cut', 'chopped / was cutting', 'were chopping / cutted', 'was chop / cut'],
             correctAnswer: 'was chopping / cut',
             hint: 'Use "was/were + -ing" for the ongoing activity and the past irregular for the sudden cut.',
-            explanation: 'Past Continuous (was chopping) represents the background activity; Past Simple (cut) is the sharp interruption.'
+            explanation: 'Past Continuous (was chopping) represents the background activity; Past Simple (cut) is the sharp interruption.',
           },
           {
             id: 'b1-u3-l1-e3',
@@ -1598,7 +1598,7 @@ export const CURRICULUM_B1: Unit[] = [
             prompt: 'the / While / dinner / rang / was / she / cooking / doorbell',
             options: ['While', 'she', 'was', 'cooking', 'dinner', 'the', 'doorbell', 'rang'],
             correctAnswer: 'While she was cooking dinner the doorbell rang',
-            explanation: '"While" introduces the continuous clause (While she was cooking dinner), followed by the past simple event (the doorbell rang).'
+            explanation: '"While" introduces the continuous clause (While she was cooking dinner), followed by the past simple event (the doorbell rang).',
           },
           {
             id: 'b1-u3-l1-e4',
@@ -1607,7 +1607,7 @@ export const CURRICULUM_B1: Unit[] = [
             prompt: 'While I was waiting for the kettle to boil, my mobile phone rang.',
             audioText: 'While I was waiting for the kettle to boil, my mobile phone rang.',
             correctAnswer: 'While I was waiting for the kettle to boil, my mobile phone rang.',
-            explanation: 'Ensure smooth linking between "waiting for" and "kettle to boil".'
+            explanation: 'Ensure smooth linking between "waiting for" and "kettle to boil".',
           }
         ]
       },
@@ -1633,7 +1633,7 @@ export const CURRICULUM_B1: Unit[] = [
             ],
             correctAnswer: 'Nobody makes better desserts than my grandmother.',
             hint: 'In English, words starting with "no-" (nobody, nothing) already make the clause negative.',
-            explanation: 'In English, two negatives make an affirmative. "Nobody makes..." is correct. Never say "Nobody doesn\'t make".'
+            explanation: 'In English, two negatives make an affirmative. "Nobody makes..." is correct. Never say "Nobody doesn\'t make".',
           },
           {
             id: 'b1-u3-l2-e2',
@@ -1642,7 +1642,7 @@ export const CURRICULUM_B1: Unit[] = [
             prompt: 'I have searched _____ (everywhere), but I cannot find my wallet _____ (anywhere)!',
             options: ['everywhere / anywhere', 'somewhere / nowhere', 'everywhere / nowhere', 'anywhere / everywhere'],
             correctAnswer: 'everywhere / anywhere',
-            explanation: 'With a negative verb ("cannot find"), we use "anywhere", not "nowhere".'
+            explanation: 'With a negative verb ("cannot find"), we use "anywhere", not "nowhere".',
           },
           {
             id: 'b1-u3-l2-e3',
@@ -1651,7 +1651,7 @@ export const CURRICULUM_B1: Unit[] = [
             prompt: 'Would you like _____ (something/anything) to drink with your meal?',
             options: ['something', 'anything', 'nothing', 'everything'],
             correctAnswer: 'something',
-            explanation: 'In polite offers where a "yes" is expected, English uses "something" rather than "anything".'
+            explanation: 'In polite offers where a "yes" is expected, English uses "something" rather than "anything".',
           },
           {
             id: 'b1-u3-l2-e4',
@@ -1660,7 +1660,7 @@ export const CURRICULUM_B1: Unit[] = [
             prompt: 'in / restaurant / speaks / Spanish / Nobody / this',
             options: ['Nobody', 'in', 'this', 'restaurant', 'speaks', 'Spanish'],
             correctAnswer: 'Nobody in this restaurant speaks Spanish',
-            explanation: 'Subject (Nobody in this restaurant) + Verb (speaks with 3rd-person -s) + Object (Spanish).'
+            explanation: 'Subject (Nobody in this restaurant) + Verb (speaks with 3rd-person -s) + Object (Spanish).',
           }
         ]
       },
@@ -1680,7 +1680,7 @@ export const CURRICULUM_B1: Unit[] = [
             prompt: 'I\'d love to come for dinner. _____, I have to submit my dissertation tonight.',
             options: ['The thing is', 'The reason are', 'Because that', 'Is because'],
             correctAnswer: 'The thing is',
-            explanation: '"The thing is, ..." is the premier British conversational phrase to introduce an explanation or obstacle.'
+            explanation: '"The thing is, ..." is the premier British conversational phrase to introduce an explanation or obstacle.',
           },
           {
             id: 'b1-u3-l3-e2',
@@ -1689,7 +1689,7 @@ export const CURRICULUM_B1: Unit[] = [
             prompt: 'is / The / of / that / ran / we / flour / reason / out',
             options: ['The', 'reason', 'is', 'that', 'we', 'ran', 'out', 'of', 'flour'],
             correctAnswer: 'The reason is that we ran out of flour',
-            explanation: '"The reason is that..." is followed by a complete subject-verb clause.'
+            explanation: '"The reason is that..." is followed by a complete subject-verb clause.',
           },
           {
             id: 'b1-u3-l3-e3',
@@ -1698,7 +1698,7 @@ export const CURRICULUM_B1: Unit[] = [
             prompt: '_____, preheat the oven. Next, mix the ingredients. _____, bake for 30 minutes.',
             options: ['First / Finally', 'At start / In the end', 'Firstly / For finish', 'To begin / Lastly that'],
             correctAnswer: 'First / Finally',
-            explanation: 'Standard sequencing linkers in recipes: First -> Next -> After that -> Finally.'
+            explanation: 'Standard sequencing linkers in recipes: First -> Next -> After that -> Finally.',
           },
           {
             id: 'b1-u3-l3-e4',
@@ -1707,7 +1707,7 @@ export const CURRICULUM_B1: Unit[] = [
             prompt: 'The reason I enjoy cooking is that it allows me to unwind after work.',
             audioText: 'The reason I enjoy cooking is that it allows me to unwind after work.',
             correctAnswer: 'The reason I enjoy cooking is that it allows me to unwind after work.',
-            explanation: 'Notice the natural pause right after "The reason I enjoy cooking...".'
+            explanation: 'Notice the natural pause right after "The reason I enjoy cooking...".',
           }
         ]
       }
@@ -1727,7 +1727,7 @@ export const CURRICULUM_B1: Unit[] = [
           prompt: 'While we _____ (have) dinner, the electricity suddenly _____ (go) out.',
           options: ['were having / went', 'had / was going', 'was having / went', 'had / had gone'],
           correctAnswer: 'were having / went',
-          explanation: 'Ongoing action (were having) interrupted by punctual event (went out).'
+          explanation: 'Ongoing action (were having) interrupted by punctual event (went out).',
         },
         {
           id: 'exam-b1-u3-e2',
@@ -1736,7 +1736,7 @@ export const CURRICULUM_B1: Unit[] = [
           prompt: 'Is there _____ vegetarian on the lunch menu today?',
           options: ['anything', 'nothing', 'something', 'everything'],
           correctAnswer: 'anything',
-          explanation: 'In general questions, "anything" is the standard indefinite pronoun.'
+          explanation: 'In general questions, "anything" is the standard indefinite pronoun.',
         },
         {
           id: 'exam-b1-u3-e3',
@@ -1745,7 +1745,7 @@ export const CURRICULUM_B1: Unit[] = [
           prompt: 'The / that / missed / bus / is / I / the / reason',
           options: ['The', 'reason', 'is', 'that', 'I', 'missed', 'the', 'bus'],
           correctAnswer: 'The reason is that I missed the bus',
-          explanation: '"The reason is that I missed the bus."'
+          explanation: '"The reason is that I missed the bus."',
         }
       ]
     }
@@ -1775,7 +1775,7 @@ export const CURRICULUM_B1: Unit[] = [
             options: ['had already started', 'already started', 'has already started', 'was already start'],
             correctAnswer: 'had already started',
             hint: 'The film started BEFORE the arrival at the cinema. Use had + past participle.',
-            explanation: 'The Past Perfect (had already started) is required because the movie began prior to the main narrative past event (arrived).'
+            explanation: 'The Past Perfect (had already started) is required because the movie began prior to the main narrative past event (arrived).',
           },
           {
             id: 'b1-u4-l1-e2',
@@ -1785,7 +1785,7 @@ export const CURRICULUM_B1: Unit[] = [
             options: ['had left', 'leaved', 'has left', 'was left'],
             correctAnswer: 'had left',
             hint: 'He left his laptop before he became late. Note that "leave" is irregular (left).',
-            explanation: 'Leaving the laptop occurred prior to being late. "Leave -> left -> left". "Leaved" does not exist.'
+            explanation: 'Leaving the laptop occurred prior to being late. "Leave -> left -> left". "Leaved" does not exist.',
           },
           {
             id: 'b1-u4-l1-e3',
@@ -1799,7 +1799,7 @@ export const CURRICULUM_B1: Unit[] = [
               'He had already saw the film twice before, but he wants to watch it again.'
             ],
             correctAnswer: 'He had already seen the film twice before, but he wanted to watch it again.',
-            explanation: '"Twice before" triggers Past Perfect (had already seen); "wanted" is the past simple state.'
+            explanation: '"Twice before" triggers Past Perfect (had already seen); "wanted" is the past simple state.',
           },
           {
             id: 'b1-u4-l1-e4',
@@ -1808,7 +1808,7 @@ export const CURRICULUM_B1: Unit[] = [
             prompt: 'seen / had / film / They / never / impressive / an / such / before',
             options: ['They', 'had', 'never', 'seen', 'such', 'an', 'impressive', 'film', 'before'],
             correctAnswer: 'They had never seen such an impressive film before',
-            explanation: 'Structure: Subject (They) + had + never + participle (seen) + such an impressive film before.'
+            explanation: 'Structure: Subject (They) + had + never + participle (seen) + such an impressive film before.',
           }
         ]
       },
@@ -1829,7 +1829,7 @@ export const CURRICULUM_B1: Unit[] = [
             options: ['- / -', 'a / a', 'the / the', 'a / -'],
             correctAnswer: '- / -',
             hint: 'Academic subjects (physics, maths) and meals (breakfast, lunch, dinner) take zero article.',
-            explanation: 'In English, academic disciplines and meals of the day are used without any article (zero article).'
+            explanation: 'In English, academic disciplines and meals of the day are used without any article (zero article).',
           },
           {
             id: 'b1-u4-l2-e2',
@@ -1839,7 +1839,7 @@ export const CURRICULUM_B1: Unit[] = [
             options: ['the / the', '- / the', 'the / -', 'a / the'],
             correctAnswer: 'the / the',
             hint: 'Plural mountain ranges (the Himalayas, the Andes, the Alps) and unique things (the moon) both require "the".',
-            explanation: 'Chains of mountains in the plural always require "the" (the Himalayas), as do unique celestial bodies (the moon).'
+            explanation: 'Chains of mountains in the plural always require "the" (the Himalayas), as do unique celestial bodies (the moon).',
           },
           {
             id: 'b1-u4-l2-e3',
@@ -1853,7 +1853,7 @@ export const CURRICULUM_B1: Unit[] = [
               'What time do you usually have some dinner?'
             ],
             correctAnswer: 'What time do you usually have dinner?',
-            explanation: 'Meals of the day take zero article: "have dinner", "have lunch", "have breakfast".'
+            explanation: 'Meals of the day take zero article: "have dinner", "have lunch", "have breakfast".',
           },
           {
             id: 'b1-u4-l2-e4',
@@ -1862,7 +1862,7 @@ export const CURRICULUM_B1: Unit[] = [
             prompt: 'We studied history together before having dinner in town.',
             audioText: 'We studied history together before having dinner in town.',
             correctAnswer: 'We studied history together before having dinner in town.',
-            explanation: 'Notice: "- history" and "- dinner" without "a" or "the".'
+            explanation: 'Notice: "- history" and "- dinner" without "a" or "the".',
           }
         ]
       },
@@ -1883,7 +1883,7 @@ export const CURRICULUM_B1: Unit[] = [
             options: ['The', 'film', 'doesn\'t', 'have', 'an', 'interesting', 'plot'],
             correctAnswer: 'The film doesn\'t have an interesting plot',
             hint: 'Adjectives come before the noun: "an interesting plot", not "plot interesting".',
-            explanation: 'In English, adjectives precede the noun they modify: "an interesting plot". Also, "the film" is 3rd person singular, so we use "doesn\'t have".'
+            explanation: 'In English, adjectives precede the noun they modify: "an interesting plot". Also, "the film" is 3rd person singular, so we use "doesn\'t have".',
           },
           {
             id: 'b1-u4-l3-e2',
@@ -1898,7 +1898,7 @@ export const CURRICULUM_B1: Unit[] = [
             ],
             correctAnswer: 'I recently saw a film called Mortal Engines on Netflix.',
             hint: 'For screens and digital streaming platforms, always use "on" (on Netflix, on TV, on YouTube).',
-            explanation: 'Natural formula: "I recently saw a film called [Title] on [Platform]".'
+            explanation: 'Natural formula: "I recently saw a film called [Title] on [Platform]".',
           },
           {
             id: 'b1-u4-l3-e3',
@@ -1907,7 +1907,7 @@ export const CURRICULUM_B1: Unit[] = [
             prompt: 'The film _____ (have/has) a female protagonist and the visual effects _____ (is/are) impressive.',
             options: ['has / are', 'have / is', 'has / is', 'have / are'],
             correctAnswer: 'has / are',
-            explanation: '"The film" is singular (it has); "the visual effects" is plural (they are).'
+            explanation: '"The film" is singular (it has); "the visual effects" is plural (they are).',
           },
           {
             id: 'b1-u4-l3-e4',
@@ -1916,7 +1916,7 @@ export const CURRICULUM_B1: Unit[] = [
             prompt: 'Although the CGI is impressive, the movie doesn\'t have an interesting plot.',
             audioText: 'Although the CGI is impressive, the movie doesn\'t have an interesting plot.',
             correctAnswer: 'Although the CGI is impressive, the movie doesn\'t have an interesting plot.',
-            explanation: 'Notice the contrast conjunction "Although" followed by the comma pause.'
+            explanation: 'Notice the contrast conjunction "Although" followed by the comma pause.',
           }
         ]
       }
@@ -1936,7 +1936,7 @@ export const CURRICULUM_B1: Unit[] = [
           prompt: 'By the time the director arrived, the actors _____ (already / rehearse) the scene twice.',
           options: ['had already rehearsed', 'already rehearsed', 'have already rehearsed', 'were already rehearse'],
           correctAnswer: 'had already rehearsed',
-          explanation: 'Rehearsing happened before the director arrived: Past Perfect (had already rehearsed).'
+          explanation: 'Rehearsing happened before the director arrived: Past Perfect (had already rehearsed).',
         },
         {
           id: 'exam-b1-u4-e2',
@@ -1950,7 +1950,7 @@ export const CURRICULUM_B1: Unit[] = [
             'We climbed in a Andes after studying physics at university.'
           ],
           correctAnswer: 'We climbed in the Andes after studying physics at university.',
-          explanation: '"The Andes" (plural mountain range) and "- physics" (academic subject with zero article).'
+          explanation: '"The Andes" (plural mountain range) and "- physics" (academic subject with zero article).',
         },
         {
           id: 'exam-b1-u4-e3',
@@ -1959,7 +1959,7 @@ export const CURRICULUM_B1: Unit[] = [
           prompt: 'film / The / impressive / has / CGI / and / acting / good',
           options: ['The', 'film', 'has', 'impressive', 'CGI', 'and', 'good', 'acting'],
           correctAnswer: 'The film has impressive CGI and good acting',
-          explanation: 'Adjectives before nouns: "impressive CGI" and "good acting".'
+          explanation: 'Adjectives before nouns: "impressive CGI" and "good acting".',
         }
       ]
     }
@@ -1970,14 +1970,14 @@ export const CURRICULUM_B1: Unit[] = [
 export const FINAL_B1_EXAM: Exam = {
   id: 'final-exam-b1',
   level: 'B1',
-  title: 'Examen de Certificación Integral Nivel B1',
-  description: 'Acreditación oficial de nivel B1 Intermedio según el marco MCER: condicionales, voz pasiva y argumentación fluida.',
+  title: 'Comprehensive B1 Intermediate Certification Assessment',
+  description: 'Official CEFR B1 Intermediate assessment validating conditionals, passive voice, reported speech, and fluent discussion.',
   passingScore: 75,
   exercises: [
     {
       id: 'final-b1-1',
       type: 'listening',
-      instruction: 'Escucha el análisis del profesor y selecciona su tesis central:',
+      instruction: 'Listen to the tutor analysis and select his core argument:',
       prompt: 'If more commuters travelled by public transit rather than driving personal vehicles, urban traffic congestion would be remarkably reduced, and air quality in London would improve substantially.',
       audioText: 'If more commuters travelled by public transit rather than driving personal vehicles, urban traffic congestion would be remarkably reduced, and air quality in London would improve substantially.',
       options: [
@@ -1987,25 +1987,25 @@ export const FINAL_B1_EXAM: Exam = {
         'London residents reject using commuter trains.'
       ],
       correctAnswer: 'Traveling by public transport significantly reduces congestion and cleans urban air.',
-      explanation: 'El profesor sostiene que el transporte público reduce la congestión y eleva la calidad del aire.'
+      explanation: 'The tutor argues that expanded rail transit lowers congestion and improves air quality.',
     },
     {
       id: 'final-b1-2',
       type: 'fill-blank',
-      instruction: 'Completa la transformación a estilo indirecto:',
+      instruction: 'Complete the reported speech transformation:',
       prompt: '"I have finished the report," Mark said. -> Mark said that he _____ the report.',
       options: ['had finished', 'has finished', 'finished', 'finishes'],
       correctAnswer: 'had finished',
-      explanation: 'El Present Perfect (have finished) cambia a Past Perfect (had finished) al reportar en pasado.'
+      explanation: 'El Present Perfect (have finished) cambia a Past Perfect (had finished) al reportar en pasado.',
     },
     {
       id: 'final-b1-3',
       type: 'speaking',
-      instruction: 'Pronuncia en voz alta tu respuesta con articulación cuidada:',
+      instruction: 'Speak your response aloud with articulate pronunciation:',
       prompt: 'If I were to recommend one book on this subject, it would certainly be this one.',
       audioText: 'If I were to recommend one book on this subject, it would certainly be this one.',
       correctAnswer: 'If I were to recommend one book on this subject, it would certainly be this one.',
-      explanation: '"If I were to..." es una construcción refinada de segundo condicional muy apreciada en entornos académicos.'
+      explanation: '"If I were to..." is an elegant conditional construction valued in formal British registers.',
     }
   ]
 }
@@ -2018,9 +2018,9 @@ export const CURRICULUM_B2: Unit[] = [
     id: 'b2-unit-1',
     level: 'B2',
     unitNumber: 1,
-    title: 'Tercer Condicional y Condicionales Mixtos',
+    title: 'Third Conditional & Mixed Conditionals',
     topic: 'Third Conditional (Regrets) and Mixed Conditionals',
-    description: 'Aprende a articular hipótesis sobre el pasado y conectar causas pasadas con efectos en el presente.',
+    description: 'Learn to articulate past regrets, hypothetical past outcomes, and past causes with present results.',
     lessons: [
       {
         id: 'b2-u1-l1',
@@ -2038,7 +2038,7 @@ export const CURRICULUM_B2: Unit[] = [
             prompt: 'If we _____ (leave) home earlier, we wouldn\'t have missed our flight from Heathrow.',
             options: ['had left', 'have left', 'would leave', 'left'],
             correctAnswer: 'had left',
-            explanation: 'Tercer condicional: If + Past Perfect (had left), would have + participio.'
+            explanation: 'Tercer condicional: If + Past Perfect (had left), would have + participio.',
           },
           {
             id: 'b2-u1-l1-e2',
@@ -2047,7 +2047,7 @@ export const CURRICULUM_B2: Unit[] = [
             prompt: 'I would have phoned you if I had known you were staying in Oxford.',
             audioText: 'I would have phoned you if I had known you were staying in Oxford.',
             correctAnswer: 'I would have phoned you if I had known you were staying in Oxford.',
-            explanation: 'En habla natural británica fluida, "would have" se contrae fonéticamente a /wʊdəv/.'
+            explanation: 'In fluent spoken British English, "would have" naturally weakens to /wʊdəv/.',
           }
         ]
       },
@@ -2067,7 +2067,7 @@ export const CURRICULUM_B2: Unit[] = [
             prompt: 'If I had accepted the university scholarship last year, I _____ (live) in Cambridge today.',
             options: ['would be living', 'would have lived', 'lived', 'had lived'],
             correctAnswer: 'would be living',
-            explanation: 'Condicional mixto: condición en pasado (had accepted) con consecuencia en el presente (would be living today).'
+            explanation: 'Mixed conditional: past unreal condition (had accepted) with a present result (would be living). ',
           }
         ]
       }
@@ -2075,7 +2075,7 @@ export const CURRICULUM_B2: Unit[] = [
     exam: {
       id: 'exam-b2-u1',
       level: 'B2',
-      title: 'Examen de Evaluación: Unidad 1 (Condicionales B2)',
+      title: 'Unit 1 Progress Assessment: Conditionals (B2)',
       description: 'Mide tu dominio de condicionales de tercer orden y estructuras mixtas complejas.',
       passingScore: 70,
       exercises: [
@@ -2086,7 +2086,7 @@ export const CURRICULUM_B2: Unit[] = [
           prompt: 'If she had listened to the advice, she _____ (not make) that serious mistake.',
           options: ["wouldn't have made", "wouldn't make", "didn't make", "hadn't made"],
           correctAnswer: "wouldn't have made",
-          explanation: 'Resultado hipotético en pasado: wouldn\'t have made.'
+          explanation: 'Hypothetical past outcome: wouldn\'t have made.',
         }
       ]
     }
@@ -2095,36 +2095,36 @@ export const CURRICULUM_B2: Unit[] = [
     id: 'b2-unit-2',
     level: 'B2',
     unitNumber: 2,
-    title: 'Modales de Deducción y Especulación Pasada',
+    title: 'Modals of Deduction & Past Speculation',
     topic: 'Must have, Can\'t have, Could have and Should have',
-    description: 'Especula sobre acontecimientos pasados graduando tu nivel de certeza y lógica argumentativa.',
+    description: 'Speculate about past events while modulating your degree of certainty and logical deductions.',
     lessons: [
       {
         id: 'b2-u2-l1',
         unitId: 'b2-unit-2',
         unitTitle: 'Unidad 2',
-        title: 'Certeza Lógica e Imposibilidad Pasada',
-        description: 'Distingue cuándo emplear "must have been" para deducciones afirmativas y "can\'t have been" para descartes lógicos.',
+        title: 'Logical Certainty & Past Impossibility',
+        description: 'Distinguish when to use "must have been" for positive deduction and "can\'t have been" for logical impossibility.',
         durationMinutes: 6,
         type: 'grammar',
         exercises: [
           {
             id: 'b2-u2-l1-e1',
             type: 'fill-blank',
-            instruction: 'Selecciona el modal de deducción lógica fundada en evidencia:',
+            instruction: 'Select the modal of logical deduction based on visible evidence:',
             prompt: 'The pavement is completely soaked with puddles. It _____ (rain) heavily during the night.',
             options: ['must have rained', 'can\'t have rained', 'should have rained', 'might rain'],
             correctAnswer: 'must have rained',
-            explanation: '"Must have rained" indica una deducción casi concluyente fundamentada en pruebas visibles.'
+            explanation: '"Must have rained" indicates a logical certainty supported by clear physical evidence.',
           },
           {
             id: 'b2-u2-l1-e2',
             type: 'multiple-choice',
-            instruction: 'Conversaste con Oliver en persona hace 5 minutos. Un tercero afirma que está en Nueva York:',
-            prompt: 'Tu réplica:',
+            instruction: 'You spoke with Oliver in person five minutes ago. Someone claims he is in New York:',
+            prompt: 'Your rebuttal:',
             options: ['He can\'t be in New York; I spoke with him in person moments ago!', 'He must be in New York.', 'He should be in New York.', 'He might have been in New York.'],
             correctAnswer: 'He can\'t be in New York; I spoke with him in person moments ago!',
-            explanation: '"Can\'t be" expresa imposibilidad lógica contundente frente a la evidencia directa.'
+            explanation: '"Can\'t be" expresses firm logical impossibility against undeniable direct evidence.',
           }
         ]
       }
@@ -2132,18 +2132,18 @@ export const CURRICULUM_B2: Unit[] = [
     exam: {
       id: 'exam-b2-u2',
       level: 'B2',
-      title: 'Examen de Evaluación: Unidad 2 (Modales B2)',
-      description: 'Comprueba tu precisión deduciendo situaciones pasadas y expresando juicios fundamentados.',
+      title: 'Unit 2 Progress Assessment: Modals of Deduction (B2)',
+      description: 'Verify your precision when deducting past circumstances and forming substantiated conclusions.',
       passingScore: 70,
       exercises: [
         {
           id: 'ex-b2-2',
           type: 'fill-blank',
-          instruction: 'Completa con la crítica sobre una acción debida no realizada:',
+          instruction: 'Complete the sentence with past criticism of an unfulfilled duty:',
           prompt: 'You _____ (notify) the administration earlier! The deadline expired at noon.',
           options: ['should have notified', 'must have notified', 'can\'t have notified', 'would notify'],
           correctAnswer: 'should have notified',
-          explanation: '"Should have + participio" expresa que una acción era necesaria u obligatoria en el pasado pero no se llevó a cabo.'
+          explanation: '"Should have + past participle" signifies that an action was advisable in the past but remained unfulfilled.',
         }
       ]
     }
@@ -2153,14 +2153,14 @@ export const CURRICULUM_B2: Unit[] = [
 export const FINAL_B2_EXAM: Exam = {
   id: 'final-exam-b2',
   level: 'B2',
-  title: 'Examen de Certificación Integral Nivel B2',
-  description: 'Certificación oficial de nivel B2 Upper-Intermediate para comunicación profesional, académica y fluidez operativa.',
+  title: 'Comprehensive B2 Upper-Intermediate Certification Assessment',
+  description: 'Official CEFR B2 Upper-Intermediate assessment evaluating workplace negotiation, nuanced deductions, and complex discourse.',
   passingScore: 75,
   exercises: [
     {
       id: 'final-b2-1',
       type: 'listening',
-      instruction: 'Escucha la intervención en el panel de debate y determina el argumento del profesor:',
+      instruction: 'Listen to the panel discussion and identify the speaker core premise:',
       prompt: 'While remote working offers undeniable scheduling flexibility, we must not overlook the institutional cohesion and spontaneous creativity that face-to-face collaboration uniquely fosters.',
       audioText: 'While remote working offers undeniable scheduling flexibility, we must not overlook the institutional cohesion and spontaneous creativity that face-to-face collaboration uniquely fosters.',
       options: [
@@ -2170,25 +2170,25 @@ export const FINAL_B2_EXAM: Exam = {
         'Individual creativity only flourishes in total isolation.'
       ],
       correctAnswer: 'In-person collaboration fosters team cohesion and spontaneous creativity in an irreplaceable manner.',
-      explanation: 'El ponente argumenta que la colaboración presencial aporta cohesión y creatividad espontánea insustituibles.'
+      explanation: 'The speaker maintains that in-person collaboration cultivates irreplaceable cohesion and spontaneous innovation.',
     },
     {
       id: 'final-b2-2',
       type: 'fill-blank',
-      instruction: 'Completa con la construcción de condicional mixto adecuada:',
+      instruction: 'Complete the sentence with the appropriate mixed conditional construction:',
       prompt: 'If I hadn\'t accepted the research appointment in Oxford ten years ago, I _____ (not live) here today.',
       options: ["wouldn't be living", "wouldn't have lived", "didn't live", "won't live"],
       correctAnswer: "wouldn't be living",
-      explanation: 'Condicional mixto: causa en pasado (Past Perfect) con efecto continuo en el presente (wouldn\'t be living).'
+      explanation: 'Condicional mixto: causa en pasado (Past Perfect) con efecto continuo en el presente (wouldn\'t be living).',
     },
     {
       id: 'final-b2-3',
       type: 'speaking',
-      instruction: 'Pronuncia esta argumentación con firmeza, control tonal y dicción formal:',
+      instruction: 'Deliver this argument with poise, tonal control, and formal diction:',
       prompt: 'Having meticulously weighed all potential outcomes, we arrived at an agreeable consensus.',
       audioText: 'Having meticulously weighed all potential outcomes, we arrived at an agreeable consensus.',
       correctAnswer: 'Having meticulously weighed all potential outcomes, we arrived at an agreeable consensus.',
-      explanation: 'Uso de cláusula de participio perfecto ("Having meticulously weighed...") típica de registros formales y profesionales.'
+      explanation: 'Use of a perfect participle clause ("Having meticulously weighed...") characteristic of professional prose.',
     }
   ]
 }
@@ -2201,7 +2201,7 @@ export const CURRICULUM_C1: Unit[] = [
     id: 'c1-unit-1',
     level: 'C1',
     unitNumber: 1,
-    title: 'Inversión Gramatical y Retórica para Énfasis',
+    title: 'Grammatical Inversion & Rhetorical Emphasis',
     topic: 'Inversion with Negative and Restrictive Adverbials',
     description: 'Aprende a estructurar oraciones de elevado impacto persuasivo invirtiendo el sujeto y el auxiliar.',
     lessons: [
@@ -2209,28 +2209,28 @@ export const CURRICULUM_C1: Unit[] = [
         id: 'c1-u1-l1',
         unitId: 'c1-unit-1',
         unitTitle: 'Unidad 1',
-        title: 'Inversión con Adverbios Restrictivos (Seldom, Rarely, Never)',
-        description: 'Aplica giros sintácticos retóricos como "Seldom have I witnessed..." en discursos y ensayos formales.',
+        title: 'Inversion with Restrictive Adverbs (Seldom, Rarely, Never)',
+        description: 'Apply rhetorical inversions such as "Seldom have I witnessed..." to elevate essays and addresses.',
         durationMinutes: 6,
         type: 'grammar',
         exercises: [
           {
             id: 'c1-u1-l1-e1',
             type: 'sentence-order',
-            instruction: 'Ordena los elementos para construir una inversión enfática formal:',
+            instruction: 'Assemble the words to construct a formal emphatic inversion:',
             prompt: 'have / never / I / such / heard / eloquence / inspiring',
             options: ['Never', 'have', 'I', 'heard', 'such', 'inspiring', 'eloquence'],
             correctAnswer: 'Never have I heard such inspiring eloquence',
-            explanation: 'Al anteponer "Never", el orden se invierte a Auxiliar (have) + Sujeto (I) + Verbo (heard).'
+            explanation: 'Al anteponer "Never", el orden se invierte a Auxiliar (have) + Sujeto (I) + Verbo (heard).',
           },
           {
             id: 'c1-u1-l1-e2',
             type: 'fill-blank',
-            instruction: 'Completa la inversión formal en un contexto institucional:',
+            instruction: 'Complete the formal inversion in an institutional setting:',
             prompt: 'Under no circumstances _____ (staff / permit) to disclose confidential client data.',
             options: ['are staff permitted', 'staff are permitted', 'staff permit', 'are permitted staff'],
             correctAnswer: 'are staff permitted',
-            explanation: 'Con expresiones restrictivas como "Under no circumstances", la inversión es preceptiva: are + staff + permitted.'
+            explanation: 'Following negative prepositional phrases such as "Under no circumstances", subject-auxiliary inversion is mandatory.',
           }
         ]
       }
@@ -2238,18 +2238,18 @@ export const CURRICULUM_C1: Unit[] = [
     exam: {
       id: 'exam-c1-u1',
       level: 'C1',
-      title: 'Examen de Evaluación: Unidad 1 (Inversión C1)',
-      description: 'Evalúa tu dominio de la inversión formal y la sintaxis retórica avanzada.',
+      title: 'Unit 1 Progress Assessment: Inversion (C1)',
+      description: 'Assess your command of formal subject-auxiliary inversion and elevated literary syntax.',
       passingScore: 70,
       exercises: [
         {
           id: 'ex-c1-1',
           type: 'fill-blank',
-          instruction: 'Completa la inversión retórica:',
+          instruction: 'Complete the rhetorical inversion:',
           prompt: 'Little _____ (she / realize) that her decision would alter the trajectory of modern science.',
           options: ['did she realize', 'she realized', 'she did realize', 'had she realized'],
           correctAnswer: 'did she realize',
-          explanation: '"Little did she realize" es la estructura clásica de inversión con "Little" en literatura y ensayo.'
+          explanation: '"Little did she realize" is a classical rhetorical inversion widely deployed in essays and narrative fiction.',
         }
       ]
     }
@@ -2267,27 +2267,27 @@ export const CURRICULUM_C1: Unit[] = [
         unitId: 'c1-unit-2',
         unitTitle: 'Unidad 2',
         title: 'Oraciones Hendidas (Cleft Sentences: What... / It is...)',
-        description: 'Domina "What concerns us is...", "It was precisely for this reason that..." para guiar la atención del interlocutor.',
+        description: 'Master "What concerns us is..." and "It was precisely for this reason that..." to direct thematic focus.',
         durationMinutes: 6,
         type: 'speaking',
         exercises: [
           {
             id: 'c1-u2-l1-e1',
             type: 'sentence-order',
-            instruction: 'Ordena la oración hendida enfática:',
+            instruction: 'Assemble the words to construct the emphatic pseudo-cleft sentence:',
             prompt: 'is / what / need / we / thorough / a / investigation',
             options: ['What', 'we', 'need', 'is', 'a', 'thorough', 'investigation'],
             correctAnswer: 'What we need is a thorough investigation',
-            explanation: '"What + cláusula + is/was" focaliza el objeto o idea con elegancia retórica.'
+            explanation: '"What + clause + is/was" foregrounds the focal point with precision.',
           },
           {
             id: 'c1-u2-l1-e2',
             type: 'speaking',
-            instruction: 'Pronuncia esta fórmula de desacuerdo diplomático británico:',
+            instruction: 'Deliver this phrase of British diplomatic dissent with measured composure:',
             prompt: 'With all due respect, I am not entirely persuaded by that argument.',
             audioText: 'With all due respect, I am not entirely persuaded by that argument.',
             correctAnswer: 'With all due respect, I am not entirely persuaded by that argument.',
-            explanation: '"I am not entirely persuaded" es el canon diplomático británico para manifestar desacuerdo sin confrontación.'
+            explanation: '"I am not entirely persuaded" exemplifies British understated diplomatic disagreement.',
           }
         ]
       }
@@ -2295,15 +2295,15 @@ export const CURRICULUM_C1: Unit[] = [
     exam: {
       id: 'exam-c1-u2',
       level: 'C1',
-      title: 'Examen de Evaluación: Unidad 2 (Diplomacia C1)',
-      description: 'Mide tu competencia para comunicarte con registro diplomático sofisticado y persuasión serena.',
+      title: 'Unit 2 Progress Assessment: Diplomatic Register (C1)',
+      description: 'Assess your capability to negotiate and disagree using serene diplomatic understatement.',
       passingScore: 70,
       exercises: [
         {
           id: 'ex-c1-2',
           type: 'multiple-choice',
-          instruction: '¿Cuál es la forma más diplomática de manifestar cautela frente a una propuesta en un comité directivo?',
-          prompt: 'Rechazo profesional y diplomático:',
+          instruction: 'Which phrasing offers the most tactful expression of caution before an executive committee?',
+          prompt: 'Tactful executive reservation:',
           options: [
             'I have certain reservations regarding the feasibility of this proposal.',
             'This idea is completely flawed and unworkable.',
@@ -2311,7 +2311,7 @@ export const CURRICULUM_C1: Unit[] = [
             'You shouldn\'t have proposed this.'
           ],
           correctAnswer: 'I have certain reservations regarding the feasibility of this proposal.',
-          explanation: '"I have certain reservations regarding the feasibility..." es la expresión diplomática prototípica.'
+          explanation: '"I have certain reservations regarding the feasibility..." is the textbook phrase for understated executive critique.',
         }
       ]
     }
@@ -2321,8 +2321,8 @@ export const CURRICULUM_C1: Unit[] = [
 export const FINAL_C1_EXAM: Exam = {
   id: 'final-exam-c1',
   level: 'C1',
-  title: 'Examen de Certificación Integral Nivel C1',
-  description: 'Certificación oficial de nivel C1 Avanzado para liderazgo, academia y entornos profesionales de alto impacto.',
+  title: 'Comprehensive C1 Advanced Certification Assessment',
+  description: 'Official CEFR C1 Advanced qualification certifying rhetorical agility, stylistic nuance, and persuasive leadership.',
   passingScore: 75,
   exercises: [
     {
@@ -2338,67 +2338,67 @@ export const FINAL_C1_EXAM: Exam = {
         'English is the sole language with proven cognitive benefits.'
       ],
       correctAnswer: 'Multilingualism boosts cognitive flexibility and shields neural pathways from age-related decline.',
-      explanation: 'La estructura correlativa "Not only... but it also..." enfatiza ambos beneficios cognitivos simultáneamente.'
+      explanation: 'The correlative structure "Not only... but also..." emphasizes both propositions with equal rhetorical force.',
     },
     {
       id: 'final-c1-2',
       type: 'fill-blank',
-      instruction: 'Completa con la forma adecuada del subjuntivo formal mandatorio inglés:',
+      instruction: 'Complete the sentence using the formal mandative English subjunctive:',
       prompt: 'It is essential that every delegate _____ (be) present when the treaty is ratified.',
       options: ['be', 'is', 'was', 'should be being'],
       correctAnswer: 'be',
-      explanation: 'En el subjuntivo formal inglés con adjetivos de mandato o necesidad, se usa la forma base pura (be) para todas las personas.'
+      explanation: 'In the mandative subjunctive following adjectives of urgency, the uninflected base verb (be) applies across all persons.',
     },
     {
       id: 'final-c1-3',
       type: 'speaking',
-      instruction: 'Pronuncia con cadencia retórica, control tonal y dicción impecable:',
+      instruction: 'Recite this sentence with measured oratorical cadence and refined articulation:',
       prompt: 'Scarcely had the keynote address concluded when an enthusiastic ovation erupted.',
       audioText: 'Scarcely had the keynote address concluded when an enthusiastic ovation erupted.',
       correctAnswer: 'Scarcely had the keynote address concluded when an enthusiastic ovation erupted.',
-      explanation: 'Inversión temporal: Scarcely had + Sujeto + participio... when...'
+      explanation: 'Temporal inversion: Scarcely had + Subject + past participle... when...',
     }
   ]
 }
 
 // ============================================================================
-// NIVEL C2: MAESTRÍA Y PROFICIENCIA (CEFR C2)
+// CEFR LEVEL C2: MASTERY & PROFICIENCY
 // ============================================================================
 export const CURRICULUM_C2: Unit[] = [
   {
     id: 'c2-unit-1',
     level: 'C2',
     unitNumber: 1,
-    title: 'Retórica Magistral y Estilo Académico Oxford',
+    title: 'Master Rhetoric & Oxford Academic Prose',
     topic: 'Mastery of Syntax, Participle Clauses and Nuance',
-    description: 'Alcanza el registro supremo del idioma inglés: oratoria parlamentaria, ensayo literario y precisión lexical absoluta.',
+    description: 'Achieve the pinnacle of English expression: parliamentary debate, literary critique, and absolute lexical exactitude.',
     lessons: [
       {
         id: 'c2-u1-l1',
         unitId: 'c2-unit-1',
         unitTitle: 'Unidad 1',
-        title: 'Sintaxis Compleja y Cláusulas Absolutas de Participio',
-        description: 'Estructuras densas y elegantes para articular razonamientos sofisticados sin subordinación innecesaria.',
+        title: 'Complex Syntax & Absolute Participle Clauses',
+        description: 'Deploy dense, elegant syntactic constructions to articulate nuanced reasoning with economy and grace.',
         durationMinutes: 6,
         type: 'grammar',
         exercises: [
           {
             id: 'c2-u1-l1-e1',
             type: 'sentence-order',
-            instruction: 'Ordena la cláusula absoluta clásica de la prosa ensayística de Oxford:',
+            instruction: 'Assemble the classical absolute participle clause characteristic of Oxford prose:',
             prompt: 'all / being / considered / things / concluded / proceedings / were / the',
             options: ['All', 'things', 'considered,', 'the', 'proceedings', 'were', 'concluded'],
             correctAnswer: 'All things considered, the proceedings were concluded',
-            explanation: '"All things considered" opera como una cláusula absoluta de participio independiente.'
+            explanation: '"All things considered" functions as a non-finite absolute clause modifying the entire matrix sentence.',
           },
           {
             id: 'c2-u1-l1-e2',
             type: 'speaking',
-            instruction: 'Pronuncia con la cadencia de la oratoria británica ilustrada:',
+            instruction: 'Deliver this speech with the oratorical cadence of British parliamentary debate:',
             prompt: 'Be that as it may, we cannot turn a blind eye to empirical reality.',
             audioText: 'Be that as it may, we cannot turn a blind eye to empirical reality.',
             correctAnswer: 'Be that as it may, we cannot turn a blind eye to empirical reality.',
-            explanation: '"Be that as it may" (sea como fuere) es un conector concesivo formal de alta elocuencia.'
+            explanation: '"Be that as it may" (sea como fuere) es un conector concesivo formal de alta elocuencia.',
           }
         ]
       }
@@ -2406,18 +2406,18 @@ export const CURRICULUM_C2: Unit[] = [
     exam: {
       id: 'exam-c2-u1',
       level: 'C2',
-      title: 'Examen de Evaluación: Unidad 1 (Retórica C2)',
-      description: 'Mide tu destreza para componer y analizar prosa de nivel maestría.',
+      title: 'Unit 1 Progress Assessment: Rhetoric & Syntax (C2)',
+      description: 'Appraise your proficiency in deconstructing and composing mastery-level prose.',
       passingScore: 70,
       exercises: [
         {
           id: 'ex-c2-1',
           type: 'fill-blank',
-          instruction: 'Completa con la colocación consagrada de registro culto:',
+          instruction: 'Complete the sentence with the established elevated idiom:',
           prompt: 'His treatise on moral philosophy falls nothing short of an absolute tour de _____.',
           options: ['force', 'grace', 'power', 'mind'],
           correctAnswer: 'force',
-          explanation: '"A tour de force" es el término consagrado en inglés culto para denotar una obra maestra de excepcional maestría técnica.'
+          explanation: '"A tour de force" denotes a masterly achievement characterized by exceptional artistic or technical command.',
         }
       ]
     }
@@ -2426,7 +2426,7 @@ export const CURRICULUM_C2: Unit[] = [
     id: 'c2-unit-2',
     level: 'C2',
     unitNumber: 2,
-    title: 'Ironía, Eufemismo Británico y Agudeza Idiomática',
+    title: 'Irony, British Understatement & Idiomatic Wit',
     topic: 'British Understatement, Irony and Mastery of Idiom',
     description: 'Decodifica el humor sutil, el "understatement" y los matices que caracterizan el dominio nativo pleno.',
     lessons: [
@@ -2434,15 +2434,15 @@ export const CURRICULUM_C2: Unit[] = [
         id: 'c2-u2-l1',
         unitId: 'c2-unit-2',
         unitTitle: 'Unidad 2',
-        title: 'El Understatement Británico en su Máxima Expresión',
-        description: 'Cómo un británico expresa un reto titánico diciendo con flema: "We have a bit of a situation".',
+        title: 'British Understatement at its Finest',
+        description: 'How British speakers defuse colossal dilemmas with calm understatement: "We have a bit of a situation".',
         durationMinutes: 6,
         type: 'listening',
         exercises: [
           {
             id: 'c2-u2-l1-e1',
             type: 'listening',
-            instruction: 'Escucha la expresión del profesor Davies y determina su significado real en contexto:',
+            instruction: 'Listen to the tutor idiom and deduce its pragmatic meaning in context:',
             prompt: 'It was rather a sticky wicket, but we soldiered on and managed to pull it off.',
             audioText: 'It was rather a sticky wicket, but we soldiered on and managed to pull it off.',
             options: [
@@ -2452,7 +2452,7 @@ export const CURRICULUM_C2: Unit[] = [
               'The weather was exceptionally humid.'
             ],
             correctAnswer: 'It was a remarkably difficult and delicate situation, yet we persevered and achieved the goal.',
-            explanation: '"On a sticky wicket" es un modismo británico histórico proveniente del críquet para denotar una circunstancia ardua y espinosa.'
+            explanation: '"On a sticky wicket" is a historical cricketing idiom denoting a precarious or delicate situation.',
           },
           {
             id: 'c2-u2-l1-e2',
@@ -2461,7 +2461,7 @@ export const CURRICULUM_C2: Unit[] = [
             prompt: 'I wouldn\'t say it was an unmitigated triumph, to put it mildly.',
             audioText: 'I wouldn\'t say it was an unmitigated triumph, to put it mildly.',
             correctAnswer: 'I wouldn\'t say it was an unmitigated triumph, to put it mildly.',
-            explanation: '"To put it mildly" es el eufemismo por antonomasia para atenuar verbalmente una valoración adversa.'
+            explanation: '"To put it mildly" is the quintessential British phrase used to deliberately understate a grave reality.',
           }
         ]
       }
@@ -2469,15 +2469,15 @@ export const CURRICULUM_C2: Unit[] = [
     exam: {
       id: 'exam-c2-u2',
       level: 'C2',
-      title: 'Examen de Evaluación: Unidad 2 (Agudeza C2)',
-      description: 'Evalúa tu comprensión de la ironía y los matices profundos del inglés nativo superior.',
+      title: 'Unit 2 Progress Assessment: Cultural Wit & Irony (C2)',
+      description: 'Gauge your grasp of situational irony, cultural understatement, and high-level conversational nuance.',
       passingScore: 70,
       exercises: [
         {
           id: 'ex-c2-2',
           type: 'multiple-choice',
-          instruction: '¿Qué denota cuando un interlocutor británico califica una propuesta con cortesía diciendo "That is a very courageous proposal"?',
-          prompt: 'Decodifica el eufemismo institucional británico:',
+          instruction: 'What does a British speaker imply when describing a proposal as "a very courageous proposal"?',
+          prompt: 'Decode the classic British institutional understatement:',
           options: [
             'She considers the proposal utterly foolish, reckless, or ill-advised.',
             'She admires your daring spirit and will fund it immediately.',
@@ -2485,7 +2485,7 @@ export const CURRICULUM_C2: Unit[] = [
             'She suggests putting it to an immediate public vote.'
           ],
           correctAnswer: 'She considers the proposal utterly foolish, reckless, or ill-advised.',
-          explanation: 'En el humor institucional británico (consagrado en Yes Minister), calificar un plan como "courageous" es la fórmula más cortés para advertir que conducirá al desastre.'
+          explanation: 'In British institutional parlance, dubbing a proposal "courageous" is the most polite euphemism for warning of catastrophe.',
         }
       ]
     }
@@ -2495,14 +2495,14 @@ export const CURRICULUM_C2: Unit[] = [
 export const FINAL_C2_EXAM: Exam = {
   id: 'final-exam-c2',
   level: 'C2',
-  title: 'Examen de Maestría Máxima Nivel C2 (Oxford Master of English)',
-  description: 'La máxima acreditación pedagógica otorgada por el profesor Davies. Certifica el dominio pleno, erudito y nativo del idioma inglés.',
+  title: 'Oxford Master of English: Comprehensive C2 Award',
+  description: 'The supreme pedagogical laurel validating erudite fluency, stylistic mastery, and native-level command of the English language.',
   passingScore: 80,
   exercises: [
     {
       id: 'final-c2-1',
       type: 'listening',
-      instruction: 'Escucha la disertación final de clausura y extrae la conclusión epistemológica:',
+      instruction: 'Listen to the valedictory lecture and identify its central philosophical conclusion:',
       prompt: 'Language is by no means a static repository of symbols, but rather a dynamic, living organism that mirrors the evolving consciousness of humanity itself. To master it is not merely to acquire vocabulary, but to inhabit another way of perceiving existence.',
       audioText: 'Language is by no means a static repository of symbols, but rather a dynamic, living organism that mirrors the evolving consciousness of humanity itself. To master it is not merely to acquire vocabulary, but to inhabit another way of perceiving existence.',
       options: [
@@ -2512,25 +2512,25 @@ export const FINAL_C2_EXAM: Exam = {
         'Language learning should be strictly limited to utilitarian grammar.'
       ],
       correctAnswer: 'Mastering a language is not mere vocabulary memorization, but inhabiting a new way of perceiving human existence.',
-      explanation: 'La disertación culmina afirmando que el verdadero dominio lingüístico transforma la percepción misma de la realidad.'
+      explanation: 'The lecture concludes that true linguistic mastery fundamentally reframes how one interprets human experience.',
     },
     {
       id: 'final-c2-2',
       type: 'fill-blank',
-      instruction: 'Completa con la correlación retórica precisa:',
+      instruction: 'Complete the sentence with the precise rhetorical correlative:',
       prompt: '_____ had the storm subsided than the intrepid scholars recommenced their expedition.',
       options: ['No sooner', 'Hardly', 'Scarcely', 'Barely'],
       correctAnswer: 'No sooner',
-      explanation: '"No sooner" se correlaciona estrictamente con "than" (No sooner had... than...). "Hardly" y "Scarcely" se correlacionan con "when".'
+      explanation: '"No sooner" se correlaciona estrictamente con "than" (No sooner had... than...). "Hardly" y "Scarcely" se correlacionan con "when".',
     },
     {
       id: 'final-c2-3',
       type: 'speaking',
-      instruction: 'Pronuncia con dicción, autoridad intelectual y cadencia nativa perfecta:',
+      instruction: 'Pronounce with authoritative cadence, intellectual presence, and flawless native intonation:',
       prompt: 'Herein lies the quintessential paradox of the human intellect: the more we discover, the vaster the frontiers of our ignorance appear.',
       audioText: 'Herein lies the quintessential paradox of the human intellect: the more we discover, the vaster the frontiers of our ignorance appear.',
       correctAnswer: 'Herein lies the quintessential paradox of the human intellect: the more we discover, the vaster the frontiers of our ignorance appear.',
-      explanation: 'Uso magistral de "Herein lies" y la estructura de doble comparativo correlativo ("the more... the vaster...").'
+      explanation: 'Uso magistral de "Herein lies" y la estructura de doble comparativo correlativo ("the more... the vaster...").',
     }
   ]
 }
@@ -2554,7 +2554,7 @@ export const ALL_LEVELS_DATA: Record<CEFRLevel, LevelDescriptor> = {
     level: 'A1',
     title: 'Level A1',
     subtitle: 'Beginner (CEFR A1)',
-    description: 'Foundational greetings, alphabet, numbers, verb to be, daily objects, café ordering, and present simple routines.',
+    description: 'Foundational greetings, alphabet, numbers, verb to be, daily objects, cafe ordering, and present simple routines.',
     accentColor: 'from-sky-500 to-blue-600',
     badgeText: 'Absolute Foundations',
     units: CURRICULUM_A1,

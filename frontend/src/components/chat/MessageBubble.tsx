@@ -116,7 +116,7 @@ export default function MessageBubble({ message }: Props) {
               >
                 <div className="flex items-center gap-1.5 text-[11px] font-extrabold text-emerald-800 dark:text-emerald-300 uppercase tracking-wider mb-1">
                   <Languages size={13} className="text-emerald-600 dark:text-emerald-400" />
-                  <span>Traducción al español:</span>
+                  <span>Spanish Translation:</span>
                 </div>
                 <p className="text-xs sm:text-sm font-semibold text-emerald-950 dark:text-emerald-100 leading-relaxed whitespace-pre-wrap">
                   {message.translation}

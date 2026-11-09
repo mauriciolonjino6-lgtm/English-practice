@@ -502,7 +502,7 @@ export default function GlossaryModule({ isModal = false, onClose }: Props) {
                     type="text"
                     value={newMeaningEs}
                     onChange={(e) => setNewMeaningEs(e.target.value)}
-                    placeholder="Significado en español y notas para recordarlo..."
+                    placeholder="Spanish meaning and memory notes..."
                     className="w-full px-3 py-2 rounded-xl text-xs sm:text-sm bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-white/10 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-500"
                   />
                 </div>

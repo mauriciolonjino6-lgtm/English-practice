@@ -82,7 +82,7 @@ export default function ExamModal({ exam, onClose, onComplete }: Props) {
               </div>
 
               <span className="inline-block px-3 py-1 rounded-full bg-emerald-100 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 text-xs font-bold uppercase tracking-wider mb-2">
-                ¡Examen Aprobado con Éxito!
+                Assessment Successfully Passed!
               </span>
 
               <h2 className="text-2xl font-black text-slate-900 dark:text-white mb-1">
@@ -90,7 +90,7 @@ export default function ExamModal({ exam, onClose, onComplete }: Props) {
               </h2>
 
               <p className="text-xs text-slate-500 dark:text-slate-400 mb-6">
-                Puntuación alcanzada: <strong className="text-emerald-500 text-base">{score}%</strong> (Mínimo requerido: {exam.passingScore}%)
+                Score achieved: <strong className="text-emerald-500 text-base">{score}%</strong> (Passing score: {exam.passingScore}%)
               </p>
 
               {/* Oxford Certificate Banner */}
@@ -255,7 +255,7 @@ export default function ExamModal({ exam, onClose, onComplete }: Props) {
             <div className="space-y-3">
               <div className="min-h-[56px] p-3 rounded-2xl border-2 border-dashed border-amber-300 dark:border-amber-700 bg-amber-50/40 dark:bg-amber-950/20 flex flex-wrap gap-2 items-center">
                 {selectedWords.length === 0 ? (
-                  <span className="text-xs text-slate-400 italic">Toca las palabras para ordenar la oración...</span>
+                  <span className="text-xs text-slate-400 italic">Tap words in sequence to assemble the sentence...</span>
                 ) : (
                   selectedWords.map((word, idx) => (
                     <button

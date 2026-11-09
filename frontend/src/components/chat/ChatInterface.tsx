@@ -161,7 +161,7 @@ export default function ChatInterface() {
       const objectUrl = URL.createObjectURL(file)
       img.onload = () => {
         URL.revokeObjectURL(objectUrl)
-        const maxDimension = 960
+        const maxDimension = 800
         let { width, height } = img
 
         if (width > maxDimension || height > maxDimension) {
@@ -189,7 +189,7 @@ export default function ChatInterface() {
         }
 
         ctx.drawImage(img, 0, 0, width, height)
-        const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.72)
+        const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.65)
         const base64 = compressedDataUrl.split(',')[1] || ''
         resolve({ dataUrl: compressedDataUrl, base64, mimeType: 'image/jpeg' })
       }
@@ -246,7 +246,7 @@ export default function ChatInterface() {
     setShowAttachMenu(false)
 
     // User message in chat
-    const userDisplayContent = textToSend || (currentAttachment ? '[Foto/Documento adjunto]' : '')
+    const userDisplayContent = textToSend || (currentAttachment ? '[Attached Photo / Document]' : '')
     try {
       addMessage(makeMsg('user', userDisplayContent, {
         imageUrl: currentAttachment?.previewUrl,
@@ -298,7 +298,7 @@ export default function ChatInterface() {
         setActiveCorrection(res.correction)
       }
     } catch {
-      toast.error('Error de conexión con el servidor. Intenta de nuevo.')
+      toast.error('Connection error with the Oxford server. Please try again.')
       updateMessage(loadingId, {
         content: "I apologize, our Oxford line seemed to disconnect for a moment. Please click below to send your message again!",
         isLoading: false,
@@ -342,7 +342,7 @@ export default function ChatInterface() {
 
       if (res.correction?.hasError) setActiveCorrection(res.correction)
     } catch {
-      toast.error('Error de audio o conexión. Intenta de nuevo.')
+      toast.error('Audio or connection error. Please try again.')
       updateMessage(loadingId, {
         content: "I could not quite catch that audio recording. Would you mind pressing the microphone to speak once more?",
         isLoading: false,
@@ -669,13 +669,13 @@ export default function ChatInterface() {
                       <button
                         onClick={(e) => {
                           e.stopPropagation()
-                          if (confirm('¿Eliminar esta conversación?')) {
+                          if (confirm('Delete this conversation?')) {
                             deleteSession(sess.id)
-                            toast('Chat eliminado')
+                            toast('Chat deleted')
                           }
                         }}
                         className="p-2 rounded-xl text-slate-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition-colors"
-                        title="Eliminar conversación"
+                        title="Delete conversation"
                       >
                         <Trash2 size={16} />
                       </button>
