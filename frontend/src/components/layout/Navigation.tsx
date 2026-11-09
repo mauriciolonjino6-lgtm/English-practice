@@ -1,13 +1,13 @@
 import { useNavigate, useLocation } from 'react-router-dom'
-import { LayoutDashboard, GraduationCap, MessageCircle, Mic2, BookOpen } from 'lucide-react'
+import { LayoutDashboard, GraduationCap, MessageCircle, BookOpen, Mic2 } from 'lucide-react'
 import { clsx } from 'clsx'
 
 const tabs = [
-  { path: '/dashboard',  label: 'Inicio',      icon: LayoutDashboard },
-  { path: '/learn',      label: 'Aprender',    icon: GraduationCap   },
-  { path: '/chat',       label: 'Profesor AI', icon: MessageCircle   },
-  { path: '/shadowing',  label: 'Shadowing',   icon: Mic2            },
-  { path: '/flashcards', label: 'Tarjetas',    icon: BookOpen        },
+  { path: '/dashboard',  label: 'Home',      icon: LayoutDashboard },
+  { path: '/learn',      label: 'Curriculum',icon: GraduationCap   },
+  { path: '/chat',       label: 'AI Tutor',  icon: MessageCircle   },
+  { path: '/glossary',   label: 'Glossary',  icon: BookOpen        },
+  { path: '/shadowing',  label: 'Speaking',  icon: Mic2            },
 ] as const
 
 export default function Navigation() {
@@ -30,8 +30,8 @@ export default function Navigation() {
             key={path}
             onClick={() => navigate(path)}
             className={clsx(
-              'flex flex-col items-center gap-1 px-4 py-1.5 rounded-2xl',
-              'transition-all duration-200 select-none min-w-[64px]',
+              'flex flex-col items-center gap-1 px-3 sm:px-4 py-1.5 rounded-2xl',
+              'transition-all duration-200 select-none min-w-[58px]',
               active
                 ? 'text-brand-500 font-bold'
                 : 'opacity-50 hover:opacity-100 active:scale-95'
@@ -43,7 +43,7 @@ export default function Navigation() {
             )}>
               <Icon size={20} strokeWidth={active ? 2.5 : 1.8} />
             </div>
-            <span className="text-[10px] tracking-wide">
+            <span className="text-[10px] tracking-wide font-medium">
               {label}
             </span>
           </button>

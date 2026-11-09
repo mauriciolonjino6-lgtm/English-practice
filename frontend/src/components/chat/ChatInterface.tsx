@@ -41,38 +41,38 @@ function makeMsg(role: Message['role'], content: string, extra?: Partial<Message
 }
 
 const SCENARIOS = [
-  { id: 'free-talk',   label: 'Conversación', icon: MessageCircle, intro: "Hello! Welcome to our English session. I'm Mr. Davies. Tell me, what's on your mind today, or what would you like to talk about?" },
-  { id: 'cafe',        label: 'Cafetería',    icon: Coffee,        intro: "Good morning! Welcome to Soho Coffee. Take a look at the board. What can I get started for you today?" },
-  { id: 'airport',     label: 'Aeropuerto',   icon: Plane,         intro: "Good afternoon. Welcome to London Heathrow. May I see your passport and landing card, please? What is the purpose of your visit?" },
-  { id: 'interview',   label: 'Entrevista',   icon: Briefcase,     intro: "Hello, please have a seat. Thank you for coming to this interview today. To start off, could you tell me a little about yourself and your background?" },
-  { id: 'directions',  label: 'Direcciones',  icon: Compass,       intro: "Excuse me, love! You look a bit lost here outside Covent Garden station. Where are you trying to get to?" },
-  { id: 'tech',        label: 'Ingeniería',   icon: Code,          intro: "Hi there! I hear you're working on some software and network projects. Could you explain what technologies you use in your daily work?" },
+  { id: 'free-talk',   label: 'Free Talk',          icon: MessageCircle, intro: "Hello! Welcome to our English tutorial. I'm Professor Emma, speaking to you from Oxford. What's on your mind today, or what would you like to practice?" },
+  { id: 'cafe',        label: 'Coffee Shop',        icon: Coffee,        intro: "Good morning! Welcome to Soho Coffee. Take a look at the board. What can I get started for you today?" },
+  { id: 'airport',     label: 'Heathrow Airport',   icon: Plane,         intro: "Good afternoon. Welcome to London Heathrow. May I see your passport and landing card, please? What is the purpose of your visit?" },
+  { id: 'interview',   label: 'Job Interview',      icon: Briefcase,     intro: "Hello, please have a seat. Thank you for coming to this interview today. To start off, could you tell me a little about yourself and your background?" },
+  { id: 'directions',  label: 'London Directions',  icon: Compass,       intro: "Excuse me! You look a bit lost here outside Covent Garden station. Where are you trying to get to?" },
+  { id: 'tech',        label: 'Tech & Engineering', icon: Code,          intro: "Hi there! I hear you're working on software and web architecture projects. Could you explain what technologies you use in your daily work?" },
 ] as const
 
 const DEFAULT_SUGGESTIONS: Record<ScenarioType, SuggestedReply[]> = {
   'free-talk': [
-    { text: "Hello Mr. Davies, I want to practice conversation.", hint: "Hola profesor Davies, quiero practicar conversación." },
-    { text: "Could you teach me some British slang?", hint: "¿Podría enseñarme modismos británicos?" },
+    { text: "Hello, I want to practice daily British conversation.", hint: "Friendly greeting to start speaking" },
+    { text: "Could you teach me some authentic British expressions?", hint: "Explore idioms and UK culture" },
   ],
   'cafe': [
-    { text: "Could I have a flat white and a muffin, please?", hint: "¿Podría pedir un flat white y un panecillo, por favor?" },
-    { text: "How much is that in total?", hint: "¿Cuánto es en total?" },
+    { text: "Could I have a flat white and a warm muffin, please?", hint: "Polite cafe ordering" },
+    { text: "How much is that altogether?", hint: "Asking total price in the UK" },
   ],
   'airport': [
-    { text: "I'm visiting London for a holiday and to study.", hint: "Visito Londres de vacaciones y para estudiar." },
-    { text: "I will be staying here for three weeks.", hint: "Me quedaré aquí durante tres semanas." },
+    { text: "I'm visiting London for a holiday and to study English.", hint: "Stating purpose of visit" },
+    { text: "I will be staying in Oxford for three weeks.", hint: "Stating duration of stay" },
   ],
   'interview': [
-    { text: "I'm a systems engineering student with experience in programming.", hint: "Soy estudiante de ingeniería de sistemas con experiencia en programación." },
-    { text: "I enjoy solving complex technical problems.", hint: "Disfruto resolver problemas técnicos complejos." },
+    { text: "I'm a software engineering student with experience in programming.", hint: "Professional introduction" },
+    { text: "I enjoy solving complex technical problems.", hint: "Highlighting key strengths" },
   ],
   'directions': [
-    { text: "Could you tell me how to get to the British Museum, please?", hint: "¿Podría decirme cómo llegar al Museo Británico, por favor?" },
-    { text: "Is it within walking distance from here?", hint: "¿Queda a una distancia caminable desde aquí?" },
+    { text: "Could you tell me how to get to the British Museum, please?", hint: "Asking street directions politely" },
+    { text: "Is it within walking distance from here?", hint: "Checking walking distance" },
   ],
   'tech': [
-    { text: "I work with databases and cloud services.", hint: "Trabajo con bases de datos y servicios en la nube." },
-    { text: "We are designing a microservices architecture.", hint: "Estamos diseñando una arquitectura de microservicios." },
+    { text: "I work with databases and cloud services.", hint: "Technical background summary" },
+    { text: "We are designing a microservices architecture.", hint: "System design topic" },
   ],
 }
 
@@ -212,11 +212,11 @@ export default function ChatInterface() {
     if (!file) return
 
     if (file.size > 25 * 1024 * 1024) {
-      toast.error('El archivo excede el límite de 25MB.')
+      toast.error('File exceeds 25MB limit.')
       return
     }
 
-    const toastId = toast.loading('Optimizando foto/documento...')
+    const toastId = toast.loading('Optimizing image for British Tutor...')
     try {
       const { dataUrl, base64, mimeType } = await compressImage(file)
       setAttachedFile({
@@ -226,9 +226,9 @@ export default function ChatInterface() {
         previewUrl: dataUrl,
       })
       setShowAttachMenu(false)
-      toast.success('Foto lista para enviar a Mr. Davies', { id: toastId })
+      toast.success('Image ready to send to British Tutor', { id: toastId })
     } catch {
-      toast.error('No se pudo procesar la imagen.', { id: toastId })
+      toast.error('Could not process image.', { id: toastId })
     } finally {
       e.target.value = ''
     }
@@ -382,29 +382,29 @@ export default function ChatInterface() {
             <button
               onClick={() => {
                 createNewSession(activeScenario)
-                toast.success('¡Nuevo chat creado!')
+                toast.success('New chat session created')
               }}
               className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold bg-brand-600 hover:bg-brand-700 text-white shadow-sm transition-all active:scale-95"
-              title="Iniciar una conversación nueva con Mr. Davies"
+              title="Start a new conversation with British Tutor"
             >
               <PlusCircle size={14} />
-              <span>Nuevo Chat</span>
+              <span>New Chat</span>
             </button>
 
             <button
               onClick={() => setShowHistoryModal(true)}
               className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-700 transition-all active:scale-95"
-              title="Ver todas tus conversaciones guardadas"
+              title="View all your saved chat conversations"
             >
               <History size={14} className="text-brand-600 dark:text-brand-400" />
-              <span>Mis Chats ({sessions.length})</span>
+              <span>My Chats ({sessions.length})</span>
             </button>
           </div>
 
           {/* Current Chat Title badge */}
           <div className="text-right hidden sm:block">
             <span className="text-[11px] font-bold text-slate-700 dark:text-slate-300 block truncate max-w-[200px]">
-              {activeChat?.title || 'Conversación'}
+              {activeChat?.title || 'Conversation'}
             </span>
           </div>
         </div>
@@ -451,7 +451,7 @@ export default function ChatInterface() {
       {activeSuggestions.length > 0 && !isTyping && (
         <div className="px-3 sm:px-4 py-1.5 bg-slate-100/95 dark:bg-slate-900/90 border-t border-b border-slate-200 dark:border-white/10 overflow-x-auto scrollbar-hide flex items-center gap-2 shrink-0">
           <span className="text-[11px] font-extrabold uppercase tracking-wider text-brand-700 dark:text-brand-300 shrink-0 flex items-center gap-1">
-            <Sparkles size={12} className="text-brand-600 dark:text-brand-400" /> Sugerencias:
+            <Sparkles size={12} className="text-brand-600 dark:text-brand-400" /> Suggestions:
           </span>
           {activeSuggestions.map((sug, idx) => (
             <button
@@ -488,7 +488,7 @@ export default function ChatInterface() {
             {attachedFile.previewUrl.startsWith('data:image/') ? (
               <img
                 src={attachedFile.previewUrl}
-                alt="Miniatura"
+                alt="Thumbnail"
                 className="w-10 h-10 rounded-lg object-cover border border-brand-300 dark:border-brand-700 shrink-0 shadow-sm"
               />
             ) : (
@@ -501,7 +501,7 @@ export default function ChatInterface() {
                 {attachedFile.name}
               </span>
               <span className="text-[10px] font-medium text-brand-700 dark:text-brand-300 block">
-                Adjunto listo para enviar a Mr. Davies
+                Attachment ready to send to British Tutor
               </span>
             </div>
           </div>
@@ -509,7 +509,7 @@ export default function ChatInterface() {
           <button
             onClick={() => setAttachedFile(null)}
             className="p-1 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition-colors"
-            title="Quitar archivo adjunto"
+            title="Remove attachment"
           >
             <X size={18} />
           </button>
@@ -525,7 +525,7 @@ export default function ChatInterface() {
               type="button"
               onClick={() => setShowAttachMenu((v) => !v)}
               className="p-3 rounded-2xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 transition-all active:scale-95 shadow-sm"
-              title="Adjuntar foto o documento para Mr. Davies"
+              title="Attach photo or document for British Tutor"
             >
               <Paperclip size={18} className="text-brand-600 dark:text-brand-400" />
             </button>
@@ -542,7 +542,7 @@ export default function ChatInterface() {
                   className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold text-slate-800 dark:text-slate-100 hover:bg-brand-50 dark:hover:bg-brand-950/40 hover:text-brand-600 transition-colors w-full text-left"
                 >
                   <Camera size={16} className="text-brand-600 dark:text-brand-400" />
-                  <span>Tomar foto</span>
+                  <span>Take photo</span>
                 </button>
 
                 <button
@@ -554,7 +554,7 @@ export default function ChatInterface() {
                   className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold text-slate-800 dark:text-slate-100 hover:bg-brand-50 dark:hover:bg-brand-950/40 hover:text-brand-600 transition-colors w-full text-left"
                 >
                   <ImageIcon size={16} className="text-brand-600 dark:text-brand-400" />
-                  <span>Subir foto o archivo</span>
+                  <span>Upload photo or file</span>
                 </button>
               </div>
             )}
@@ -582,7 +582,7 @@ export default function ChatInterface() {
                   handleSend()
                 }
               }}
-              placeholder={attachedFile ? "Escribe un comentario sobre la imagen..." : "Escribe en inglés, usa el micrófono o adjunta..."}
+              placeholder={attachedFile ? "Type a comment about this image in English..." : "Type in English, use the microphone, or attach a photo..."}
               className="w-full rounded-xl px-4 py-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white placeholder:text-slate-400 focus:bg-white dark:focus:bg-slate-800 focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500/20 resize-none py-3 pr-10 text-sm max-h-32 transition-all shadow-sm"
             />
           </div>
@@ -615,7 +615,7 @@ export default function ChatInterface() {
             <div className="p-4 bg-slate-50 dark:bg-slate-850 border-b border-slate-200 dark:border-white/10 flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <History size={18} className="text-brand-600 dark:text-brand-400" />
-                <h3 className="font-bold text-base text-slate-900 dark:text-white">Tus Conversaciones</h3>
+                <h3 className="font-bold text-base text-slate-900 dark:text-white">Your Conversations</h3>
               </div>
               <button
                 onClick={() => setShowHistoryModal(false)}
@@ -644,7 +644,7 @@ export default function ChatInterface() {
                       onClick={() => {
                         switchSession(sess.id)
                         setShowHistoryModal(false)
-                        toast.success(`Chat activo: ${sess.title}`)
+                        toast.success(`Active chat: ${sess.title}`)
                       }}
                       className="flex-1 text-left"
                     >
@@ -654,12 +654,12 @@ export default function ChatInterface() {
                         </span>
                         {isActive && (
                           <span className="px-2 py-0.5 text-[10px] font-bold bg-brand-500 text-white rounded-full flex items-center gap-1">
-                            <Check size={10} /> Actual
+                            <Check size={10} /> Active
                           </span>
                         )}
                       </div>
                       <div className="text-[11px] text-slate-500 dark:text-slate-400 flex items-center gap-2">
-                        <span>{msgCount} {msgCount === 1 ? 'mensaje' : 'mensajes'}</span>
+                        <span>{msgCount} {msgCount === 1 ? 'message' : 'messages'}</span>
                         <span>•</span>
                         <span>{new Date(sess.updatedAt).toLocaleDateString([], { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}</span>
                       </div>

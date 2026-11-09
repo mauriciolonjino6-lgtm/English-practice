@@ -264,7 +264,7 @@ export default function CurriculumModule() {
                         </span>
                         {unitExamPassed && (
                           <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500 text-white">
-                            Aprobado
+                            Passed
                           </span>
                         )}
                       </div>
@@ -275,7 +275,7 @@ export default function CurriculumModule() {
                   </div>
 
                   <span className="text-xs font-bold text-amber-600 dark:text-amber-400 shrink-0">
-                    {unitExamPassed ? 'Repetir Examen' : 'Presentar Examen'} →
+                    {unitExamPassed ? 'Retake Assessment' : 'Start Assessment'} →
                   </span>
                 </button>
               </div>
@@ -297,7 +297,7 @@ export default function CurriculumModule() {
 
         <div>
           <span className="px-3 py-1 rounded-full bg-black/20 text-xs font-black uppercase tracking-wider inline-block mb-1">
-            Evaluación Periódica • {activeDescriptor.title}
+            Periodic Oxford Certification • {activeDescriptor.title}
           </span>
           <h2 className="text-2xl sm:text-3xl font-black">
             {activeDescriptor.finalExam.title}
@@ -310,7 +310,7 @@ export default function CurriculumModule() {
         {hasPassedFinal ? (
           <div className="bg-white/20 backdrop-blur-md p-4 rounded-2xl max-w-sm mx-auto border border-white/20">
             <p className="text-xs font-bold text-white uppercase flex items-center justify-center gap-1.5">
-              <Award size={16} /> ¡Certificado {selectedLevel} Obtenido!
+              <Award size={16} /> Level {selectedLevel} Certificate Earned
             </p>
             <p className="text-[11px] text-amber-100 mt-1">
               Congratulations! You have demonstrated verified Oxford proficiency at this level.

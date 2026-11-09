@@ -6,19 +6,19 @@ import { useAppStore } from '@/store/useAppStore'
 import { authLogin } from '@/services/api'
 
 const LEVELS = [
-  { id: 'A1', name: 'A1 · Principiante', desc: 'Empezando desde cero' },
-  { id: 'A2', name: 'A2 · Básico', desc: 'Frases y preguntas cotidianas' },
-  { id: 'B1', name: 'B1 · Intermedio', desc: 'Conversaciones fluidas de viajes y trabajo' },
-  { id: 'B2', name: 'B2 · Avanzado', desc: 'Debates, modismos y temas complejos' },
-  { id: 'C1', name: 'C1 · Dominio Eficaz', desc: 'Inversión sintáctica, oraciones hendidas y diplomacia' },
-  { id: 'C2', name: 'C2 · Maestría Oxford', desc: 'Retórica de élite, atenuación y precisión nativa' },
+  { id: 'A1', name: 'A1 · Beginner', desc: 'Starting from scratch' },
+  { id: 'A2', name: 'A2 · Elementary', desc: 'Everyday phrases & dialogue' },
+  { id: 'B1', name: 'B1 · Intermediate', desc: 'Travel, cinema, work & stories' },
+  { id: 'B2', name: 'B2 · Upper Intermediate', desc: 'Debates, British idioms & essays' },
+  { id: 'C1', name: 'C1 · Advanced', desc: 'Inversion, nuance & diplomacy' },
+  { id: 'C2', name: 'C2 · Oxford Mastery', desc: 'Elite rhetoric & native precision' },
 ]
 
 const GOALS = [
-  'Conversación Diaria',
-  'Viajes y Aeropuertos',
-  'Trabajo y Entrevistas',
-  'Estudio y Certificaciones',
+  'Daily Conversation & Fluency',
+  'Travel & Heathrow Navigation',
+  'Job Interviews & Career',
+  'Oxford ESL Certifications',
 ]
 
 export default function AuthModal() {
@@ -26,7 +26,7 @@ export default function AuthModal() {
   const [name, setName] = useState(user?.name || 'Mauricio')
   const [email, setEmail] = useState(user?.email || 'mauricio@fluent.ai')
   const [level, setLevel] = useState(user?.level || 'A1')
-  const [goal, setGoal] = useState(user?.goal || 'Conversación Diaria')
+  const [goal, setGoal] = useState(user?.goal || 'Daily Conversation & Fluency')
   const [loading, setLoading] = useState(false)
 
   if (!isAuthModalOpen) return null
@@ -34,7 +34,7 @@ export default function AuthModal() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!name.trim()) {
-      toast.error('Por favor escribe tu nombre')
+      toast.error('Please enter your name')
       return
     }
 
@@ -42,7 +42,7 @@ export default function AuthModal() {
     try {
       const res = await authLogin({ name: name.trim(), email: email.trim(), level, goal })
       setUser(res.user)
-      toast.success(`¡Bienvenido, ${res.user.name}! Nivel ${res.user.level}`)
+      toast.success(`Welcome, ${res.user.name}! Level ${res.user.level}`)
       setAuthModalOpen(false)
     } catch {
       // Fallback local if server has network issue
@@ -56,7 +56,7 @@ export default function AuthModal() {
         streak: user?.streak || 1,
       }
       setUser(localUser)
-      toast.success(`¡Perfil guardado, ${localUser.name}!`)
+      toast.success(`Profile saved, ${localUser.name}!`)
       setAuthModalOpen(false)
     } finally {
       setLoading(false)
@@ -86,8 +86,8 @@ export default function AuthModal() {
               <Sparkles size={24} />
             </div>
             <div>
-              <h2 className="text-xl font-bold">{user ? 'Mi Perfil de Aprendizaje' : 'Iniciar Sesión / Registro'}</h2>
-              <p className="text-xs text-white/60">Configura tu nivel para adaptar las lecciones con Mr. Davies</p>
+              <h2 className="text-xl font-bold">{user ? 'My Learning Profile' : 'Sign In / Register'}</h2>
+              <p className="text-xs text-white/60">Configure your target level and study preferences</p>
             </div>
           </div>
 
@@ -95,7 +95,7 @@ export default function AuthModal() {
             {/* Name */}
             <div>
               <label className="block text-xs font-semibold text-white/70 uppercase tracking-wider mb-1.5">
-                Tu Nombre o Apodo
+                Full Name or Preferred Name
               </label>
               <div className="relative">
                 <User size={18} className="absolute left-3.5 top-3.5 text-white/40" />
@@ -103,7 +103,7 @@ export default function AuthModal() {
                   type="text"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  placeholder="Ej. Mauricio"
+                  placeholder="e.g. Mauricio"
                   className="input-field pl-10"
                   required
                 />
@@ -113,7 +113,7 @@ export default function AuthModal() {
             {/* Email (Optional) */}
             <div>
               <label className="block text-xs font-semibold text-white/70 uppercase tracking-wider mb-1.5">
-                Correo Electrónico <span className="text-white/40 font-normal">(Opcional para guardar progreso)</span>
+                Email Address <span className="text-white/40 font-normal">(Optional to sync cloud progress)</span>
               </label>
               <div className="relative">
                 <Mail size={18} className="absolute left-3.5 top-3.5 text-white/40" />
@@ -121,7 +121,7 @@ export default function AuthModal() {
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="tu@email.com"
+                  placeholder="you@email.com"
                   className="input-field pl-10"
                 />
               </div>
@@ -131,7 +131,7 @@ export default function AuthModal() {
             <div>
               <label className="block text-xs font-semibold text-white/70 uppercase tracking-wider mb-1.5 flex items-center gap-1.5">
                 <Award size={14} className="text-brand-400" />
-                Tu Nivel Actual de Inglés
+                Target CEFR Level
               </label>
               <div className="grid grid-cols-2 gap-2">
                 {LEVELS.map((lvl) => {
@@ -162,7 +162,7 @@ export default function AuthModal() {
             <div>
               <label className="block text-xs font-semibold text-white/70 uppercase tracking-wider mb-1.5 flex items-center gap-1.5">
                 <Target size={14} className="text-emerald-400" />
-                Tu Meta Principal
+                Primary Learning Goal
               </label>
               <div className="grid grid-cols-2 gap-2">
                 {GOALS.map((g) => {
@@ -192,7 +192,7 @@ export default function AuthModal() {
                 disabled={loading}
                 className="btn-primary flex-1 py-3 text-center text-sm font-bold flex items-center justify-center gap-2"
               >
-                {loading ? 'Guardando...' : user ? 'Actualizar Perfil' : 'Entrar y Comenzar'}
+                {loading ? 'Saving…' : user ? 'Update Profile' : 'Start Learning'}
               </button>
 
               {user && (
@@ -201,11 +201,11 @@ export default function AuthModal() {
                   onClick={() => {
                     logout()
                     setAuthModalOpen(false)
-                    toast('Sesión cerrada')
+                    toast('Signed out')
                   }}
                   className="px-4 py-3 rounded-2xl bg-red-500/20 text-red-300 hover:bg-red-500/30 text-xs font-semibold transition-colors"
                 >
-                  Cerrar Sesión
+                  Sign Out
                 </button>
               )}
             </div>
@@ -215,4 +215,3 @@ export default function AuthModal() {
     </AnimatePresence>
   )
 }
-

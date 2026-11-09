@@ -21,7 +21,7 @@ const item = {
 export default function Dashboard() {
   const navigate = useNavigate()
   const { user, userId, progress, dueCards, setProgress, setDueCards, setActiveScenario, setAuthModalOpen, levelProgress } = useAppStore()
-  const { speak } = useSpeechSynthesis()
+  const { speak, stop, isPlaying } = useSpeechSynthesis()
 
   useEffect(() => {
     const activeId = user?.id || userId
@@ -35,15 +35,16 @@ export default function Dashboard() {
   }
 
   const actions = [
-    { label: 'Conversación Libre', sub: 'Habla con Mr. Davies', icon: MessageCircle, path: '/chat', scenario: 'free-talk' as const, color: 'from-brand-600 to-indigo-600' },
-    { label: 'Entrenamiento de Acento', sub: 'Shadowing con audio británico', icon: Mic2, path: '/shadowing', color: 'from-emerald-600 to-teal-600' },
-    { label: 'Tarjetas de Memoria', sub: `${dueCards.length} palabras por repasar`, icon: BookOpen, path: '/flashcards', color: 'from-amber-600 to-orange-600' },
+    { label: 'Conversational AI Tutor', sub: 'Chat with British Tutor Emma & Mr. Davies', icon: MessageCircle, path: '/chat', scenario: 'free-talk' as const, color: 'from-brand-600 to-indigo-600' },
+    { label: 'Oxford English Glossary', sub: 'Explore definitions, false friends & idioms', icon: BookOpen, path: '/glossary', color: 'from-blue-600 to-cyan-600' },
+    { label: 'British Accent Training', sub: 'Shadowing with authentic RP pronunciation', icon: Mic2, path: '/shadowing', color: 'from-emerald-600 to-teal-600' },
+    { label: 'Spaced Repetition Cards', sub: `${dueCards.length} review items pending in SM-2 queue`, icon: BookOpen, path: '/flashcards', color: 'from-amber-600 to-orange-600' },
   ]
 
   const scenarios = [
-    { id: 'cafe' as const, label: 'En la Cafetería', icon: Coffee, desc: 'Pedir café y comida en Londres' },
-    { id: 'airport' as const, label: 'En el Aeropuerto', icon: Plane, desc: 'Aduana, maletas y preguntas clave' },
-    { id: 'interview' as const, label: 'Entrevista Laboral', icon: Briefcase, desc: 'Presentar tu experiencia en inglés' },
+    { id: 'cafe' as const, label: 'Soho Coffee Shop', icon: Coffee, desc: 'Ordering hot tea, flat white & food in London' },
+    { id: 'airport' as const, label: 'Heathrow Airport', icon: Plane, desc: 'Passport control, baggage claim & key questions' },
+    { id: 'interview' as const, label: 'London Job Interview', icon: Briefcase, desc: 'Presenting experience & technical background' },
   ]
 
   return (
@@ -58,10 +59,10 @@ export default function Dashboard() {
         <motion.div variants={item} className="pt-2 flex items-center justify-between">
           <div>
             <p className="opacity-60 text-xs font-semibold uppercase tracking-wider">
-              {user ? `¡Hola de nuevo, ${user.name}!` : 'Bienvenido a tu clase'}
+              {user ? `Welcome back, ${user.name}!` : 'Welcome to your tutorial'}
             </p>
             <h1 className="text-2xl font-black mt-0.5">
-              Aprende <span className="text-gradient">Inglés Real</span>
+              Master <span className="text-gradient">Real British English</span>
             </h1>
           </div>
 
@@ -70,7 +71,7 @@ export default function Dashboard() {
               onClick={() => setAuthModalOpen(true)}
               className="px-3 py-1.5 rounded-xl bg-brand-500/20 text-brand-400 border border-brand-400/30 text-xs font-bold hover:bg-brand-500/30 transition-all"
             >
-              Crear Perfil
+              Create Profile
             </button>
           )}
         </motion.div>
@@ -91,18 +92,18 @@ export default function Dashboard() {
             <div className="flex items-center justify-between mb-2">
               <span className="px-3 py-1 rounded-full bg-white/20 text-[10px] font-black uppercase tracking-wider flex items-center gap-1.5 backdrop-blur-md">
                 <GraduationCap size={13} />
-                Ruta Pedagógica • Nivel {levelProgress.currentLevel || 'A1'}
+                Curriculum Path • Level {levelProgress.currentLevel || 'A1'}
               </span>
               <span className="text-xs font-bold text-amber-300">
-                {levelProgress.completedLessons.length} lecciones completadas
+                {levelProgress.completedLessons.length} lessons completed
               </span>
             </div>
 
             <h2 className="text-xl font-black mt-1">
-              Continuar Aprendiendo ({levelProgress.currentLevel || 'A1'})
+              Continue Learning ({levelProgress.currentLevel || 'A1'})
             </h2>
             <p className="text-xs text-indigo-100 mt-0.5 line-clamp-1">
-              Ejercicios dinámicos de escucha, pronunciación, gramática y exámenes periódicos.
+              Interactive listening, speaking, grammar exercises & periodic certifications.
             </p>
 
             <div className="mt-4 flex items-center justify-between gap-4">
@@ -113,7 +114,7 @@ export default function Dashboard() {
                 />
               </div>
               <span className="text-xs font-extrabold flex items-center gap-1 text-white group-hover:translate-x-1 transition-transform">
-                Entrar a la ruta →
+                Open Curriculum →
               </span>
             </div>
           </div>
@@ -124,9 +125,9 @@ export default function Dashboard() {
           <div className="flex items-center justify-between mb-2">
             <p className="text-xs font-bold uppercase tracking-wider opacity-60 flex items-center gap-1.5">
               <Sparkles size={13} className="text-brand-400" />
-              Misiones Prácticas de Hoy
+              Today's Practical Scenarios
             </p>
-            <span className="text-[10px] opacity-40">Toca para interactuar</span>
+            <span className="text-[10px] opacity-40">Tap to engage</span>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
@@ -157,8 +158,8 @@ export default function Dashboard() {
                 <Zap size={18} className="text-amber-400" />
               </div>
               <div className="flex-1 text-left">
-                <p className="text-sm font-bold text-amber-300">¡Tienes tarjetas por repasar!</p>
-                <p className="text-xs opacity-70">{dueCards.length} palabras esperando en tu sistema SM-2</p>
+                <p className="text-sm font-bold text-amber-300">Flashcards Due for Review</p>
+                <p className="text-xs opacity-70">{dueCards.length} vocabulary items waiting in your SM-2 queue</p>
               </div>
               <ChevronRight size={16} className="opacity-40" />
             </button>
@@ -168,7 +169,7 @@ export default function Dashboard() {
         {/* Quick Start Actions */}
         <motion.div variants={item}>
           <p className="text-xs font-bold opacity-60 uppercase tracking-wider mb-2.5">
-            Módulos de Aprendizaje
+            Learning Modules
           </p>
           <div className="space-y-2.5">
             {actions.map(({ label, sub, icon: Icon, path, color, scenario }) => (
@@ -198,22 +199,22 @@ export default function Dashboard() {
           <div className="flex items-center justify-between mb-2">
             <div className="flex items-center gap-1.5">
               <Lightbulb size={15} className="text-brand-400" />
-              <p className="text-xs font-bold text-brand-400 uppercase tracking-wider">Frase Británica del Día</p>
+              <p className="text-xs font-bold text-brand-400 uppercase tracking-wider">British Phrase of the Day</p>
             </div>
             <button
-              onClick={() => speak("Could I have a flat white and a bacon bap, please?")}
+              onClick={() => isPlaying ? stop() : speak("Could I have a flat white and a bacon bap, please?")}
               className="flex items-center gap-1 text-[11px] font-bold text-brand-400 hover:text-brand-300"
-              title="Escuchar audio"
+              title="Listen to British audio"
             >
               <Volume2 size={13} />
-              <span>Escuchar</span>
+              <span>{isPlaying ? 'Stop' : 'Listen'}</span>
             </button>
           </div>
           <p className="text-sm font-semibold leading-relaxed">
             "Could I have a flat white and a bacon bap, please?"
           </p>
           <p className="text-xs opacity-60 mt-1">
-            En Reino Unido, <em>"Could I have..."</em> suena mucho más educado y natural que <em>"I want..."</em>.
+            In the United Kingdom, <em>"Could I have..."</em> sounds far more polite and natural than <em>"I want..."</em>.
           </p>
         </motion.div>
       </motion.div>

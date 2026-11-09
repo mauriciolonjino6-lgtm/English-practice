@@ -230,10 +230,10 @@ export default function LessonPlayer({ lesson, onClose, onComplete }: Props) {
             <div className="bg-slate-50 dark:bg-slate-800/80 p-4 rounded-2xl border border-slate-200 dark:border-white/5 flex items-center justify-between gap-4">
               <div className="flex-1">
                 <p className="text-xs text-brand-600 dark:text-brand-400 font-bold uppercase mb-1">
-                  Profesora Emma · Audio Británico de Oxford
+                  British Tutor Emma · Oxford Audio
                 </p>
                 <p className="text-sm text-slate-800 dark:text-slate-200 italic">
-                  {isPlaying ? 'Reproduciendo audio claro en pronunciación británica...' : 'Haz clic en el botón para escuchar la pronunciación británica:'}
+                  {isPlaying ? 'Playing crystal-clear British English audio...' : 'Click the speaker button to listen to authentic British RP audio:'}
                 </p>
               </div>
               <button
@@ -243,7 +243,7 @@ export default function LessonPlayer({ lesson, onClose, onComplete }: Props) {
                   'w-12 h-12 rounded-2xl text-white flex items-center justify-center transition-all shadow-md active:scale-95 shrink-0',
                   isPlaying ? 'bg-emerald-600 animate-pulse ring-4 ring-emerald-500/30' : 'bg-brand-600 hover:bg-brand-500'
                 )}
-                title={isPlaying ? 'Detener audio' : 'Escuchar audio'}
+                title={isPlaying ? 'Stop audio' : 'Listen to audio'}
               >
                 <Volume2 size={22} className={clsx(isPlaying && 'scale-110')} />
               </button>
@@ -463,7 +463,7 @@ export default function LessonPlayer({ lesson, onClose, onComplete }: Props) {
             }
             className="px-6 py-3 rounded-2xl bg-brand-600 text-white font-bold text-sm shadow-md hover:bg-brand-500 disabled:opacity-40 disabled:cursor-not-allowed transition-all active:scale-95 flex items-center gap-2"
           >
-            <span>Comprobar respuesta</span>
+            <span>Check Answer</span>
             <ChevronRight size={16} />
           </button>
         ) : (

@@ -26,7 +26,7 @@ export default function MessageBubble({ message }: Props) {
         </div>
         <div className="bg-white dark:bg-slate-800/90 border border-slate-200 dark:border-white/10 px-4 py-3 rounded-2xl flex items-center gap-2.5 shadow-sm">
           <Loader2 size={16} className="text-brand-500 animate-spin" />
-          <span className="text-sm font-medium text-slate-600 dark:text-slate-300">Mr. Davies is preparing his answer…</span>
+          <span className="text-sm font-medium text-slate-600 dark:text-slate-300">British Tutor is preparing the answer…</span>
         </div>
       </motion.div>
     )
@@ -81,10 +81,10 @@ export default function MessageBubble({ message }: Props) {
                            bg-brand-50 dark:bg-brand-950/40 border border-brand-200/70 dark:border-brand-800/40
                            text-brand-700 dark:text-brand-300 font-bold hover:bg-brand-100 dark:hover:bg-brand-900/50
                            transition-all active:scale-95"
-                title="Escuchar pronunciación británica"
+                title="Listen to authentic British pronunciation"
               >
                 <Volume2 size={14} className="text-brand-600 dark:text-brand-400" />
-                <span>Escuchar</span>
+                <span>Listen</span>
               </button>
 
               {/* Toggle Spanish Translation */}
@@ -95,10 +95,10 @@ export default function MessageBubble({ message }: Props) {
                              bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200/70 dark:border-emerald-800/40
                              text-emerald-800 dark:text-emerald-300 font-bold hover:bg-emerald-100 dark:hover:bg-emerald-900/50
                              transition-all active:scale-95"
-                  title="Ver traducción en español"
+                  title="Toggle Spanish translation"
                 >
                   <Languages size={14} className="text-emerald-600 dark:text-emerald-400" />
-                  <span>{showTranslation ? 'Ocultar español' : 'Traducir'}</span>
+                  <span>{showTranslation ? 'Hide Translation' : 'Translate'}</span>
                 </button>
               )}
             </div>

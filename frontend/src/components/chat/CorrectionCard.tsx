@@ -27,7 +27,7 @@ export default function CorrectionCard({ correction, onDismiss, onRepeat }: Prop
 
   const isDuplicate = cleanExplanation.toLowerCase() === cleanCorrected.toLowerCase()
   if (isDuplicate || !cleanExplanation) {
-    cleanExplanation = "Recuerda aplicar esta forma gramatical en inglés británico para asegurar precisión y naturalidad."
+    cleanExplanation = "Apply this grammatical structure in British English to ensure natural fluency and accuracy."
   }
 
   return (
@@ -47,7 +47,7 @@ export default function CorrectionCard({ correction, onDismiss, onRepeat }: Prop
           >
             <AlertCircle size={17} className="text-amber-600 dark:text-amber-400 shrink-0" />
             <span className="text-amber-950 dark:text-amber-200 font-bold text-xs sm:text-sm tracking-tight group-hover:underline">
-              Recomendación · {correction.rule || "Consejo del Profesor Davies"}
+              Recommendation · {correction.rule || "Tutor's Advice"}
             </span>
             {isMinimized ? (
               <ChevronDown size={15} className="text-amber-700 dark:text-amber-400" />
@@ -61,12 +61,12 @@ export default function CorrectionCard({ correction, onDismiss, onRepeat }: Prop
               onClick={() => setIsMinimized((v) => !v)}
               className="px-2 py-0.5 text-[11px] font-semibold rounded-md bg-amber-200/60 dark:bg-amber-900/40 text-amber-900 dark:text-amber-300 hover:bg-amber-200"
             >
-              {isMinimized ? 'Ver detalle' : 'Minimizar'}
+              {isMinimized ? 'Show details' : 'Minimize'}
             </button>
             <button
               onClick={onDismiss}
               className="text-slate-400 hover:text-slate-700 dark:text-slate-400 dark:hover:text-white transition-colors p-1 rounded-lg hover:bg-black/5 dark:hover:bg-white/10"
-              title="Cerrar sugerencia"
+              title="Close recommendation"
             >
               <X size={16} />
             </button>
@@ -77,11 +77,11 @@ export default function CorrectionCard({ correction, onDismiss, onRepeat }: Prop
         {!isMinimized && (
           <>
             <div className="p-3.5 space-y-3 max-h-[30vh] sm:max-h-[32vh] overflow-y-auto overscroll-contain">
-              {/* Lo que dijiste (Error) */}
+              {/* What you said (Error) */}
               {correction.original && correction.original.trim() !== cleanCorrected && (
                 <div>
                   <p className="text-[11px] font-extrabold text-rose-700 dark:text-rose-400 uppercase tracking-wider mb-1">
-                    Como lo dijiste:
+                    What you said:
                   </p>
                   <div className="text-xs sm:text-sm font-medium text-rose-950 dark:text-rose-200 bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-900/50 px-3 py-2 rounded-xl line-through decoration-rose-500/70">
                     {correction.original}
@@ -89,22 +89,22 @@ export default function CorrectionCard({ correction, onDismiss, onRepeat }: Prop
                 </div>
               )}
 
-              {/* Forma Correcta */}
+              {/* Correct British English */}
               <div>
                 <p className="text-[11px] font-extrabold text-emerald-700 dark:text-emerald-400 uppercase tracking-wider mb-1 flex items-center gap-1.5">
                   <CheckCircle2 size={13} className="text-emerald-600 dark:text-emerald-400" />
-                  <span>Cómo se escribe en inglés:</span>
+                  <span>Correct British English:</span>
                 </p>
                 <div className="text-xs sm:text-sm font-bold text-emerald-950 dark:text-emerald-100 bg-emerald-50 dark:bg-emerald-950/40 border-2 border-emerald-300 dark:border-emerald-800/60 px-3 py-2 rounded-xl shadow-sm">
                   {cleanCorrected}
                 </div>
               </div>
 
-              {/* Explicación / Regla */}
+              {/* Explanation & Rule */}
               <div>
                 <p className="text-[11px] font-extrabold text-blue-700 dark:text-blue-400 uppercase tracking-wider mb-1 flex items-center gap-1.5">
                   <BookOpen size={13} className="text-blue-600 dark:text-blue-400" />
-                  <span>Explicación del profesor (Por qué):</span>
+                  <span>Tutor's Guidance & Rule:</span>
                 </p>
                 <div className="text-xs sm:text-sm font-medium text-slate-800 dark:text-slate-200 bg-blue-50/80 dark:bg-blue-950/30 border border-blue-200/80 dark:border-blue-900/40 px-3 py-2 rounded-xl leading-relaxed">
                   {cleanExplanation}
@@ -121,7 +121,7 @@ export default function CorrectionCard({ correction, onDismiss, onRepeat }: Prop
                            text-white text-xs sm:text-sm font-bold shadow-md shadow-amber-500/25 transition-all"
               >
                 <RefreshCw size={14} />
-                <span>Practicar la frase correcta</span>
+                <span>Practice the correct sentence</span>
               </button>
             </div>
           </>

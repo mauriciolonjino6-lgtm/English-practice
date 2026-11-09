@@ -98,18 +98,18 @@ export default function ExamModal({ exam, onClose, onComplete }: Props) {
                 <div className="flex items-center gap-2 mb-2">
                   <ShieldCheck size={20} className="text-amber-600 dark:text-amber-400" />
                   <span className="text-xs font-extrabold uppercase tracking-wider text-amber-900 dark:text-amber-300">
-                    Certificación de Nivel Oxford ESL
+                    Oxford ESL Level Certification
                   </span>
                 </div>
                 <p className="text-sm font-bold text-slate-900 dark:text-white">
-                  Otorgado a: {user?.name || 'Estudiante'}
+                  Conferred upon: {user?.name || 'Student'}
                 </p>
                 <p className="text-xs text-slate-600 dark:text-slate-300 mt-1 leading-relaxed">
-                  Ha demostrado competencia sólida en habilidades de comprensión auditiva, expresión oral y gramática funcional correspondientes al <strong>Nivel A2 (Pre-Intermedio)</strong>.
+                  Has demonstrated verified competence in listening comprehension, spoken communication, and British functional grammar.
                 </p>
                 <div className="mt-3 pt-2 border-t border-amber-200 dark:border-amber-700/40 flex justify-between items-center text-[11px] text-slate-500 dark:text-slate-400 italic">
-                  <span>Prof. Davies • Oxford, UK</span>
-                  <span className="font-semibold text-emerald-600 dark:text-emerald-400">+100 XP Ganados</span>
+                  <span>British Tutor Emma • Oxford, UK</span>
+                  <span className="font-semibold text-emerald-600 dark:text-emerald-400">+100 XP Earned</span>
                 </div>
               </div>
             </>
@@ -296,7 +296,7 @@ export default function ExamModal({ exam, onClose, onComplete }: Props) {
           {currentExercise.type === 'speaking' && (
             <div className="text-center p-4 bg-slate-50 dark:bg-slate-800/50 rounded-2xl border border-slate-200 dark:border-white/5 space-y-3">
               <p className="text-xs text-slate-500 dark:text-slate-400">
-                Escucha el audio modelo de la profesora Emma y luego pronúncialo con voz clara y firme:
+                Listen to British Tutor Emma's native model audio, then speak clearly:
               </p>
               <button
                 type="button"
@@ -307,7 +307,7 @@ export default function ExamModal({ exam, onClose, onComplete }: Props) {
                 )}
               >
                 <Volume2 size={16} />
-                <span>{isPlaying ? 'Detener Audio' : 'Escuchar Frase Modelo'}</span>
+                <span>{isPlaying ? 'Stop Audio' : 'Listen to Model Audio'}</span>
               </button>
             </div>
           )}
@@ -321,7 +321,7 @@ export default function ExamModal({ exam, onClose, onComplete }: Props) {
           onClick={onClose}
           className="px-4 py-2 text-xs font-semibold text-slate-500 hover:text-slate-700 dark:hover:text-white"
         >
-          Cancelar examen
+          Exit Assessment
         </button>
 
         <button
@@ -333,7 +333,7 @@ export default function ExamModal({ exam, onClose, onComplete }: Props) {
           onClick={handleNextQuestion}
           className="px-6 py-3 rounded-2xl bg-gradient-to-r from-amber-500 to-yellow-500 text-white font-bold text-sm shadow-md hover:opacity-95 disabled:opacity-40 disabled:cursor-not-allowed transition-all active:scale-95 flex items-center gap-2"
         >
-          <span>{currentIndex + 1 === exam.exercises.length ? 'Finalizar Examen' : 'Siguiente Pregunta'}</span>
+          <span>{currentIndex + 1 === exam.exercises.length ? 'Finish Assessment' : 'Next Question'}</span>
           <ChevronRight size={16} />
         </button>
       </div>

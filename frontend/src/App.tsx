@@ -5,6 +5,7 @@ import ChatInterface from '@/components/chat/ChatInterface'
 import ShadowingModule from '@/components/shadowing/ShadowingModule'
 import FlashcardModule from '@/components/flashcards/FlashcardModule'
 import CurriculumModule from '@/components/curriculum/CurriculumModule'
+import GlossaryModule from '@/components/glossary/GlossaryModule'
 
 export default function App() {
   return (
@@ -14,6 +15,7 @@ export default function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/learn" element={<CurriculumModule />} />
         <Route path="/chat" element={<ChatInterface />} />
+        <Route path="/glossary" element={<GlossaryModule />} />
         <Route path="/shadowing" element={<ShadowingModule />} />
         <Route path="/flashcards" element={<FlashcardModule />} />
       </Routes>

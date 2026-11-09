@@ -1,6 +1,7 @@
 import { create } from 'zustand'
 import { persist, createJSONStorage } from 'zustand/middleware'
 import type { Message, SRSCard, UserProgress, UserProfile, ChatSession } from '@/types'
+import type { GlossaryWord } from '@/data/glossaryData'
 
 const safeStorage = {
   getItem: (name: string): string | null => {
@@ -163,6 +164,15 @@ interface AppState {
   isAuthModalOpen: boolean
   setAuthModalOpen: (open: boolean) => void
 
+  // ── Glossary ───────────────────────────────────────
+  starredGlossaryWordIds: string[]
+  customGlossaryWords: GlossaryWord[]
+  isGlossaryModalOpen: boolean
+  toggleStarGlossaryWord: (id: string) => void
+  addCustomGlossaryWord: (word: Omit<GlossaryWord, 'id' | 'isCustom'>) => void
+  removeCustomGlossaryWord: (id: string) => void
+  setGlossaryModalOpen: (open: boolean) => void
+
   // ── Actions ────────────────────────────────────────
   addMessage:     (msg: Message) => void
   updateMessage:  (id: string, patch: Partial<Message>) => void
@@ -322,6 +332,39 @@ export const useAppStore = create<AppState>()(
 
       setUserId:         (id)       => set({ userId: id }),
       setAuthModalOpen:  (open)     => set({ isAuthModalOpen: open }),
+
+      // ── Glossary State & Actions ─────────────────────
+      starredGlossaryWordIds: ['glo-plot', 'glo-cuppa', 'glo-kettle', 'glo-past-perfect', 'glo-zero-article-subjects'],
+      customGlossaryWords: [],
+      isGlossaryModalOpen: false,
+
+      toggleStarGlossaryWord: (id: string) => {
+        set((s) => ({
+          starredGlossaryWordIds: s.starredGlossaryWordIds.includes(id)
+            ? s.starredGlossaryWordIds.filter((x) => x !== id)
+            : [...s.starredGlossaryWordIds, id],
+        }))
+      },
+
+      addCustomGlossaryWord: (word) => {
+        const newWord: GlossaryWord = {
+          ...word,
+          id: `custom-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
+          isCustom: true,
+        }
+        set((s) => ({
+          customGlossaryWords: [newWord, ...s.customGlossaryWords],
+        }))
+      },
+
+      removeCustomGlossaryWord: (id: string) => {
+        set((s) => ({
+          customGlossaryWords: s.customGlossaryWords.filter((w) => w.id !== id),
+          starredGlossaryWordIds: s.starredGlossaryWordIds.filter((x) => x !== id),
+        }))
+      },
+
+      setGlossaryModalOpen: (open: boolean) => set({ isGlossaryModalOpen: open }),
 
       // ── Multi-Chat Management ────────────────────────
       createNewSession: (scenario = 'free-talk') => {
