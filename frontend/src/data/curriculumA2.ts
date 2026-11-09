@@ -1552,8 +1552,420 @@ export const CURRICULUM_B1: Unit[] = [
         }
       ]
     }
+  },
+  {
+    id: 'b1-unit-3',
+    level: 'B1',
+    unitNumber: 3,
+    title: 'Unit 3: Food for Thought & Narrative Interruption',
+    topic: 'Past Continuous vs Past Simple (When/While), Indefinite Pronouns and Giving Reasons',
+    description: 'Master background actions vs sudden interruptions, using some-/any-/no-/every- without double negatives, and articulating reasons naturally.',
+    lessons: [
+      {
+        id: 'b1-u3-l1',
+        unitId: 'b1-unit-3',
+        unitTitle: 'Unit 3',
+        title: 'Listening & Speaking: Kitchen Disasters & Narrative Interruption',
+        description: 'Contrast a long continuous action in the past with a sudden interrupting event using while and when.',
+        durationMinutes: 6,
+        type: 'listening',
+        exercises: [
+          {
+            id: 'b1-u3-l1-e1',
+            type: 'listening',
+            instruction: 'Listen to Emma\'s cooking mishap and identify what triggered the smoke alarm:',
+            prompt: 'While I was preparing a Sunday roast in the kitchen, the smoke alarm suddenly went off because I had left the oven door open!',
+            audioText: 'While I was preparing a Sunday roast in the kitchen, the smoke alarm suddenly went off because I had left the oven door open!',
+            options: ['She had left the oven door open', 'She burned the pasta on the hob', 'Her neighbor rang the bell', 'The toaster malfunctioned'],
+            correctAnswer: 'She had left the oven door open',
+            hint: 'Listen for the reason starting with "because I had...".',
+            explanation: 'Emma says: "the smoke alarm suddenly went off because I had left the oven door open!"'
+          },
+          {
+            id: 'b1-u3-l1-e2',
+            type: 'fill-blank',
+            instruction: 'Complete with Past Continuous (long action) and Past Simple (short interruption):',
+            prompt: 'I _____ (chop) vegetables when I accidentally _____ (cut) my finger.',
+            options: ['was chopping / cut', 'chopped / was cutting', 'were chopping / cutted', 'was chop / cut'],
+            correctAnswer: 'was chopping / cut',
+            hint: 'Use "was/were + -ing" for the ongoing activity and the past irregular for the sudden cut.',
+            explanation: 'Past Continuous (was chopping) represents the background activity; Past Simple (cut) is the sharp interruption.'
+          },
+          {
+            id: 'b1-u3-l1-e3',
+            type: 'sentence-order',
+            instruction: 'Arrange the sentence to express simultaneous narrative actions with "while":',
+            prompt: 'the / While / dinner / rang / was / she / cooking / doorbell',
+            options: ['While', 'she', 'was', 'cooking', 'dinner', 'the', 'doorbell', 'rang'],
+            correctAnswer: 'While she was cooking dinner the doorbell rang',
+            explanation: '"While" introduces the continuous clause (While she was cooking dinner), followed by the past simple event (the doorbell rang).'
+          },
+          {
+            id: 'b1-u3-l1-e4',
+            type: 'speaking',
+            instruction: 'Pronounce the sentence with natural British connected speech:',
+            prompt: 'While I was waiting for the kettle to boil, my mobile phone rang.',
+            audioText: 'While I was waiting for the kettle to boil, my mobile phone rang.',
+            correctAnswer: 'While I was waiting for the kettle to boil, my mobile phone rang.',
+            explanation: 'Ensure smooth linking between "waiting for" and "kettle to boil".'
+          }
+        ]
+      },
+      {
+        id: 'b1-u3-l2',
+        unitId: 'b1-unit-3',
+        unitTitle: 'Unit 3',
+        title: 'Active Grammar: Indefinite Pronouns (Some, Any, No, Every)',
+        description: 'Understand how to use somebody, anything, nowhere and avoid the Spanish double-negative trap.',
+        durationMinutes: 6,
+        type: 'grammar',
+        exercises: [
+          {
+            id: 'b1-u3-l2-e1',
+            type: 'multiple-choice',
+            instruction: 'Which sentence correctly avoids a double negative in English?',
+            prompt: 'Choose the grammatically accurate sentence:',
+            options: [
+              'Nobody makes better desserts than my grandmother.',
+              'Nobody doesn\'t make better desserts than my grandmother.',
+              'Nobody makes no desserts here.',
+              'There isn\'t nobody in the dining room.'
+            ],
+            correctAnswer: 'Nobody makes better desserts than my grandmother.',
+            hint: 'In English, words starting with "no-" (nobody, nothing) already make the clause negative.',
+            explanation: 'In English, two negatives make an affirmative. "Nobody makes..." is correct. Never say "Nobody doesn\'t make".'
+          },
+          {
+            id: 'b1-u3-l2-e2',
+            type: 'fill-blank',
+            instruction: 'Complete the sentence using the correct indefinite pronouns:',
+            prompt: 'I have searched _____ (everywhere), but I cannot find my wallet _____ (anywhere)!',
+            options: ['everywhere / anywhere', 'somewhere / nowhere', 'everywhere / nowhere', 'anywhere / everywhere'],
+            correctAnswer: 'everywhere / anywhere',
+            explanation: 'With a negative verb ("cannot find"), we use "anywhere", not "nowhere".'
+          },
+          {
+            id: 'b1-u3-l2-e3',
+            type: 'fill-blank',
+            instruction: 'Complete the polite offer in a restaurant:',
+            prompt: 'Would you like _____ (something/anything) to drink with your meal?',
+            options: ['something', 'anything', 'nothing', 'everything'],
+            correctAnswer: 'something',
+            explanation: 'In polite offers where a "yes" is expected, English uses "something" rather than "anything".'
+          },
+          {
+            id: 'b1-u3-l2-e4',
+            type: 'sentence-order',
+            instruction: 'Arrange the words to form a correct negative pronoun statement:',
+            prompt: 'in / restaurant / speaks / Spanish / Nobody / this',
+            options: ['Nobody', 'in', 'this', 'restaurant', 'speaks', 'Spanish'],
+            correctAnswer: 'Nobody in this restaurant speaks Spanish',
+            explanation: 'Subject (Nobody in this restaurant) + Verb (speaks with 3rd-person -s) + Object (Spanish).'
+          }
+        ]
+      },
+      {
+        id: 'b1-u3-l3',
+        unitId: 'b1-unit-3',
+        unitTitle: 'Unit 3',
+        title: 'Communication Skills: Giving Reasons & Sequencing Recipes',
+        description: 'Move beyond "because" with native phrases like "The thing is..." and master recipe connectors.',
+        durationMinutes: 6,
+        type: 'speaking',
+        exercises: [
+          {
+            id: 'b1-u3-l3-e1',
+            type: 'multiple-choice',
+            instruction: 'Which phrase introduces a conversational reason with natural British tact?',
+            prompt: 'I\'d love to come for dinner. _____, I have to submit my dissertation tonight.',
+            options: ['The thing is', 'The reason are', 'Because that', 'Is because'],
+            correctAnswer: 'The thing is',
+            explanation: '"The thing is, ..." is the premier British conversational phrase to introduce an explanation or obstacle.'
+          },
+          {
+            id: 'b1-u3-l3-e2',
+            type: 'sentence-order',
+            instruction: 'Arrange the sentence to express an explanation smoothly:',
+            prompt: 'is / The / of / that / ran / we / flour / reason / out',
+            options: ['The', 'reason', 'is', 'that', 'we', 'ran', 'out', 'of', 'flour'],
+            correctAnswer: 'The reason is that we ran out of flour',
+            explanation: '"The reason is that..." is followed by a complete subject-verb clause.'
+          },
+          {
+            id: 'b1-u3-l3-e3',
+            type: 'fill-blank',
+            instruction: 'Complete the recipe instructions with the appropriate sequence linkers:',
+            prompt: '_____, preheat the oven. Next, mix the ingredients. _____, bake for 30 minutes.',
+            options: ['First / Finally', 'At start / In the end', 'Firstly / For finish', 'To begin / Lastly that'],
+            correctAnswer: 'First / Finally',
+            explanation: 'Standard sequencing linkers in recipes: First -> Next -> After that -> Finally.'
+          },
+          {
+            id: 'b1-u3-l3-e4',
+            type: 'speaking',
+            instruction: 'Read aloud explaining a dining preference with natural cadence:',
+            prompt: 'The reason I enjoy cooking is that it allows me to unwind after work.',
+            audioText: 'The reason I enjoy cooking is that it allows me to unwind after work.',
+            correctAnswer: 'The reason I enjoy cooking is that it allows me to unwind after work.',
+            explanation: 'Notice the natural pause right after "The reason I enjoy cooking...".'
+          }
+        ]
+      }
+    ],
+    exam: {
+      id: 'exam-b1-unit-3',
+      unitId: 'b1-unit-3',
+      level: 'B1',
+      title: 'Unit 3 Progress Assessment: Food for Thought & Narrative Past',
+      description: 'Test your mastery of past continuous vs past simple, indefinite pronouns, and giving reasons.',
+      passingScore: 70,
+      exercises: [
+        {
+          id: 'exam-b1-u3-e1',
+          type: 'fill-blank',
+          instruction: 'Complete with the correct narrative combination:',
+          prompt: 'While we _____ (have) dinner, the electricity suddenly _____ (go) out.',
+          options: ['were having / went', 'had / was going', 'was having / went', 'had / had gone'],
+          correctAnswer: 'were having / went',
+          explanation: 'Ongoing action (were having) interrupted by punctual event (went out).'
+        },
+        {
+          id: 'exam-b1-u3-e2',
+          type: 'multiple-choice',
+          instruction: 'Select the correct indefinite pronoun:',
+          prompt: 'Is there _____ vegetarian on the lunch menu today?',
+          options: ['anything', 'nothing', 'something', 'everything'],
+          correctAnswer: 'anything',
+          explanation: 'In general questions, "anything" is the standard indefinite pronoun.'
+        },
+        {
+          id: 'exam-b1-u3-e3',
+          type: 'sentence-order',
+          instruction: 'Arrange the sentence explaining a delay:',
+          prompt: 'The / that / missed / bus / is / I / the / reason',
+          options: ['The', 'reason', 'is', 'that', 'I', 'missed', 'the', 'bus'],
+          correctAnswer: 'The reason is that I missed the bus',
+          explanation: '"The reason is that I missed the bus."'
+        }
+      ]
+    }
+  },
+  {
+    id: 'b1-unit-4',
+    level: 'B1',
+    unitNumber: 4,
+    title: 'Unit 4: Cinema, Reviews & The Past of the Past',
+    topic: 'Past Simple vs Past Perfect (Timeline of Events), Articles and Film Review Writing',
+    description: 'Master sequence of past tenses (had + past participle), zero article vs the for subjects, meals, and mountain ranges, and write structured reviews.',
+    lessons: [
+      {
+        id: 'b1-u4-l1',
+        unitId: 'b1-unit-4',
+        unitTitle: 'Unit 4',
+        title: 'Mastering Narrative Time: Past Simple vs Past Perfect',
+        description: 'Understand the timeline: Past Perfect (had + participle) for the earlier action, and Past Simple for the main narrative.',
+        durationMinutes: 6,
+        type: 'grammar',
+        exercises: [
+          {
+            id: 'b1-u4-l1-e1',
+            type: 'fill-blank',
+            instruction: 'Complete the sentence with the past action that happened earlier in time:',
+            prompt: 'When I arrived at the cinema, the film _____ (already / start).',
+            options: ['had already started', 'already started', 'has already started', 'was already start'],
+            correctAnswer: 'had already started',
+            hint: 'The film started BEFORE the arrival at the cinema. Use had + past participle.',
+            explanation: 'The Past Perfect (had already started) is required because the movie began prior to the main narrative past event (arrived).'
+          },
+          {
+            id: 'b1-u4-l1-e2',
+            type: 'fill-blank',
+            instruction: 'Complete the cause that took place before the consequence:',
+            prompt: 'Akmal was late to the theatre because he _____ (leave) his laptop at the office.',
+            options: ['had left', 'leaved', 'has left', 'was left'],
+            correctAnswer: 'had left',
+            hint: 'He left his laptop before he became late. Note that "leave" is irregular (left).',
+            explanation: 'Leaving the laptop occurred prior to being late. "Leave -> left -> left". "Leaved" does not exist.'
+          },
+          {
+            id: 'b1-u4-l1-e3',
+            type: 'multiple-choice',
+            instruction: 'Which sentence accurately contrasts an earlier experience with a past desire?',
+            prompt: 'Select the grammatically accurate sentence:',
+            options: [
+              'He had already seen the film twice before, but he wanted to watch it again.',
+              'He already saw the film twice before, but he was wanting to watch it again.',
+              'He has already seen the film twice before, but he got to watch it again.',
+              'He had already saw the film twice before, but he wants to watch it again.'
+            ],
+            correctAnswer: 'He had already seen the film twice before, but he wanted to watch it again.',
+            explanation: '"Twice before" triggers Past Perfect (had already seen); "wanted" is the past simple state.'
+          },
+          {
+            id: 'b1-u4-l1-e4',
+            type: 'sentence-order',
+            instruction: 'Arrange the words to describe an unprecedented past experience:',
+            prompt: 'seen / had / film / They / never / impressive / an / such / before',
+            options: ['They', 'had', 'never', 'seen', 'such', 'an', 'impressive', 'film', 'before'],
+            correctAnswer: 'They had never seen such an impressive film before',
+            explanation: 'Structure: Subject (They) + had + never + participle (seen) + such an impressive film before.'
+          }
+        ]
+      },
+      {
+        id: 'b1-u4-l2',
+        unitId: 'b1-unit-4',
+        unitTitle: 'Unit 4',
+        title: 'Articles Masterclass: Academic Subjects, Meals and Mountain Ranges',
+        description: 'Master the three golden rules: Zero article for subjects and meals, The for plural mountain ranges and unique objects.',
+        durationMinutes: 6,
+        type: 'grammar',
+        exercises: [
+          {
+            id: 'b1-u4-l2-e1',
+            type: 'fill-blank',
+            instruction: 'Choose the correct articles for an academic subject and a meal of the day:',
+            prompt: 'I want to study _____ physics at university, and then have _____ lunch with Emma.',
+            options: ['- / -', 'a / a', 'the / the', 'a / -'],
+            correctAnswer: '- / -',
+            hint: 'Academic subjects (physics, maths) and meals (breakfast, lunch, dinner) take zero article.',
+            explanation: 'In English, academic disciplines and meals of the day are used without any article (zero article).'
+          },
+          {
+            id: 'b1-u4-l2-e2',
+            type: 'fill-blank',
+            instruction: 'Choose the correct articles for a mountain range and a unique celestial body:',
+            prompt: 'If you go climbing in _____ Himalayas, look at _____ moon tonight.',
+            options: ['the / the', '- / the', 'the / -', 'a / the'],
+            correctAnswer: 'the / the',
+            hint: 'Plural mountain ranges (the Himalayas, the Andes, the Alps) and unique things (the moon) both require "the".',
+            explanation: 'Chains of mountains in the plural always require "the" (the Himalayas), as do unique celestial bodies (the moon).'
+          },
+          {
+            id: 'b1-u4-l2-e3',
+            type: 'multiple-choice',
+            instruction: 'Which sentence uses articles with 100% precision?',
+            prompt: 'Choose the correct sentence:',
+            options: [
+              'What time do you usually have dinner?',
+              'What time do you usually have a dinner?',
+              'What time do you usually have the dinner?',
+              'What time do you usually have some dinner?'
+            ],
+            correctAnswer: 'What time do you usually have dinner?',
+            explanation: 'Meals of the day take zero article: "have dinner", "have lunch", "have breakfast".'
+          },
+          {
+            id: 'b1-u4-l2-e4',
+            type: 'speaking',
+            instruction: 'Pronounce the sentence clearly without adding unnecessary articles:',
+            prompt: 'We studied history together before having dinner in town.',
+            audioText: 'We studied history together before having dinner in town.',
+            correctAnswer: 'We studied history together before having dinner in town.',
+            explanation: 'Notice: "- history" and "- dinner" without "a" or "the".'
+          }
+        ]
+      },
+      {
+        id: 'b1-u4-l3',
+        unitId: 'b1-unit-4',
+        unitTitle: 'Unit 4',
+        title: 'Writing Masterclass: Film Reviews (Adjectives, Nouns & Natural Syntax)',
+        description: 'Learn the master template for reviewing films: adjective before noun (interesting plot, good CGI) and natural review vocabulary.',
+        durationMinutes: 6,
+        type: 'mixed',
+        exercises: [
+          {
+            id: 'b1-u4-l3-e1',
+            type: 'sentence-order',
+            instruction: 'Arrange the sentence placing the adjective before the noun (plot):',
+            prompt: 'have / The / doesn\'t / plot / film / an / interesting',
+            options: ['The', 'film', 'doesn\'t', 'have', 'an', 'interesting', 'plot'],
+            correctAnswer: 'The film doesn\'t have an interesting plot',
+            hint: 'Adjectives come before the noun: "an interesting plot", not "plot interesting".',
+            explanation: 'In English, adjectives precede the noun they modify: "an interesting plot". Also, "the film" is 3rd person singular, so we use "doesn\'t have".'
+          },
+          {
+            id: 'b1-u4-l3-e2',
+            type: 'multiple-choice',
+            instruction: 'Select the correct translation and preposition for streaming platforms:',
+            prompt: 'How do you say "Vi recientemente una película llamada Mortal Engines en Netflix"?',
+            options: [
+              'I recently saw a film called Mortal Engines on Netflix.',
+              'I recently view film is Mortal Engines in Netflix.',
+              'I have seen a film named Mortal Engines at Netflix.',
+              'I recently was seeing a film called Mortal Engines inside Netflix.'
+            ],
+            correctAnswer: 'I recently saw a film called Mortal Engines on Netflix.',
+            hint: 'For screens and digital streaming platforms, always use "on" (on Netflix, on TV, on YouTube).',
+            explanation: 'Natural formula: "I recently saw a film called [Title] on [Platform]".'
+          },
+          {
+            id: 'b1-u4-l3-e3',
+            type: 'fill-blank',
+            instruction: 'Complete with correct singular/plural agreement and natural vocabulary:',
+            prompt: 'The film _____ (have/has) a female protagonist and the visual effects _____ (is/are) impressive.',
+            options: ['has / are', 'have / is', 'has / is', 'have / are'],
+            correctAnswer: 'has / are',
+            explanation: '"The film" is singular (it has); "the visual effects" is plural (they are).'
+          },
+          {
+            id: 'b1-u4-l3-e4',
+            type: 'speaking',
+            instruction: 'Pronounce the review sentence with confident intonation:',
+            prompt: 'Although the CGI is impressive, the movie doesn\'t have an interesting plot.',
+            audioText: 'Although the CGI is impressive, the movie doesn\'t have an interesting plot.',
+            correctAnswer: 'Although the CGI is impressive, the movie doesn\'t have an interesting plot.',
+            explanation: 'Notice the contrast conjunction "Although" followed by the comma pause.'
+          }
+        ]
+      }
+    ],
+    exam: {
+      id: 'exam-b1-unit-4',
+      unitId: 'b1-unit-4',
+      level: 'B1',
+      title: 'Unit 4 Progress Assessment: Cinema, Reviews & Narrative Past',
+      description: 'Test your mastery of past perfect vs past simple, article rules, and film review syntax.',
+      passingScore: 70,
+      exercises: [
+        {
+          id: 'exam-b1-u4-e1',
+          type: 'fill-blank',
+          instruction: 'Complete with Past Perfect for the action that happened earlier:',
+          prompt: 'By the time the director arrived, the actors _____ (already / rehearse) the scene twice.',
+          options: ['had already rehearsed', 'already rehearsed', 'have already rehearsed', 'were already rehearse'],
+          correctAnswer: 'had already rehearsed',
+          explanation: 'Rehearsing happened before the director arrived: Past Perfect (had already rehearsed).'
+        },
+        {
+          id: 'exam-b1-u4-e2',
+          type: 'multiple-choice',
+          instruction: 'Which sentence uses articles correctly?',
+          prompt: 'Select the accurate sentence:',
+          options: [
+            'We climbed in the Andes after studying physics at university.',
+            'We climbed in Andes after studying a physics at university.',
+            'We climbed in the Andes after studying the physics at the university.',
+            'We climbed in a Andes after studying physics at university.'
+          ],
+          correctAnswer: 'We climbed in the Andes after studying physics at university.',
+          explanation: '"The Andes" (plural mountain range) and "- physics" (academic subject with zero article).'
+        },
+        {
+          id: 'exam-b1-u4-e3',
+          type: 'sentence-order',
+          instruction: 'Arrange the sentence to express an authentic review opinion:',
+          prompt: 'film / The / impressive / has / CGI / and / acting / good',
+          options: ['The', 'film', 'has', 'impressive', 'CGI', 'and', 'good', 'acting'],
+          correctAnswer: 'The film has impressive CGI and good acting',
+          explanation: 'Adjectives before nouns: "impressive CGI" and "good acting".'
+        }
+      ]
+    }
   }
-]
+
+];
 
 export const FINAL_B1_EXAM: Exam = {
   id: 'final-exam-b1',
@@ -2163,7 +2575,7 @@ export const ALL_LEVELS_DATA: Record<CEFRLevel, LevelDescriptor> = {
     level: 'B1',
     title: 'Level B1',
     subtitle: 'Intermediate (CEFR B1)',
-    description: 'Conditionals 1 & 2, passive voice, reported speech, expressing viewpoints, and independent travel.',
+    description: 'Conditionals, passive voice, narrative past (Past Continuous vs Past Perfect), articles, and film review writing.',
     accentColor: 'from-emerald-600 to-teal-700',
     badgeText: 'Communicative Independence',
     units: CURRICULUM_B1,
