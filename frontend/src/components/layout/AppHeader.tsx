@@ -1,9 +1,10 @@
-import { useEffect } from 'react'
-import { Sun, Moon, User as UserIcon, BookOpen } from 'lucide-react'
+import { useState, useEffect } from 'react'
+import { Sun, Moon, User as UserIcon, BookOpen, RotateCw } from 'lucide-react'
 import { useAppStore } from '@/store/useAppStore'
 import GlossaryModule from '@/components/glossary/GlossaryModule'
 
 export default function AppHeader() {
+  const [isRefreshing, setIsRefreshing] = useState(false)
   const {
     theme,
     toggleTheme,
@@ -12,6 +13,19 @@ export default function AppHeader() {
     isGlossaryModalOpen,
     setGlossaryModalOpen,
   } = useAppStore()
+
+  const handleForceRefresh = async () => {
+    setIsRefreshing(true)
+    try {
+      if ('caches' in window) {
+        const keys = await caches.keys()
+        await Promise.all(keys.map((k) => caches.delete(k)))
+      }
+    } catch {}
+    const url = new URL(window.location.href)
+    url.searchParams.set('t', Date.now().toString())
+    window.location.replace(url.toString())
+  }
 
   // Sync theme with HTML class on mount and change
   useEffect(() => {
@@ -52,6 +66,16 @@ export default function AppHeader() {
           >
             <BookOpen size={15} className="text-brand-600 dark:text-brand-400" />
             <span className="hidden sm:inline">Glossary</span>
+          </button>
+
+          {/* Quick Hard Refresh / Reload Button */}
+          <button
+            onClick={handleForceRefresh}
+            title="Refresh to latest version"
+            aria-label="Refresh and reload latest version"
+            className="p-2 rounded-xl transition-all duration-200 hover:scale-105 active:scale-95 bg-slate-100 hover:bg-slate-200 dark:bg-white/10 dark:hover:bg-white/15 text-slate-700 dark:text-white/80"
+          >
+            <RotateCw size={17} className={isRefreshing ? 'animate-spin text-brand-500' : ''} />
           </button>
 
           {/* Dark/Light Mode Button */}
