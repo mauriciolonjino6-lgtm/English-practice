@@ -161,7 +161,7 @@ export default function ChatInterface() {
       const objectUrl = URL.createObjectURL(file)
       img.onload = () => {
         URL.revokeObjectURL(objectUrl)
-        const maxDimension = 1280
+        const maxDimension = 960
         let { width, height } = img
 
         if (width > maxDimension || height > maxDimension) {
@@ -189,7 +189,7 @@ export default function ChatInterface() {
         }
 
         ctx.drawImage(img, 0, 0, width, height)
-        const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.82)
+        const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.72)
         const base64 = compressedDataUrl.split(',')[1] || ''
         resolve({ dataUrl: compressedDataUrl, base64, mimeType: 'image/jpeg' })
       }

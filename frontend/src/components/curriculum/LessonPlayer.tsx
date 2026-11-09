@@ -13,7 +13,7 @@ interface Props {
 }
 
 export default function LessonPlayer({ lesson, onClose, onComplete }: Props) {
-  const { speak } = useSpeechSynthesis()
+  const { speak, stop, isPlaying } = useSpeechSynthesis()
   const { completeLesson } = useAppStore()
 
   const [currentIndex, setCurrentIndex] = useState(0)
@@ -229,16 +229,23 @@ export default function LessonPlayer({ lesson, onClose, onComplete }: Props) {
           {currentExercise.type === 'listening' && (
             <div className="bg-slate-50 dark:bg-slate-800/80 p-4 rounded-2xl border border-slate-200 dark:border-white/5 flex items-center justify-between gap-4">
               <div className="flex-1">
-                <p className="text-xs text-slate-500 dark:text-slate-400 font-semibold uppercase mb-1">British Tutor Emma (Oxford Audio)</p>
-                <p className="text-sm text-slate-800 dark:text-slate-200 italic">"Click the speaker button to hear authentic British RP pronunciation..."</p>
+                <p className="text-xs text-brand-600 dark:text-brand-400 font-bold uppercase mb-1">
+                  Profesora Emma · Audio Británico de Oxford
+                </p>
+                <p className="text-sm text-slate-800 dark:text-slate-200 italic">
+                  {isPlaying ? 'Reproduciendo audio claro en pronunciación británica...' : 'Haz clic en el botón para escuchar la pronunciación británica:'}
+                </p>
               </div>
               <button
                 type="button"
-                onClick={() => speak(currentExercise.audioText || currentExercise.prompt)}
-                className="w-12 h-12 rounded-2xl bg-brand-600 text-white flex items-center justify-center hover:bg-brand-500 transition-colors shadow-md active:scale-95 shrink-0"
-                title="Listen to audio"
+                onClick={() => (isPlaying ? stop() : speak(currentExercise.audioText || currentExercise.prompt))}
+                className={clsx(
+                  'w-12 h-12 rounded-2xl text-white flex items-center justify-center transition-all shadow-md active:scale-95 shrink-0',
+                  isPlaying ? 'bg-emerald-600 animate-pulse ring-4 ring-emerald-500/30' : 'bg-brand-600 hover:bg-brand-500'
+                )}
+                title={isPlaying ? 'Detener audio' : 'Escuchar audio'}
               >
-                <Volume2 size={22} />
+                <Volume2 size={22} className={clsx(isPlaying && 'scale-110')} />
               </button>
             </div>
           )}
@@ -280,14 +287,17 @@ export default function LessonPlayer({ lesson, onClose, onComplete }: Props) {
           {currentExercise.type === 'speaking' && (
             <div className="space-y-4">
               <div className="flex items-center justify-between bg-slate-50 dark:bg-slate-800/50 p-3 rounded-2xl border border-slate-200 dark:border-white/5">
-                <span className="text-xs font-semibold text-slate-600 dark:text-slate-300">Listen to native model:</span>
+                <span className="text-xs font-semibold text-slate-600 dark:text-slate-300">Audio modelo (Profesora Emma):</span>
                 <button
                   type="button"
-                  onClick={() => speak(currentExercise.audioText || currentExercise.correctAnswer)}
-                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-brand-100 dark:bg-brand-950/60 text-brand-700 dark:text-brand-300 text-xs font-bold hover:bg-brand-200 transition-colors"
+                  onClick={() => (isPlaying ? stop() : speak(currentExercise.audioText || currentExercise.correctAnswer))}
+                  className={clsx(
+                    "flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all",
+                    isPlaying ? "bg-emerald-600 text-white animate-pulse" : "bg-brand-100 dark:bg-brand-950/60 text-brand-700 dark:text-brand-300 hover:bg-brand-200"
+                  )}
                 >
                   <Volume2 size={16} />
-                  <span>Listen</span>
+                  <span>{isPlaying ? 'Detener' : 'Escuchar modelo'}</span>
                 </button>
               </div>
 

@@ -13,7 +13,7 @@ interface Props {
 }
 
 export default function ExamModal({ exam, onClose, onComplete }: Props) {
-  const { speak } = useSpeechSynthesis()
+  const { speak, stop, isPlaying } = useSpeechSynthesis()
   const { user, recordExamResult } = useAppStore()
 
   const [currentIndex, setCurrentIndex] = useState(0)
@@ -215,9 +215,12 @@ export default function ExamModal({ exam, onClose, onComplete }: Props) {
             {currentExercise.audioText && (
               <button
                 type="button"
-                onClick={() => speak(currentExercise.audioText!)}
-                className="w-10 h-10 rounded-xl bg-brand-600 text-white flex items-center justify-center shrink-0 hover:bg-brand-500 transition-colors shadow-sm"
-                title="Listen to audio"
+                onClick={() => (isPlaying ? stop() : speak(currentExercise.audioText!))}
+                className={clsx(
+                  "w-10 h-10 rounded-xl text-white flex items-center justify-center shrink-0 transition-all shadow-sm",
+                  isPlaying ? "bg-emerald-600 animate-pulse" : "bg-brand-600 hover:bg-brand-500"
+                )}
+                title={isPlaying ? "Detener audio" : "Escuchar audio"}
               >
                 <Volume2 size={18} />
               </button>
@@ -293,15 +296,18 @@ export default function ExamModal({ exam, onClose, onComplete }: Props) {
           {currentExercise.type === 'speaking' && (
             <div className="text-center p-4 bg-slate-50 dark:bg-slate-800/50 rounded-2xl border border-slate-200 dark:border-white/5 space-y-3">
               <p className="text-xs text-slate-500 dark:text-slate-400">
-                Escucha el audio modelo del profesor Davies y luego pronúncialo con voz clara y firme:
+                Escucha el audio modelo de la profesora Emma y luego pronúncialo con voz clara y firme:
               </p>
               <button
                 type="button"
-                onClick={() => speak(currentExercise.audioText || currentExercise.correctAnswer)}
-                className="px-4 py-2 rounded-xl bg-brand-600 text-white text-xs font-bold inline-flex items-center gap-1.5 shadow-sm hover:bg-brand-500 transition-colors"
+                onClick={() => (isPlaying ? stop() : speak(currentExercise.audioText || currentExercise.correctAnswer))}
+                className={clsx(
+                  "px-4 py-2 rounded-xl text-white text-xs font-bold inline-flex items-center gap-1.5 shadow-sm transition-all",
+                  isPlaying ? "bg-emerald-600 animate-pulse" : "bg-brand-600 hover:bg-brand-500"
+                )}
               >
                 <Volume2 size={16} />
-                <span>Escuchar Frase Modelo</span>
+                <span>{isPlaying ? 'Detener Audio' : 'Escuchar Frase Modelo'}</span>
               </button>
             </div>
           )}

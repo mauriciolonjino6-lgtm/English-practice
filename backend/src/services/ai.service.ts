@@ -25,8 +25,8 @@ Context: ${scenarioContext}
 CRITICAL BEHAVIORAL RULES:
 1. NO GENERIC REPETITION: Never reply with canned, robotic phrases like "I understood your message! Let's practice saying that in another way." Every response must directly and uniquely address the user's specific input or image.
 2. ACTIVE CORRECTION & SEPARATION OF FIELDS (STRICT):
-   - In "corrected_sentence": Provide ONLY the clean, natural corrected English sentence (e.g. "I ate sushi in the evening, and I didn't have breakfast in the morning."). Do NOT include explanations here. If the student made no mistake, set this to null.
-   - In "explanation": Explain WHY and the grammar rule in clear, friendly Spanish so the student understands the rule. Do NOT repeat the whole sentence verbatim here; explain the grammar principle. If no mistake, set this to null.
+   - In "corrected_sentence": Provide ONLY the clean, natural corrected English sentence without any introductory remarks, greetings, conversational filler, or explanations (e.g. "I ate sushi in the evening, and I didn't have breakfast in the morning."). Do NOT include explanations here. If the student made no mistake, set this to null.
+   - In "explanation": Explain WHY and the grammar rule in clear, friendly Spanish so the student understands the rule (e.g. "En inglés estándar se usa el pasado simple 'ate' en vez de 'did eat' a menos que desees enfatizar. Además, 'breakfast' no lleva artículo 'a'."). Do NOT repeat the sentence verbatim here; explain the grammar principle. If no mistake, set this to null.
 3. CONVERSATIONAL CONTINUITY: Keep the flow alive by asking exactly one relevant, open-ended follow-up question tied to the user's topic.
 4. BILINGUAL SCAFFOLDING & TRANSLATION: If the user writes in Spanish or gets stuck, provide the English translation or structure briefly. Always provide the full Spanish translation of your reply and follow_up_question in the "translation" field so the student can toggle translation.
 5. BRITISH CONTEXT: Incorporate British vocabulary, idioms, slang, and cultural references where natural.
@@ -126,8 +126,6 @@ export async function processChat(
 
   const modelCandidates = [
     'gemini-3.1-flash-lite',
-    'gemini-3.5-flash',
-    'gemini-flash-lite-latest',
     'gemini-3.6-flash',
   ]
 
@@ -166,7 +164,7 @@ export async function processChat(
 
       const chat = model.startChat({ history: geminiHistory })
 
-      const timeoutMs = imageData ? 20000 : 10000
+      const timeoutMs = imageData ? 35000 : 15000
       const timeoutPromise = new Promise<never>((_, reject) =>
         setTimeout(() => reject(new Error(`AI generation timed out on model ${modelName}`)), timeoutMs)
       )
@@ -208,9 +206,26 @@ export async function processChat(
       const fullMessage = questionText ? `${replyText}\n\n${questionText}` : replyText
       const translationText = parsed.translation?.trim() || ''
 
-      const cleanCorrected = (parsed.corrected_sentence || parsed.correction || '').trim()
+      let cleanCorrected = (parsed.corrected_sentence || parsed.correction || '').trim()
       const isNullString = ['null', 'none', 'n/a', 'no error', 'no mistakes', 'undefined'].includes(cleanCorrected.toLowerCase())
-      const cleanExplanation = (parsed.explanation || '').trim()
+      let cleanExplanation = (parsed.explanation || '').trim()
+
+      if (cleanCorrected && !isNullString) {
+        // If cleanCorrected accidentally contains conversational advice (e.g. "Your sentences are clear! ... So, it should be: '...'")
+        const quoteMatch = cleanCorrected.match(/should be:?\s*['"]([^'"]+)['"]/i) || cleanCorrected.match(/['"]([^'"]{6,})['"]/)
+        if (quoteMatch && cleanCorrected.length > 70 && (cleanCorrected.toLowerCase().includes('tweak') || cleanCorrected.toLowerCase().includes('say') || cleanCorrected.toLowerCase().includes('normally'))) {
+          if (!cleanExplanation || cleanExplanation === cleanCorrected) {
+            cleanExplanation = cleanCorrected
+          }
+          cleanCorrected = quoteMatch[1].trim()
+        }
+      }
+
+      // Ensure explanation is never an exact duplicate of corrected sentence
+      if (cleanExplanation && cleanCorrected && (cleanExplanation === cleanCorrected || cleanExplanation.toLowerCase() === cleanCorrected.toLowerCase())) {
+        cleanExplanation = "Aplica esta estructura en inglés británico para asegurar precisión gramatical y fluidez natural."
+      }
+
       const hasCorrection = Boolean(
         cleanCorrected &&
         !isNullString &&

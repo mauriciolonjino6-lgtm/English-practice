@@ -13,6 +13,23 @@ export default function CorrectionCard({ correction, onDismiss, onRepeat }: Prop
   const [isMinimized, setIsMinimized] = useState(false)
   if (!correction.hasError) return null
 
+  // Ensure clean separation between target English sentence and Spanish explanation
+  let cleanCorrected = (correction.corrected || '').trim()
+  let cleanExplanation = (correction.explanation || '').trim()
+
+  const quoteMatch = cleanCorrected.match(/should be:?\s*['"]([^'"]+)['"]/i) || cleanCorrected.match(/['"]([^'"]{6,})['"]/)
+  if (quoteMatch && cleanCorrected.length > 70 && (cleanCorrected.toLowerCase().includes('tweak') || cleanCorrected.toLowerCase().includes('say') || cleanCorrected.toLowerCase().includes('normally'))) {
+    if (!cleanExplanation || cleanExplanation === cleanCorrected) {
+      cleanExplanation = cleanCorrected
+    }
+    cleanCorrected = quoteMatch[1].trim()
+  }
+
+  const isDuplicate = cleanExplanation.toLowerCase() === cleanCorrected.toLowerCase()
+  if (isDuplicate || !cleanExplanation) {
+    cleanExplanation = "Recuerda aplicar esta forma gramatical en inglés británico para asegurar precisión y naturalidad."
+  }
+
   return (
     <AnimatePresence>
       <motion.div
@@ -61,23 +78,25 @@ export default function CorrectionCard({ correction, onDismiss, onRepeat }: Prop
           <>
             <div className="p-3.5 space-y-3 max-h-[30vh] sm:max-h-[32vh] overflow-y-auto overscroll-contain">
               {/* Lo que dijiste (Error) */}
-              <div>
-                <p className="text-[11px] font-extrabold text-rose-700 dark:text-rose-400 uppercase tracking-wider mb-1">
-                  Como lo dijiste:
-                </p>
-                <div className="text-xs sm:text-sm font-medium text-rose-950 dark:text-rose-200 bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-900/50 px-3 py-2 rounded-xl line-through decoration-rose-500/70">
-                  {correction.original}
+              {correction.original && correction.original.trim() !== cleanCorrected && (
+                <div>
+                  <p className="text-[11px] font-extrabold text-rose-700 dark:text-rose-400 uppercase tracking-wider mb-1">
+                    Como lo dijiste:
+                  </p>
+                  <div className="text-xs sm:text-sm font-medium text-rose-950 dark:text-rose-200 bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-900/50 px-3 py-2 rounded-xl line-through decoration-rose-500/70">
+                    {correction.original}
+                  </div>
                 </div>
-              </div>
+              )}
 
               {/* Forma Correcta */}
               <div>
                 <p className="text-[11px] font-extrabold text-emerald-700 dark:text-emerald-400 uppercase tracking-wider mb-1 flex items-center gap-1.5">
                   <CheckCircle2 size={13} className="text-emerald-600 dark:text-emerald-400" />
-                  <span>Forma correcta sugerida:</span>
+                  <span>Cómo se escribe en inglés:</span>
                 </p>
                 <div className="text-xs sm:text-sm font-bold text-emerald-950 dark:text-emerald-100 bg-emerald-50 dark:bg-emerald-950/40 border-2 border-emerald-300 dark:border-emerald-800/60 px-3 py-2 rounded-xl shadow-sm">
-                  {correction.corrected}
+                  {cleanCorrected}
                 </div>
               </div>
 
@@ -85,10 +104,10 @@ export default function CorrectionCard({ correction, onDismiss, onRepeat }: Prop
               <div>
                 <p className="text-[11px] font-extrabold text-blue-700 dark:text-blue-400 uppercase tracking-wider mb-1 flex items-center gap-1.5">
                   <BookOpen size={13} className="text-blue-600 dark:text-blue-400" />
-                  <span>Explicación del profesor:</span>
+                  <span>Explicación del profesor (Por qué):</span>
                 </p>
                 <div className="text-xs sm:text-sm font-medium text-slate-800 dark:text-slate-200 bg-blue-50/80 dark:bg-blue-950/30 border border-blue-200/80 dark:border-blue-900/40 px-3 py-2 rounded-xl leading-relaxed">
-                  {correction.explanation}
+                  {cleanExplanation}
                 </div>
               </div>
             </div>
@@ -96,7 +115,7 @@ export default function CorrectionCard({ correction, onDismiss, onRepeat }: Prop
             {/* Sticky Footer */}
             <div className="px-3.5 py-2.5 bg-amber-50/60 dark:bg-amber-950/20 border-t border-amber-200/60 dark:border-amber-900/40 shrink-0">
               <button
-                onClick={() => onRepeat(correction.corrected)}
+                onClick={() => onRepeat(cleanCorrected)}
                 className="w-full flex items-center justify-center gap-2 py-2 px-3 rounded-xl
                            bg-amber-500 hover:bg-amber-600 active:scale-[0.98]
                            text-white text-xs sm:text-sm font-bold shadow-md shadow-amber-500/25 transition-all"

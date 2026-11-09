@@ -18281,17 +18281,17 @@ var require_router = __commonJS({
     var toString3 = Object.prototype.toString;
     var proto = module2.exports = function(options) {
       var opts = options || {};
-      function router5(req, res, next) {
-        router5.handle(req, res, next);
+      function router6(req, res, next) {
+        router6.handle(req, res, next);
       }
-      setPrototypeOf(router5, proto);
-      router5.params = {};
-      router5._params = [];
-      router5.caseSensitive = opts.caseSensitive;
-      router5.mergeParams = opts.mergeParams;
-      router5.strict = opts.strict;
-      router5.stack = [];
-      return router5;
+      setPrototypeOf(router6, proto);
+      router6.params = {};
+      router6._params = [];
+      router6.caseSensitive = opts.caseSensitive;
+      router6.mergeParams = opts.mergeParams;
+      router6.strict = opts.strict;
+      router6.stack = [];
+      return router6;
     };
     proto.param = function param(name, fn2) {
       if (typeof name === "function") {
@@ -20900,7 +20900,7 @@ var require_application = __commonJS({
   "../node_modules/.pnpm/express@4.22.3/node_modules/express/lib/application.js"(exports2, module2) {
     "use strict";
     var finalhandler = require_finalhandler();
-    var Router5 = require_router();
+    var Router6 = require_router();
     var methods = require_methods();
     var middleware = require_init();
     var query = require_query();
@@ -20965,7 +20965,7 @@ var require_application = __commonJS({
     };
     app2.lazyrouter = function lazyrouter() {
       if (!this._router) {
-        this._router = new Router5({
+        this._router = new Router6({
           caseSensitive: this.enabled("case sensitive routing"),
           strict: this.enabled("strict routing")
         });
@@ -20974,17 +20974,17 @@ var require_application = __commonJS({
       }
     };
     app2.handle = function handle(req, res, callback) {
-      var router5 = this._router;
+      var router6 = this._router;
       var done = callback || finalhandler(req, res, {
         env: this.get("env"),
         onerror: logerror.bind(this)
       });
-      if (!router5) {
+      if (!router6) {
         debug("no routes defined on app");
         done();
         return;
       }
-      router5.handle(req, res, done);
+      router6.handle(req, res, done);
     };
     app2.use = function use(fn2) {
       var offset = 0;
@@ -21004,15 +21004,15 @@ var require_application = __commonJS({
         throw new TypeError("app.use() requires a middleware function");
       }
       this.lazyrouter();
-      var router5 = this._router;
+      var router6 = this._router;
       fns.forEach(function(fn3) {
         if (!fn3 || !fn3.handle || !fn3.set) {
-          return router5.use(path2, fn3);
+          return router6.use(path2, fn3);
         }
         debug(".use app under %s", path2);
         fn3.mountpath = path2;
         fn3.parent = this;
-        router5.use(path2, function mounted_app(req, res, next) {
+        router6.use(path2, function mounted_app(req, res, next) {
           var orig = req.app;
           fn3.handle(req, res, function(err) {
             setPrototypeOf(req, orig.request);
@@ -22829,7 +22829,7 @@ var require_express = __commonJS({
     var mixin2 = require_merge_descriptors();
     var proto = require_application();
     var Route = require_route();
-    var Router5 = require_router();
+    var Router6 = require_router();
     var req = require_request();
     var res = require_response();
     exports2 = module2.exports = createApplication;
@@ -22852,7 +22852,7 @@ var require_express = __commonJS({
     exports2.request = req;
     exports2.response = res;
     exports2.Route = Route;
-    exports2.Router = Router5;
+    exports2.Router = Router6;
     exports2.json = bodyParser.json;
     exports2.query = require_query();
     exports2.raw = bodyParser.raw;
@@ -88848,7 +88848,7 @@ __export(server_exports, {
   default: () => server_default
 });
 module.exports = __toCommonJS(server_exports);
-var import_express5 = __toESM(require_express2());
+var import_express6 = __toESM(require_express2());
 var import_cors = __toESM(require_lib3());
 
 // ../node_modules/.pnpm/helmet@7.2.0/node_modules/helmet/index.mjs
@@ -90449,7 +90449,7 @@ SRSCard.init(
 );
 
 // src/routes/index.ts
-var import_express4 = __toESM(require_express2());
+var import_express5 = __toESM(require_express2());
 
 // src/routes/chat.routes.ts
 var import_express = __toESM(require_express2());
@@ -91384,8 +91384,8 @@ Context: ${scenarioContext}
 CRITICAL BEHAVIORAL RULES:
 1. NO GENERIC REPETITION: Never reply with canned, robotic phrases like "I understood your message! Let's practice saying that in another way." Every response must directly and uniquely address the user's specific input or image.
 2. ACTIVE CORRECTION & SEPARATION OF FIELDS (STRICT):
-   - In "corrected_sentence": Provide ONLY the clean, natural corrected English sentence (e.g. "I ate sushi in the evening, and I didn't have breakfast in the morning."). Do NOT include explanations here. If the student made no mistake, set this to null.
-   - In "explanation": Explain WHY and the grammar rule in clear, friendly Spanish so the student understands the rule. Do NOT repeat the whole sentence verbatim here; explain the grammar principle. If no mistake, set this to null.
+   - In "corrected_sentence": Provide ONLY the clean, natural corrected English sentence without any introductory remarks, greetings, conversational filler, or explanations (e.g. "I ate sushi in the evening, and I didn't have breakfast in the morning."). Do NOT include explanations here. If the student made no mistake, set this to null.
+   - In "explanation": Explain WHY and the grammar rule in clear, friendly Spanish so the student understands the rule (e.g. "En ingl\xE9s est\xE1ndar se usa el pasado simple 'ate' en vez de 'did eat' a menos que desees enfatizar. Adem\xE1s, 'breakfast' no lleva art\xEDculo 'a'."). Do NOT repeat the sentence verbatim here; explain the grammar principle. If no mistake, set this to null.
 3. CONVERSATIONAL CONTINUITY: Keep the flow alive by asking exactly one relevant, open-ended follow-up question tied to the user's topic.
 4. BILINGUAL SCAFFOLDING & TRANSLATION: If the user writes in Spanish or gets stuck, provide the English translation or structure briefly. Always provide the full Spanish translation of your reply and follow_up_question in the "translation" field so the student can toggle translation.
 5. BRITISH CONTEXT: Incorporate British vocabulary, idioms, slang, and cultural references where natural.
@@ -91432,8 +91432,6 @@ async function processChat(userInput, history, scenario = "free-talk", _studentL
   }
   const modelCandidates = [
     "gemini-3.1-flash-lite",
-    "gemini-3.5-flash",
-    "gemini-flash-lite-latest",
     "gemini-3.6-flash"
   ];
   const geminiHistory = [];
@@ -91464,7 +91462,7 @@ ${text}`;
         }
       });
       const chat = model.startChat({ history: geminiHistory });
-      const timeoutMs = imageData ? 2e4 : 1e4;
+      const timeoutMs = imageData ? 35e3 : 15e3;
       const timeoutPromise = new Promise(
         (_3, reject2) => setTimeout(() => reject2(new Error(`AI generation timed out on model ${modelName}`)), timeoutMs)
       );
@@ -91503,9 +91501,21 @@ ${text}`;
 
 ${questionText}` : replyText;
       const translationText = parsed.translation?.trim() || "";
-      const cleanCorrected = (parsed.corrected_sentence || parsed.correction || "").trim();
+      let cleanCorrected = (parsed.corrected_sentence || parsed.correction || "").trim();
       const isNullString = ["null", "none", "n/a", "no error", "no mistakes", "undefined"].includes(cleanCorrected.toLowerCase());
-      const cleanExplanation = (parsed.explanation || "").trim();
+      let cleanExplanation = (parsed.explanation || "").trim();
+      if (cleanCorrected && !isNullString) {
+        const quoteMatch = cleanCorrected.match(/should be:?\s*['"]([^'"]+)['"]/i) || cleanCorrected.match(/['"]([^'"]{6,})['"]/);
+        if (quoteMatch && cleanCorrected.length > 70 && (cleanCorrected.toLowerCase().includes("tweak") || cleanCorrected.toLowerCase().includes("say") || cleanCorrected.toLowerCase().includes("normally"))) {
+          if (!cleanExplanation || cleanExplanation === cleanCorrected) {
+            cleanExplanation = cleanCorrected;
+          }
+          cleanCorrected = quoteMatch[1].trim();
+        }
+      }
+      if (cleanExplanation && cleanCorrected && (cleanExplanation === cleanCorrected || cleanExplanation.toLowerCase() === cleanCorrected.toLowerCase())) {
+        cleanExplanation = "Aplica esta estructura en ingl\xE9s brit\xE1nico para asegurar precisi\xF3n gramatical y fluidez natural.";
+      }
       const hasCorrection = Boolean(
         cleanCorrected && !isNullString && cleanCorrected !== ""
       );
@@ -91944,12 +91954,86 @@ router3.get("/user/:id", getUser);
 router3.put("/user/:id", updateUser);
 var auth_routes_default = router3;
 
-// src/routes/index.ts
+// src/routes/tts.routes.ts
+var import_express4 = __toESM(require_express2());
+
+// src/controllers/tts.controller.ts
+var import_https = __toESM(require("https"));
+function splitText(text, maxLen = 160) {
+  const sentences = text.match(/[^.!?]+[.!?]+|[^.!?]+$/g) || [text];
+  const chunks = [];
+  let current = "";
+  for (const s of sentences) {
+    const trimmed = s.trim();
+    if (!trimmed) continue;
+    if ((current + " " + trimmed).trim().length <= maxLen) {
+      current = (current + " " + trimmed).trim();
+    } else {
+      if (current) chunks.push(current);
+      if (trimmed.length <= maxLen) {
+        current = trimmed;
+      } else {
+        const words = trimmed.split(" ");
+        let sub = "";
+        for (const w of words) {
+          if ((sub + " " + w).trim().length <= maxLen) {
+            sub = (sub + " " + w).trim();
+          } else {
+            if (sub) chunks.push(sub);
+            sub = w;
+          }
+        }
+        current = sub;
+      }
+    }
+  }
+  if (current) chunks.push(current);
+  return chunks.length > 0 ? chunks : [text];
+}
+function fetchAudioChunk(text) {
+  return new Promise((resolve, reject2) => {
+    const url = "https://translate.google.com/translate_tts?ie=UTF-8&tl=en-GB&client=tw-ob&q=" + encodeURIComponent(text);
+    import_https.default.get(url, (res) => {
+      if (res.statusCode !== 200) {
+        return reject2(new Error(`TTS chunk error: ${res.statusCode}`));
+      }
+      const data = [];
+      res.on("data", (chunk2) => data.push(chunk2));
+      res.on("end", () => resolve(Buffer.concat(data)));
+    }).on("error", reject2);
+  });
+}
+async function getBritishAudio(req, res, next) {
+  try {
+    const text = typeof req.query.text === "string" ? req.query.text.trim() : "";
+    if (!text) {
+      res.status(400).json({ error: "Text query parameter is required" });
+      return;
+    }
+    const chunks = splitText(text);
+    const audioBuffers = await Promise.all(chunks.map((c) => fetchAudioChunk(c)));
+    const fullAudio = Buffer.concat(audioBuffers);
+    res.setHeader("Content-Type", "audio/mpeg");
+    res.setHeader("Cache-Control", "public, max-age=604800, immutable");
+    res.setHeader("Content-Length", fullAudio.length);
+    res.send(fullAudio);
+  } catch (error) {
+    next(error);
+  }
+}
+
+// src/routes/tts.routes.ts
 var router4 = (0, import_express4.Router)();
-router4.use("/auth", auth_routes_default);
-router4.use("/chat", chat_routes_default);
-router4.use("/srs", srs_routes_default);
-var routes_default = router4;
+router4.get("/", getBritishAudio);
+var tts_routes_default = router4;
+
+// src/routes/index.ts
+var router5 = (0, import_express5.Router)();
+router5.use("/auth", auth_routes_default);
+router5.use("/chat", chat_routes_default);
+router5.use("/srs", srs_routes_default);
+router5.use("/tts", tts_routes_default);
+var routes_default = router5;
 
 // src/middleware/errorHandler.ts
 function errorHandler(err, _req, res, _next) {
@@ -91961,7 +92045,7 @@ function errorHandler(err, _req, res, _next) {
 }
 
 // src/server.ts
-var app = (0, import_express5.default)();
+var app = (0, import_express6.default)();
 app.set("trust proxy", 1);
 app.use((req, _res, next) => {
   if (!req.socket) req.socket = {};
@@ -91983,8 +92067,8 @@ app.use((0, import_cors.default)({
 if (!process.env.VERCEL && ENV.NODE_ENV === "development") {
   app.use((0, import_morgan.default)("dev"));
 }
-app.use(import_express5.default.json({ limit: "10mb" }));
-app.use(import_express5.default.urlencoded({ extended: true }));
+app.use(import_express6.default.json({ limit: "10mb" }));
+app.use(import_express6.default.urlencoded({ extended: true }));
 app.get(["/", "/api"], (_req, res) => {
   res.json({
     ok: true,
@@ -92021,7 +92105,7 @@ app.use("/", routes_default);
 if (!process.env.VERCEL) {
   const frontendDist = import_path.default.resolve(__dirname, "../../frontend/dist");
   if (import_fs.default.existsSync(frontendDist)) {
-    app.use(import_express5.default.static(frontendDist));
+    app.use(import_express6.default.static(frontendDist));
     app.get("*", (_req, res) => {
       res.sendFile(import_path.default.join(frontendDist, "index.html"));
     });
