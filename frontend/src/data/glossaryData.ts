@@ -367,3 +367,4 @@ export const INITIAL_GLOSSARY: GlossaryWord[] = [
     example: 'Akmal had left his laptop at work; therefore, he had to return before meeting us.',
   },
 ]
+

@@ -91378,32 +91378,45 @@ var SCENARIOS = {
 };
 function buildSystemPrompt(scenario = "free-talk") {
   const scenarioContext = SCENARIOS[scenario] ?? SCENARIOS["free-talk"];
-  return `You are British Tutor Emma, an expert British English educator residing in Oxford. Your primary mission is to provide an immersive, encouraging English learning experience for the student, utilizing the Communicative Language Teaching (CLT) method.
-Context: ${scenarioContext}
+  return `You are British Tutor Emma, a friendly, charismatic, and expert British English educator from Oxford.
+Your primary mission is to provide an immersive, encouraging, and authentic English conversational learning experience.
+Current Scenario Context: ${scenarioContext}
 
-CRITICAL BEHAVIORAL RULES:
-1. FULL IMMERSION IN NATURAL BRITISH ENGLISH: Keep all your conversational dialogue, visual descriptions, and guidance strictly in natural British English. Use Received Pronunciation phrasing, British spelling (colour, organise, centre, programme), and authentic idioms (cuppa, sorted, fancy, cheer).
-2. ACTIVE CORRECTION & SEPARATION OF FIELDS (STRICT):
-   - In "corrected_sentence": Provide ONLY the clean, natural corrected English sentence without any introductory remarks, greetings, conversational filler, or explanations (e.g. "I ate sushi in the evening, and I didn't have breakfast in the morning."). Do NOT include explanations here. If the student made no mistake, set this to null.
-   - In "explanation": Explain WHY and the grammar rule in clear, concise English with a helpful reference (e.g. "In standard British English, we use the simple past 'ate' instead of 'did eat' unless emphasizing. Also, daily meals such as 'breakfast' take no article 'a'."). Do NOT repeat the whole sentence verbatim here. If no mistake, set this to null.
-3. CONVERSATIONAL CONTINUITY: Keep the flow alive by asking exactly one relevant, open-ended follow-up question tied to the user's topic.
-4. BILINGUAL SUPPORT ONLY IN TRANSLATION FIELD: Always provide the full Spanish translation of your reply and follow_up_question in the "translation" field so the student can toggle translation if needed.
-5. MULTIMODAL IMAGE & DOCUMENT VISION (MANDATORY WHEN AN IMAGE IS ATTACHED):
-   - DETAILED VISUAL DESCRIPTION: In your "reply", explicitly describe what you see in the image in detail in British English.
-   - TEACH RELEVANT ENGLISH & ANSWER: Answer any question asked about the picture. Introduce 2-3 useful British English words or expressions for the items shown.
-   - TEXT & HOMEWORK: If the image contains a worksheet, book page, or handwritten text, transcribe and evaluate the English, solve/explain the exercises, and provide constructive feedback.
-   - ACCURATE CORRECTIONS: If there is an English error, provide the clean correction in "corrected_sentence" and the rule explanation in "explanation". If there are NO errors, both MUST be strictly null.
-   - ENGAGING QUESTION: In "follow_up_question", ask an open-ended question directly about the image/scene.
-   - SPANISH TRANSLATION: In "translation", provide the full Spanish translation of your "reply" and "follow_up_question".
+CONVERSATION PRINCIPLES (COMMUNICATIVE LANGUAGE TEACHING):
+1. ENGAGING, NATURAL BRITISH CONVERSATION:
+   - Talk like a real British conversationalist: warm, witty, encouraging, and natural.
+   - When the student introduces or changes the topic (e.g. food, supermarkets, London travel, daily life), dive STRAIGHT into that topic with enthusiasm!
+   - NEVER repeat robotic or repetitive phrases like "What else would you like to discuss today?". Always ask creative, specific questions that advance the topic or roleplay.
+   - Use authentic British English vocabulary and idioms naturally (e.g. 'splendid', 'fancy', 'trolley', 'till', 'cuppa', 'lovely', 'brilliant', 'sorted', 'cheers').
+   - Keep your conversational reply around 2-4 sentences: engaging, vibrant, and easy to respond to.
+
+2. SUGGESTED REPLIES (MANDATORY):
+   - Always supply 3 realistic, practical sentences the student could say next to continue the dialogue smoothly.
+   - Include a concise Spanish hint for each option to help lower-level students understand the communicative intent.
+
+3. CONSTRUCTIVE & GENTLE CORRECTIONS:
+   - If the student made a noticeable grammar or vocabulary mistake (such as spelling "market" as "Marked", or wrong verb tense), provide the clean corrected sentence in "corrected_sentence" and a clear, friendly 1-sentence tip in "explanation".
+   - If the student's message has no mistakes, set both "corrected_sentence" and "explanation" to null.
+   - Do NOT treat minor British vs American spelling differences (e.g. practice vs practise) as an error.
+   - Never let corrections interrupt the warmth and flow of your conversational "reply".
+
+4. MULTIMODAL VISION (WHEN AN IMAGE IS ATTACHED):
+   - If the student shares an image or document, thoroughly examine it and describe what you see in detail in your "reply".
+   - Teach 2-3 useful British expressions for items in the picture and ask a relevant question about it.
 
 STRICT OUTPUT FORMAT (JSON ONLY):
-You must return your response EXCLUSIVELY as a valid JSON object matching this exact schema:
+Return EXCLUSIVELY a single valid JSON object matching this schema:
 {
-  "corrected_sentence": "Write ONLY the clean corrected English sentence here without explanations. If flawless, set this to null.",
-  "explanation": "Explain the grammar rule and WHY in clear, constructive English so the student learns. If flawless, set this to null.",
-  "reply": "Your conversational response continuing the dialogue naturally in British English, describing the image in detail if an image is attached.",
-  "follow_up_question": "Your engaging follow-up question in British English.",
-  "translation": "Traducci\xF3n completa y fluida en espa\xF1ol de tu reply y follow_up_question."
+  "reply": "Your warm conversational response in natural British English.",
+  "follow_up_question": "Your engaging, topic-specific question.",
+  "suggested_replies": [
+    {"text": "Natural reply option 1", "hint": "Breve pista en espa\xF1ol"},
+    {"text": "Natural reply option 2", "hint": "Breve pista en espa\xF1ol"},
+    {"text": "Natural reply option 3", "hint": "Breve pista en espa\xF1ol"}
+  ],
+  "corrected_sentence": "Clean corrected sentence or null if no error.",
+  "explanation": "Friendly 1-sentence explanation of the rule or null if no error.",
+  "translation": "Traducci\xF3n completa en espa\xF1ol de tu reply y follow_up_question."
 }`;
 }
 function cleanJson(raw) {
@@ -91414,6 +91427,71 @@ function cleanJson(raw) {
     cleaned = cleaned.replace(/^```\s*/, "").replace(/\s*```$/, "");
   }
   return cleaned.trim();
+}
+function parseAIResponse(raw, userInput) {
+  const cleaned = cleanJson(raw);
+  try {
+    const obj = JSON.parse(cleaned);
+    if (obj && typeof obj === "object") {
+      return {
+        reply: typeof obj.reply === "string" ? obj.reply : "",
+        follow_up_question: typeof obj.follow_up_question === "string" ? obj.follow_up_question : "",
+        suggested_replies: Array.isArray(obj.suggested_replies) ? obj.suggested_replies : [],
+        corrected_sentence: obj.corrected_sentence ?? obj.correction ?? null,
+        explanation: obj.explanation ?? null,
+        translation: obj.translation ?? ""
+      };
+    }
+  } catch (err) {
+    console.warn("[AI JSON Parse Warning] Retrying with resilient regex parser:", err);
+  }
+  const extractString = (field) => {
+    const regex = new RegExp(`"${field}"\\s*:\\s*"((?:\\\\.|[^"\\\\])*)"`, "i");
+    const match = raw.match(regex);
+    if (match && match[1]) {
+      return match[1].replace(/\\n/g, "\n").replace(/\\"/g, '"').trim();
+    }
+    return "";
+  };
+  const reply = extractString("reply");
+  const followUp = extractString("follow_up_question");
+  const translation = extractString("translation");
+  const corrected = extractString("corrected_sentence") || extractString("correction");
+  const explanation = extractString("explanation");
+  let suggestedReplies = [];
+  try {
+    const sugMatch = raw.match(/"suggested_replies"\s*:\s*(\[[^\]]*\])/s);
+    if (sugMatch && sugMatch[1]) {
+      suggestedReplies = JSON.parse(sugMatch[1]);
+    }
+  } catch {
+  }
+  if (reply || followUp) {
+    return {
+      reply: reply || "That sounds splendid! Let's explore that topic together.",
+      follow_up_question: followUp || "What is your perspective on this?",
+      suggested_replies: suggestedReplies,
+      corrected_sentence: corrected || null,
+      explanation: explanation || null,
+      translation: translation || ""
+    };
+  }
+  let stripped = raw.replace(/\{[\s\S]*?"(reply|content)":\s*"/i, "").replace(/["}]+\s*$/g, "").replace(/"(corrected_sentence|explanation|translation|follow_up_question)":\s*(null|"[^"]*")/gi, "").replace(/[{}\[\]"]/g, "").trim();
+  if (!stripped || stripped.length < 5 || stripped.startsWith("{") || stripped.includes('"reply"')) {
+    stripped = "That is a splendid topic to practice! I would be delighted to chat about it with you.";
+  }
+  return {
+    reply: stripped,
+    follow_up_question: "What's the first question or thought that comes to your mind?",
+    suggested_replies: [
+      { text: "Could you give me an everyday example?", hint: "Pide un ejemplo com\xFAn" },
+      { text: "How would you say that in London?", hint: "Pregunta por modismos brit\xE1nicos" },
+      { text: "Let's do a short roleplay!", hint: "Prop\xF3n un juego de roles" }
+    ],
+    corrected_sentence: null,
+    explanation: null,
+    translation: "\xA1Es un tema excelente para practicar! Me encantar\xEDa explorarlo contigo."
+  };
 }
 async function processChat(userInput, history, scenario = "free-talk", _studentLevel = "A1", imageData) {
   const apiKey = process.env.GEMINI_API_KEY || ENV.GEMINI_API_KEY;
@@ -91457,7 +91535,7 @@ ${text}`;
         generationConfig: {
           responseMimeType: "application/json",
           temperature: 0.7,
-          maxOutputTokens: 600
+          maxOutputTokens: 1500
         }
       });
       const chat = model.startChat({ history: geminiHistory });
@@ -91465,7 +91543,7 @@ ${text}`;
       const timeoutPromise = new Promise(
         (_3, reject2) => setTimeout(() => reject2(new Error(`AI generation timed out on model ${modelName}`)), timeoutMs)
       );
-      let sendPayload = userInput || "Hello Professor Davies.";
+      let sendPayload = userInput || "Hello Tutor Emma.";
       if (imageData && imageData.data) {
         const textPrompt = userInput?.trim() ? `[Student message]: ${userInput}
 
@@ -91482,18 +91560,7 @@ ${text}`;
       }
       const result2 = await Promise.race([chat.sendMessage(sendPayload), timeoutPromise]);
       const raw = result2.response.text();
-      let parsed;
-      try {
-        parsed = JSON.parse(cleanJson(raw));
-      } catch (parseErr) {
-        console.warn("[AI JSON Parse Warning] Raw output was:", raw);
-        parsed = {
-          corrected_sentence: null,
-          explanation: null,
-          reply: raw.trim(),
-          follow_up_question: "What else would you like to discuss today?"
-        };
-      }
+      const parsed = parseAIResponse(raw, userInput);
       const replyText = parsed.reply?.trim() || "";
       const questionText = parsed.follow_up_question?.trim() || "";
       const fullMessage = questionText ? `${replyText}
@@ -91523,6 +91590,11 @@ ${questionText}` : replyText;
         reply: replyText,
         follow_up_question: questionText,
         translation: translationText,
+        suggestedReplies: parsed.suggested_replies && parsed.suggested_replies.length > 0 ? parsed.suggested_replies : [
+          { text: "That sounds splendid! Tell me more.", hint: "Continuar la conversaci\xF3n" },
+          { text: "Could you give me an example?", hint: "Pedir un ejemplo pr\xE1ctico" },
+          { text: "How do British people usually say that?", hint: "Preguntar por modismos brit\xE1nicos" }
+        ],
         rawCorrection: cleanCorrected || null,
         correction: {
           hasError: hasCorrection,
@@ -91546,6 +91618,10 @@ ${questionText}` : replyText;
     follow_up_question: "Could you repeat what you just said so we can continue?",
     translation: "\xA1Cielos, nuestra conexi\xF3n de Oxford tuvo una peque\xF1a interferencia! \xBFPodr\xEDas repetir lo que dijiste para continuar nuestra conversaci\xF3n?",
     debugError: lastError?.message || String(lastError),
+    suggestedReplies: [
+      { text: "Could you repeat that, please?", hint: "\xBFPodr\xEDas repetirlo?" },
+      { text: "Let's try that again!", hint: "\xA1Intent\xE9moslo de nuevo!" }
+    ],
     rawCorrection: null,
     correction: { hasError: false, original: "", corrected: "", explanation: "", rule: "" },
     vocabulary: [],

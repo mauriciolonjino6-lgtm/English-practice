@@ -137,7 +137,7 @@ export default function ChatInterface() {
     setActiveSuggestions(DEFAULT_SUGGESTIONS[scId] || [])
     const target = SCENARIOS.find((s) => s.id === scId)
     if (target) {
-      toast(`Escenario: ${target.label}`)
+      toast(`Scenario: ${target.label}`)
     }
   }
 
